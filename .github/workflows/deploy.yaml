@@ -1,0 +1,26 @@
+---
+name: Deploy on production закуп-ай.рф
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/git
+            rm -rf zakupai
+            mkdir zakupai
+            git clone --depth 1 git@github.com:talkiiing-team/zakupai.git
+            cd zakupai
+            docker compose --env-file /etc/zakupai/env up --build -d
