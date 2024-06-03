@@ -23,4 +23,5 @@ jobs:
             mkdir zakupai
             git clone --depth 1 git@github.com:talkiiing-team/zakupai.git
             cd zakupai
-            docker compose --env-file /etc/zakupai/env up --build -d
+            cp /etc/zakupai/.env ./.env
+            docker compose up --build -d

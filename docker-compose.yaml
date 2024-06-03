@@ -9,9 +9,9 @@ services:
     volumes:
       - clickhouse_data:/var/lib/clickhouse
     environment:
-      - CLICKHOUSE_DB='zakupai'
-      - CLICKHOUSE_USER=$CLICKHOUSE_USER
-      - CLICKHOUSE_PASSWORD=$CLICKHOUSE_PASSWORD
+      - CLICKHOUSE_DB=zakupai
+      - CLICKHOUSE_USER=${CLICKHOUSE_USER}
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
 
 volumes:
   clickhouse_data:
