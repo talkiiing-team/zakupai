@@ -1,0 +1,21 @@
+{
+  "name": "api",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "clickhouse-migrations": "^0.1.14",
+    "tsx": "^4.13.3",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@clickhouse/client": "^1.1.0",
+    "@hono/node-server": "^1.11.2",
+    "hono": "^4.4.4",
+    "tslog": "^4.9.2"
+  }
+}

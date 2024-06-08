@@ -1,25 +1,47 @@
-version: "3"
+version: '3'
 
 services:
   clickhouse:
-    image: "clickhouse/clickhouse-server:24-alpine"
+    image: 'clickhouse/clickhouse-server:24-alpine'
     ports:
       - 8123:8123
       - 9000:9000
     volumes:
       - clickhouse_data:/var/lib/clickhouse
     environment:
-      - CLICKHOUSE_DB=zakupai
+      - CLICKHOUSE_DB=${CLICKHOUSE_DB}
       - CLICKHOUSE_USER=${CLICKHOUSE_USER}
       - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
 
   caddy:
-    build: "./caddy"
+    build: ./caddy
     ports:
       - 80:80
       - 443:443
     volumes:
       - caddy_data:/data
+
+  api:
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: api
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+      - CLICKHOUSE_URL=http://clickhouse:8123
+      - CLICKHOUSE_DB=${CLICKHOUSE_DB}
+      - CLICKHOUSE_USER=${CLICKHOUSE_USER}
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
+
+  web:
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: web
+    ports:
+      - 4000:80
 
 volumes:
   clickhouse_data:
