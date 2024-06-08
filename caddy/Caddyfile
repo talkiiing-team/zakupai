@@ -1,5 +1,5 @@
 xn----7sbbznd9a5a.xn--p1ai {
-    reverse_proxy http://nginx
+    reverse_proxy http://web
 }
 
 api.xn----7sbbznd9a5a.xn--p1ai {
