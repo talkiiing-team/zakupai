@@ -1,7 +1,10 @@
 import { FC } from 'react';
+import { RouterProvider } from '@tanstack/react-router';
 
-import {} from '@/app/index.css';
+import { router } from '@/app/router';
+
+import '@/app/index.css';
 
 export const App: FC = () => {
-    return <div>pizda</div>;
+    return <RouterProvider router={router} />;
 };

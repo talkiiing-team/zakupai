@@ -1,6 +1,8 @@
-import { Logger } from 'tslog';
+import dotenv from 'dotenv';
 
-const logger = new Logger();
+import { logger } from '@/logger';
+
+dotenv.config();
 
 if (typeof process.env.PORT !== 'string') {
     process.env.PORT = '3000';
@@ -11,4 +13,9 @@ if (typeof process.env.CLICKHOUSE_URL !== 'string') {
     process.exit(1);
 }
 
-export const { PORT, CLICKHOUSE_URL } = process.env;
+if (typeof process.env.JWT_SECRET !== 'string') {
+    logger.fatal('JWT_SECRET env is not provided');
+    process.exit(1);
+}
+
+export const { PORT, CLICKHOUSE_URL, JWT_SECRET } = process.env;

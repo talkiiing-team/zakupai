@@ -4,3 +4,4 @@ node_modules
 *.md
 dist
 .env*
+routeTree.gen.ts

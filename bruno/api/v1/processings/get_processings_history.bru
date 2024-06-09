@@ -1,0 +1,15 @@
+meta {
+  name: get_processings_history
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseURL}}/v1/processings
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{bearer}}
+}

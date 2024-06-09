@@ -1,6 +1,6 @@
 import { createClient } from '@clickhouse/client';
 
-import { CLICKHOUSE_URL } from './env';
+import { CLICKHOUSE_URL } from '@/env';
 
 createClient({
     url: CLICKHOUSE_URL,
