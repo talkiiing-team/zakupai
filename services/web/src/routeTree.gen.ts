@@ -13,19 +13,21 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as PanelImport } from './routes/_panel'
 import { Route as IndexImport } from './routes/index'
-import { Route as PanelLayoutImport } from './routes/panel/_layout'
 
 // Create Virtual Routes
 
-const PanelImport = createFileRoute('/panel')()
-const PanelIndexLazyImport = createFileRoute('/panel/')()
-const AuthIndexLazyImport = createFileRoute('/auth/')()
+const AuthSignInLazyImport = createFileRoute('/auth/sign-in')()
+const PanelDashboardLazyImport = createFileRoute('/_panel/dashboard')()
+const PanelProcessingsIndexLazyImport = createFileRoute(
+  '/_panel/processings/',
+)()
 
 // Create/Update Routes
 
 const PanelRoute = PanelImport.update({
-  path: '/panel',
+  id: '/_panel',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -34,20 +36,24 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const PanelIndexLazyRoute = PanelIndexLazyImport.update({
-  path: '/',
-  getParentRoute: () => PanelRoute,
-} as any).lazy(() => import('./routes/panel/index.lazy').then((d) => d.Route))
-
-const AuthIndexLazyRoute = AuthIndexLazyImport.update({
-  path: '/auth/',
+const AuthSignInLazyRoute = AuthSignInLazyImport.update({
+  path: '/auth/sign-in',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/auth/index.lazy').then((d) => d.Route))
+} as any).lazy(() => import('./routes/auth/sign-in.lazy').then((d) => d.Route))
 
-const PanelLayoutRoute = PanelLayoutImport.update({
-  id: '/_layout',
+const PanelDashboardLazyRoute = PanelDashboardLazyImport.update({
+  path: '/dashboard',
   getParentRoute: () => PanelRoute,
-} as any)
+} as any).lazy(() =>
+  import('./routes/_panel/dashboard.lazy').then((d) => d.Route),
+)
+
+const PanelProcessingsIndexLazyRoute = PanelProcessingsIndexLazyImport.update({
+  path: '/processings/',
+  getParentRoute: () => PanelRoute,
+} as any).lazy(() =>
+  import('./routes/_panel/processings/index.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -60,32 +66,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/panel': {
-      id: '/panel'
-      path: '/panel'
-      fullPath: '/panel'
+    '/_panel': {
+      id: '/_panel'
+      path: ''
+      fullPath: ''
       preLoaderRoute: typeof PanelImport
       parentRoute: typeof rootRoute
     }
-    '/panel/_layout': {
-      id: '/panel/_layout'
-      path: '/panel'
-      fullPath: '/panel'
-      preLoaderRoute: typeof PanelLayoutImport
-      parentRoute: typeof PanelRoute
+    '/_panel/dashboard': {
+      id: '/_panel/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof PanelDashboardLazyImport
+      parentRoute: typeof PanelImport
     }
-    '/auth/': {
-      id: '/auth/'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthIndexLazyImport
+    '/auth/sign-in': {
+      id: '/auth/sign-in'
+      path: '/auth/sign-in'
+      fullPath: '/auth/sign-in'
+      preLoaderRoute: typeof AuthSignInLazyImport
       parentRoute: typeof rootRoute
     }
-    '/panel/': {
-      id: '/panel/'
-      path: '/'
-      fullPath: '/panel/'
-      preLoaderRoute: typeof PanelIndexLazyImport
+    '/_panel/processings/': {
+      id: '/_panel/processings/'
+      path: '/processings'
+      fullPath: '/processings'
+      preLoaderRoute: typeof PanelProcessingsIndexLazyImport
       parentRoute: typeof PanelImport
     }
   }
@@ -95,8 +101,11 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  PanelRoute: PanelRoute.addChildren({ PanelIndexLazyRoute }),
-  AuthIndexLazyRoute,
+  PanelRoute: PanelRoute.addChildren({
+    PanelDashboardLazyRoute,
+    PanelProcessingsIndexLazyRoute,
+  }),
+  AuthSignInLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -108,30 +117,30 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/panel",
-        "/auth/"
+        "/_panel",
+        "/auth/sign-in"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/panel": {
-      "filePath": "panel",
+    "/_panel": {
+      "filePath": "_panel.tsx",
       "children": [
-        "/panel/_layout",
-        "/panel/"
+        "/_panel/dashboard",
+        "/_panel/processings/"
       ]
     },
-    "/panel/_layout": {
-      "filePath": "panel/_layout.tsx",
-      "parent": "/panel"
+    "/_panel/dashboard": {
+      "filePath": "_panel/dashboard.lazy.tsx",
+      "parent": "/_panel"
     },
-    "/auth/": {
-      "filePath": "auth/index.lazy.tsx"
+    "/auth/sign-in": {
+      "filePath": "auth/sign-in.lazy.tsx"
     },
-    "/panel/": {
-      "filePath": "panel/index.lazy.tsx",
-      "parent": "/panel"
+    "/_panel/processings/": {
+      "filePath": "_panel/processings/index.lazy.tsx",
+      "parent": "/_panel"
     }
   }
 }

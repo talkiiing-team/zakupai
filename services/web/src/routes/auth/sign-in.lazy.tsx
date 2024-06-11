@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from '@tanstack/react-router';
 
-export const Route = createLazyFileRoute('/auth/')({
+export const Route = createLazyFileRoute('/auth/sign-in')({
     component: () => (
         <main className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-green-500 to-green-50">
             <form className="rounded-xl border border-zinc-300 bg-zinc-50 p-4">
