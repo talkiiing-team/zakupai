@@ -4,17 +4,17 @@ import { Position } from 'reactflow';
 import { BaseNode } from '@/features/graph-designer/ui/nodes/base-node';
 import { useGraphDesignerState } from '@/features/graph-designer/model/use-graph-designer-state';
 
-export type DecreaseTargetActionData = {
-    type: 'dec_target';
+export type IncreaseTargetActionData = {
+    type: 'inc_target';
     x: number;
 };
 
 type Props = {
     id: string;
-    data: DecreaseTargetActionData;
+    data: IncreaseTargetActionData;
 };
 
-export const DecreaseTargetNode: FC<Props> = ({ id, data }) => {
+export const IncreaseTargetActionNode: FC<Props> = ({ id, data }) => {
     const { nodes } = useGraphDesignerState();
 
     const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +41,7 @@ export const DecreaseTargetNode: FC<Props> = ({ id, data }) => {
 
     return (
         <BaseNode
-            title="Уменьшить целевую метрику на X"
+            title="Увеличить целевую метрику на X"
             color="gray"
             handles={[{ position: Position.Left, type: 'target' }]}
         >

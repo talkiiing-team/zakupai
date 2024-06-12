@@ -3,16 +3,16 @@ import { Position } from 'reactflow';
 
 import { BaseNode } from '@/features/graph-designer/ui/nodes/base-node';
 
-export type AssetAreaFeatureData = {
+export type AssetAreaQuantityFeatureData = {
     type: 'asset_area';
 };
 
 type Props = {
     id: string;
-    data: AssetAreaFeatureData;
+    data: AssetAreaQuantityFeatureData;
 };
 
-export const AssetAreaNode: FC<Props> = () => {
+export const AssetAreaQuantityFeatureNode: FC<Props> = () => {
     return (
         <BaseNode
             title="Площадь основого средства"

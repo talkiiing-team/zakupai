@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import { Handle, HandleType, Position } from 'reactflow';
 import clsx from 'clsx';
 
-type Color = 'gray' | 'yellow' | 'blue' | 'green';
+type Color = 'gray' | 'yellow' | 'blue' | 'green' | 'red';
 
 type Props = {
     children?: ReactNode;
@@ -16,6 +16,7 @@ const mapColor: Record<Color, string> = {
     yellow: 'bg-yellow-200',
     blue: 'bg-blue-200',
     green: 'bg-green-200',
+    red: 'bg-red-200',
 };
 
 export const BaseNode: FC<Props> = ({ children, title, color, handles }) => {

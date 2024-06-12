@@ -29,7 +29,7 @@ export const inventory: Array<{
         color: 'bg-gray-200',
     },
     {
-        displayName: 'Присвоить целевую метрику',
+        displayName: 'Приравнять целевую метрику',
         type: 'assign_target',
         defaultData: { type: 'assign_target', x: 1 },
         color: 'bg-gray-200',
@@ -38,13 +38,21 @@ export const inventory: Array<{
         displayName: 'Используется в основной деятельности',
         type: 'used_in_core',
         defaultData: { type: 'used_in_core' },
-        color: 'bg-yellow-200',
+        color: 'bg-red-200',
     },
     {
         displayName: 'Cпособ использования',
         type: 'usage_variants',
         defaultData: { type: 'usage_variants' },
-        color: 'bg-yellow-200',
+        color: 'bg-red-200',
+    },
+    {
+        displayName: 'Булево условие',
+        type: 'boolean_condition',
+        defaultData: {
+            type: 'boolean_condition',
+        },
+        color: 'bg-red-200',
     },
     {
         displayName: 'Площадь основного средства',
@@ -61,5 +69,38 @@ export const inventory: Array<{
             compareOp: QuantityConditionCompareOperator.EQ,
         },
         color: 'bg-yellow-200',
+    },
+    {
+        displayName: 'Дата ввода в эксплуатацию',
+        type: 'usage_start',
+        defaultData: {
+            type: 'usage_start',
+        },
+        color: 'bg-blue-200',
+    },
+    {
+        displayName: 'Дата начала действия связи со зданием',
+        type: 'building_action_start',
+        defaultData: {
+            type: 'building_action_start',
+        },
+        color: 'bg-blue-200',
+    },
+    {
+        displayName: 'Дата отражения счёта в учетной системе',
+        type: 'bill_tracking_start',
+        defaultData: {
+            type: 'bill_tracking_start',
+        },
+        color: 'bg-blue-200',
+    },
+    {
+        displayName: 'Условие по дате',
+        type: 'date_condition',
+        defaultData: {
+            type: 'date_condition',
+            date: new Date().toLocaleDateString(),
+        },
+        color: 'bg-blue-200',
     },
 ];
