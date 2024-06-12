@@ -41,7 +41,7 @@ export const MultiplyTargetActionNode: FC<Props> = ({ id, data }) => {
 
     return (
         <BaseNode
-            title="Изменить целевую метрику на X"
+            title="Изменить целевую метрику в X"
             color="gray"
             handles={[{ position: Position.Left, type: 'target' }]}
         >
