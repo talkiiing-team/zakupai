@@ -17,23 +17,14 @@ services:
     environment:
       - PORT=3000
       - JWT_SECRET=${JWT_SECRET}
-    volumes:
-      - s3_bucket:/mnt/bucket
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
 
   web:
     build:
       context: .
       dockerfile: dockerfile
       target: web
-
-  geesefs:
-    build: ./geesefs
-    privileged: true
-    environment:
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-    volumes:
-      - s3_bucket:/mnt/bucket
 
 volumes:
   caddy_data:
