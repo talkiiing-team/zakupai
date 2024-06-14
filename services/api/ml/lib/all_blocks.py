@@ -9,18 +9,23 @@ cur_metric = 0
 dct_blok_to_next_blocks = defaultdict(list) # по id-шнику лежат все следующие блоки
 # в случае ветвлений лежит список [[ребра да][ребра нет]]
 dct_id_to_block = dict()
+dct_sum_by_feature = None
+count_calls = 0
 
-
-def run_algo(row):
+def run_algo(row, dct_sums):
+    global dct_sum_by_feature
+    dct_sum_by_feature = dct_sums
     init_run()
+
     dct_id_to_block["root"].forward(row)
     return get_metric_after_run()
 
 
 def init_graph(raw_graph, features):
-    global  dct_id_to_block
+    global dct_id_to_block
     raw_nodes = raw_graph["nodes"]
     raw_edges = raw_graph["edges"]
+
     dct_id_to_block = {block_dct["id"]: get_block(block_dct, features) for block_dct in raw_nodes}
 
     init_run()
@@ -45,8 +50,9 @@ def reset_graph():
 
 
 def init_run():
-    global cur_metric
+    global cur_metric, count_calls
     cur_metric = 0
+    count_calls = 0
 
 
 def get_metric_after_run():
@@ -56,7 +62,7 @@ def get_metric_after_run():
 
 def run_all_next_blocks(blocks_to_go, next_row, next_input=None):
     for next_block_id in blocks_to_go:
-        dct_id_to_block[next_block_id].forward(next_row, input=next_input)
+        dct_id_to_block[next_block_id].main_forward(next_row, input=next_input)
 
 
 def compare_values(one, two, op):
@@ -76,14 +82,14 @@ class Block():
     def forward(self, row, input=None):
         pass
 
-    def main_forward(self, row):
-        global cur_metric
-        cur_metric += 1
+    def main_forward(self, row, input=None):
+        global count_calls
+        count_calls += 1
 
-        if cur_metric == 100:
+        if count_calls == 100:
             return
 
-        self.forward(row)
+        self.forward(row, input)
 
 
 class Feature(Block):
@@ -148,16 +154,27 @@ class SetEqualMainMetric(Block):
         run_all_next_blocks(dct_blok_to_next_blocks[self.id_block], row, input)
 
 
-class AddDistributionMainMetric(Block):
+class SetProportionalWithCoef(Block):
     def __init__(self, id_block, x):
         self.x = x
         self.id_block = id_block
 
     def forward(self, row, input=None):
-        global cur_metric, dct_sum_by_feture
+        global dct_sum_by_feature, cur_metric
+        cur_metric += self.x * (row[input] / dct_sum_by_feature[input])
+        run_all_next_blocks(dct_blok_to_next_blocks[self.id_block], row, input)
+
+
+class AddFeatureDistribution(Block):
+    def __init__(self, id_block, x):
+        self.x = x
+        self.id_block = id_block
+
+    def forward(self, row, input=None):
+        global cur_metric, dct_sum_by_feature
 
         value = row[input]
-        sum_cur_feature = dct_sum_by_feture[input]
+        sum_cur_feature = dct_sum_by_feature[input]
         cur_metric += self.x * value / sum_cur_feature
 
         run_all_next_blocks(dct_blok_to_next_blocks[self.id_block], row, input)
@@ -256,6 +273,9 @@ def get_block(block_dct, features):
 
     if block_type == "date_condition":
         return IfBlockByDatetime(block_id, x=block_dct["data"]["date"])
+
+    if block_type == "use_feature_distribution":
+        return AddFeatureDistribution(block_id, x=block_dct["data"]["x"])
 
     print(f"Warning: unknown block: {block_dct}")
 

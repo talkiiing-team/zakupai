@@ -9,6 +9,7 @@ def get_disrib_sums(res_by_prime, unique_primes, numeric_features):
 
     for prime_id in tqdm(unique_primes):
         prime_features_group = res_by_prime.get_group(prime_id)
+        full_sum_rub = prime_features_group["Стоимость без НДС"].iloc[0]
 
         dct_sum_by_feature = {}  # считаем ниже в цикле
         for column in numeric_features:
@@ -17,8 +18,12 @@ def get_disrib_sums(res_by_prime, unique_primes, numeric_features):
 
         metric_values = []
         for _, row in prime_features_group.iterrows():
-            metric_values.append(all_blocks.run_algo(row))
+            metric_values.append(all_blocks.run_algo(row, dct_sum_by_feature))
         distrib_sums[prime_id] = metric_values
+
+        sum_metric = sum(distrib_sums.values())
+        for prime_id, metric_value in distrib_sums.items():
+            distrib_sums[prime_id] = metric_value / sum_metric * full_sum_rub
 
     return distrib_sums
 
