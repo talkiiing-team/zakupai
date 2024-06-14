@@ -24,4 +24,4 @@ jobs:
             git clone --depth 1 git@github.com:talkiiing-team/zakupai.git
             cd zakupai
             cp /etc/zakupai/.env ./.env
-            docker compose up --build -d
+            docker compose up --build -d --remove-orphans
