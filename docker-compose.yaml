@@ -1,18 +1,6 @@
 version: '3'
 
 services:
-  clickhouse:
-    image: 'clickhouse/clickhouse-server:24-alpine'
-    ports:
-      - 8123:8123
-      - 9000:9000
-    volumes:
-      - clickhouse_data:/var/lib/clickhouse
-    environment:
-      - CLICKHOUSE_DB=${CLICKHOUSE_DB}
-      - CLICKHOUSE_USER=${CLICKHOUSE_USER}
-      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
-
   caddy:
     build: ./caddy
     ports:
@@ -30,10 +18,6 @@ services:
       - 3000:3000
     environment:
       - PORT=3000
-      - CLICKHOUSE_URL=http://clickhouse:8123
-      - CLICKHOUSE_DB=${CLICKHOUSE_DB}
-      - CLICKHOUSE_USER=${CLICKHOUSE_USER}
-      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
 
   web:
     build:
@@ -43,6 +27,8 @@ services:
     ports:
       - 4000:80
 
+  geesefs:
+    build: ./geesefs
+
 volumes:
-  clickhouse_data:
   caddy_data:

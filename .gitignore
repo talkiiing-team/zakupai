@@ -1,3 +1,4 @@
 .env*
 inventory.cfg
 node_modules
+*.pyc
