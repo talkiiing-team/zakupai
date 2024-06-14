@@ -14,7 +14,7 @@ FROM base AS api
 RUN apk add --no-cache python3 py3-pip
 COPY --from=build /build/api /app
 WORKDIR /app
-CMD [ "pnpm", "dev" ]
+CMD [ "pnpm", "start" ]
 
 FROM base AS web_build
 COPY --from=build /build/web /app

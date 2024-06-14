@@ -14,24 +14,21 @@ services:
       context: .
       dockerfile: dockerfile
       target: api
-    ports:
-      - 3000:3000
     environment:
       - PORT=3000
+      - JWT_SECRET=${JWT_SECRET}
 
   web:
     build:
       context: .
       dockerfile: dockerfile
       target: web
-    ports:
-      - 4000:80
-    environment:
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
 
   geesefs:
     build: ./geesefs
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
 
 volumes:
   caddy_data:
