@@ -45,15 +45,20 @@ app.post('/dataset', async (c) => {
         }),
     );
 
-    const res = await PythonShell.run('merge.py', {
-        mode: 'text',
-        scriptPath: path.join(import.meta.dirname, '../../../ml'),
-        args: written,
+    await new Promise<void>((resolve, reject) => {
+        const py = new PythonShell('merge.py', {
+            mode: 'text',
+            scriptPath: path.join(import.meta.dirname, '../../../ml'),
+            args: written,
+        });
+
+        py.on('message', console.log);
+        py.on('close', resolve);
+        py.on('error', reject);
+        py.on('pythonError', reject);
     });
 
     console.log('finished python');
-
-    return c.body(res as unknown as string);
 });
 
 export default app;
