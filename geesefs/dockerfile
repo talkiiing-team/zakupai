@@ -2,7 +2,7 @@ FROM ubuntu:22.10
 
 WORKDIR /app
 
-RUN apt-get install fuse -y
+RUN apt-get update && apt-get install fuse -y
 RUN wget https://github.com/yandex-cloud/geesefs/releases/latest/download/geesefs-linux-amd64 && chmod a+x geesefs-linux-amd64
 RUN mkdir -p /mnt/bucket
 

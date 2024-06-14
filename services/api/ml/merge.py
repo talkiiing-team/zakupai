@@ -19,3 +19,7 @@ merger = ContractsMerger(pays_df, merger_df, main_costs_df, squares_df, serv_cod
 res = merger.start_merging()
 
 print(res)
+
+# res.to_csv("res_datetimes.csv")
+# with open("features.pkl", "wb") as f:
+#     pickle.dump(features, f)
