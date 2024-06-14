@@ -12,7 +12,9 @@ main_costs_df = pd.read_excel(main_costs_path)
 squares_df = pd.read_excel(squares_path)
 serv_codes_df = pd.read_excel(serv_codes_path)
 
-pays_df = pd.concat(*map(lambda x: pd.read_excel(x), pays_paths), axis=0)
+pays_df = pd.concat(map(lambda x: pd.read_excel(x), pays_paths), axis=0)
+
+print('loaded all dataframes')
 
 merger = ContractsMerger(pays_df, merger_df, main_costs_df, squares_df, serv_codes_df)
 
