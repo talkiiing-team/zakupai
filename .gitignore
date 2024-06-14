@@ -2,3 +2,6 @@
 inventory.cfg
 node_modules
 *.pyc
+*.pkl
+__pycache__
+*.csv
