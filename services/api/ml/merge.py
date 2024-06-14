@@ -1,10 +1,12 @@
 import sys
 import pandas as pd
-import time
 
 from lib.merge_contracts import ContractsMerger
 
 sys.argv = sys.argv[1:]
+
+
+print('loading dataframes', sys.argv)
 
 [merger_path, main_costs_path, squares_path, serv_codes_path, *pays_paths] = sys.argv
 
@@ -17,11 +19,12 @@ pays_df = pd.concat(map(lambda x: pd.read_excel(x), pays_paths), axis=0)
 
 print('loaded all dataframes')
 
-# merger = ContractsMerger(pays_df, merger_df, main_costs_df, squares_df, serv_codes_df)
+merger = ContractsMerger(pays_df, merger_df, main_costs_df, squares_df, serv_codes_df)
 
-# a, b = merger.start_merging()
+a, b = merger.start_merging()
 
-# print(a, b)
+print(a, b)
+
 
 # res.to_csv("res_datetimes.csv")
 # with open("features.pkl", "wb") as f:
