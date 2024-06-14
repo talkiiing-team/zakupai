@@ -5,7 +5,7 @@ RUN corepack enable
 
 FROM base AS build
 WORKDIR /usr/src/app
-COPY package.json pnpm-workspace.yaml pnpm-lock.yaml services/*/package.json ./
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml services/*/package.json ./usr/src/app/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 COPY . /usr/src/app
 RUN pnpm deploy --filter=api /build/api
