@@ -14,6 +14,7 @@ FROM base AS api
 WORKDIR /app
 RUN apk add --no-cache python3 py3-pip wget fuse
 RUN wget https://github.com/yandex-cloud/geesefs/releases/latest/download/geesefs-linux-amd64 && chmod a+x geesefs-linux-amd64
+RUN pip install pandas numpy
 RUN mkdir -p /mnt/bucket
 COPY --from=build /build/api /app
 CMD ./geesefs-linux-amd64 zakupai /mnt/bucket && pnpm start
