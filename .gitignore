@@ -5,3 +5,4 @@ node_modules
 *.pkl
 __pycache__
 *.csv
+*.XLSX
