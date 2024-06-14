@@ -17,6 +17,8 @@ services:
     environment:
       - PORT=3000
       - JWT_SECRET=${JWT_SECRET}
+    volumes:
+      - s3_bucket:/mnt/bucket
 
   web:
     build:
@@ -30,6 +32,9 @@ services:
     environment:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    volumes:
+      - s3_bucket:/mnt/bucket
 
 volumes:
   caddy_data:
+  s3_bucket:
