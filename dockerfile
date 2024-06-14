@@ -11,11 +11,7 @@ RUN pnpm deploy --filter=api /build/api
 RUN pnpm deploy --filter=web /build/web
 
 FROM base AS api
-ENV PYTHONUNBUFFERED=1
-RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
-RUN python3 -m ensurepip
-RUN pip3 install --no-cache --upgrade pip setuptools
-RUN pip3 install pandas numpy
+RUN apk add --no-cache python3 py3-pip
 COPY --from=build /build/api /app
 WORKDIR /app
 CMD [ "pnpm", "dev" ]
