@@ -49,6 +49,7 @@ app.post('/dataset', async (c) => {
         const py = new PythonShell('merge.py', {
             mode: 'text',
             scriptPath: path.join(import.meta.dirname, '../../../ml'),
+            pythonOptions: ['-u'],
             args: written,
         });
 
