@@ -21,7 +21,7 @@ print('loaded all dataframes')
 
 # a, b = merger.start_merging()
 
-print(a, b)
+# print(a, b)
 
 # res.to_csv("res_datetimes.csv")
 # with open("features.pkl", "wb") as f:
