@@ -51,6 +51,8 @@ app.post('/dataset', async (c) => {
         args: written,
     });
 
+    console.log('finished python');
+
     return c.body(res as unknown as string);
 });
 
