@@ -14,6 +14,7 @@ services:
       context: .
       dockerfile: dockerfile
       target: api
+    privileged: true
     environment:
       - PORT=3000
       - JWT_SECRET=${JWT_SECRET}
