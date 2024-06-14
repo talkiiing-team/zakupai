@@ -1,4 +1,5 @@
 import path from 'node:path';
+import fs from 'node:fs/promises';
 
 import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
@@ -10,7 +11,11 @@ const app = new Hono();
 
 // app.use('*', auth);
 
-app.get('/', (c) => c.body('hello world'));
+app.get('/', async (c) => {
+    const files = await fs.readdir('/mnt/bucket');
+
+    c.body(files.join('\n'));
+});
 
 app.post('/dataset', async (c) => {
     const body = await c.req.parseBody();
