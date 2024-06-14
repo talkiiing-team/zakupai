@@ -17,11 +17,11 @@ def run_algo(row):
     return get_metric_after_run()
 
 
-def init_graph(raw_graph):
+def init_graph(raw_graph, features):
     global  dct_id_to_block
     raw_nodes = raw_graph["nodes"]
     raw_edges = raw_graph["edges"]
-    dct_id_to_block = {block_dct["id"]: get_block(block_dct) for block_dct in raw_nodes}
+    dct_id_to_block = {block_dct["id"]: get_block(block_dct, features) for block_dct in raw_nodes}
 
     init_run()
     reset_graph()
@@ -34,9 +34,9 @@ def init_graph(raw_graph):
                 dct_blok_to_next_blocks[source_id] = [[], []]
 
             true_or_false = int(edge["sourceHandle"] == "true")
-            dct_blok_to_next_blocks[source_id][true_or_false].append(edge["target"])
+            dct_blok_to_next_blocks[source_id][true_or_false].append(target_id)
         else:
-            dct_blok_to_next_blocks[source_id].append(edge["target"])
+            dct_blok_to_next_blocks[source_id].append(target_id)
 
 
 def reset_graph():
@@ -203,7 +203,10 @@ class IfBlockByDatetime(Block):
         run_all_next_blocks(blocks_to_go, row, None)
 
 
-def get_block(block_dct):
+def get_block(block_dct, features):
+    # запоминаем по какому типу какой сотлбец дергать
+    dct_feature_type_to_column = {ft:cn for _, ft, cn in features}
+
     block_type = block_dct["type"]
     block_id = block_dct["id"]
 
@@ -212,6 +215,7 @@ def get_block(block_dct):
 
     # ПРИЗНАКИ
 
+    #################### С НОВЫМ РЕДАКТОРОМ ГРАФОВ ВОТ ЭТО УБРАТЬ
     if block_type == "usage_variants":
         return Feature(block_id, 'Признак "Способ использования"')
 
@@ -223,6 +227,11 @@ def get_block(block_dct):
 
     if block_type == "usage_start":
         return Feature(block_id, "Дата ввода в эксплуатацию")
+    ########################################## ВОТ ЭТО ДОБАВИТЬ
+
+    # if block_type in dct_feature_type_to_column.keys():
+    #     return Feature(block_id, dct_feature_type_to_column[block_type])
+
 
     # TARGET OPERATIONS
     if block_type == "mul_target":
