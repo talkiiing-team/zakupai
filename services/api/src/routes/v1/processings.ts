@@ -14,7 +14,7 @@ const app = new Hono();
 app.get('/', async (c) => {
     const files = await fs.readdir('/mnt/bucket');
 
-    c.body(files.join('\n'));
+    return c.body(files.join('\n'));
 });
 
 app.post('/dataset', async (c) => {
@@ -34,7 +34,7 @@ app.post('/dataset', async (c) => {
         ],
     });
 
-    console.log(res);
+    return c.body(res as unknown as string);
 });
 
 export default app;
