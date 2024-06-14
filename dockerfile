@@ -12,7 +12,7 @@ RUN pnpm deploy --filter=web /build/web
 
 FROM base AS api
 WORKDIR /app
-RUN apk add --no-cache python3 py3-pip py3-pandas py3-numpy wget fuse
+RUN apk add --no-cache python3 py3-pip py3-pandas py3-numpy py3-openpyxl wget fuse
 RUN wget https://github.com/yandex-cloud/geesefs/releases/latest/download/geesefs-linux-amd64 && chmod a+x geesefs-linux-amd64
 RUN mkdir -p /mnt/bucket
 COPY --from=build /build/api /app
