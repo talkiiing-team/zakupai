@@ -20,8 +20,14 @@ import { Route as IndexImport } from './routes/index'
 
 const AuthSignInLazyImport = createFileRoute('/auth/sign-in')()
 const PanelDashboardLazyImport = createFileRoute('/_panel/dashboard')()
-const PanelProcessingsIndexLazyImport = createFileRoute(
-  '/_panel/processings/',
+const PanelProcessingsUploadLazyImport = createFileRoute(
+  '/_panel/processings/upload',
+)()
+const PanelProcessingsGraphLazyImport = createFileRoute(
+  '/_panel/processings/graph',
+)()
+const PanelProcessingsDatasetLazyImport = createFileRoute(
+  '/_panel/processings/dataset',
 )()
 
 // Create/Update Routes
@@ -48,12 +54,29 @@ const PanelDashboardLazyRoute = PanelDashboardLazyImport.update({
   import('./routes/_panel/dashboard.lazy').then((d) => d.Route),
 )
 
-const PanelProcessingsIndexLazyRoute = PanelProcessingsIndexLazyImport.update({
-  path: '/processings/',
+const PanelProcessingsUploadLazyRoute = PanelProcessingsUploadLazyImport.update(
+  {
+    path: '/processings/upload',
+    getParentRoute: () => PanelRoute,
+  } as any,
+).lazy(() =>
+  import('./routes/_panel/processings/upload.lazy').then((d) => d.Route),
+)
+
+const PanelProcessingsGraphLazyRoute = PanelProcessingsGraphLazyImport.update({
+  path: '/processings/graph',
   getParentRoute: () => PanelRoute,
 } as any).lazy(() =>
-  import('./routes/_panel/processings/index.lazy').then((d) => d.Route),
+  import('./routes/_panel/processings/graph.lazy').then((d) => d.Route),
 )
+
+const PanelProcessingsDatasetLazyRoute =
+  PanelProcessingsDatasetLazyImport.update({
+    path: '/processings/dataset',
+    getParentRoute: () => PanelRoute,
+  } as any).lazy(() =>
+    import('./routes/_panel/processings/dataset.lazy').then((d) => d.Route),
+  )
 
 // Populate the FileRoutesByPath interface
 
@@ -87,11 +110,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInLazyImport
       parentRoute: typeof rootRoute
     }
-    '/_panel/processings/': {
-      id: '/_panel/processings/'
-      path: '/processings'
-      fullPath: '/processings'
-      preLoaderRoute: typeof PanelProcessingsIndexLazyImport
+    '/_panel/processings/dataset': {
+      id: '/_panel/processings/dataset'
+      path: '/processings/dataset'
+      fullPath: '/processings/dataset'
+      preLoaderRoute: typeof PanelProcessingsDatasetLazyImport
+      parentRoute: typeof PanelImport
+    }
+    '/_panel/processings/graph': {
+      id: '/_panel/processings/graph'
+      path: '/processings/graph'
+      fullPath: '/processings/graph'
+      preLoaderRoute: typeof PanelProcessingsGraphLazyImport
+      parentRoute: typeof PanelImport
+    }
+    '/_panel/processings/upload': {
+      id: '/_panel/processings/upload'
+      path: '/processings/upload'
+      fullPath: '/processings/upload'
+      preLoaderRoute: typeof PanelProcessingsUploadLazyImport
       parentRoute: typeof PanelImport
     }
   }
@@ -103,7 +140,9 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   PanelRoute: PanelRoute.addChildren({
     PanelDashboardLazyRoute,
-    PanelProcessingsIndexLazyRoute,
+    PanelProcessingsDatasetLazyRoute,
+    PanelProcessingsGraphLazyRoute,
+    PanelProcessingsUploadLazyRoute,
   }),
   AuthSignInLazyRoute,
 })
@@ -128,7 +167,9 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_panel.tsx",
       "children": [
         "/_panel/dashboard",
-        "/_panel/processings/"
+        "/_panel/processings/dataset",
+        "/_panel/processings/graph",
+        "/_panel/processings/upload"
       ]
     },
     "/_panel/dashboard": {
@@ -138,8 +179,16 @@ export const routeTree = rootRoute.addChildren({
     "/auth/sign-in": {
       "filePath": "auth/sign-in.lazy.tsx"
     },
-    "/_panel/processings/": {
-      "filePath": "_panel/processings/index.lazy.tsx",
+    "/_panel/processings/dataset": {
+      "filePath": "_panel/processings/dataset.lazy.tsx",
+      "parent": "/_panel"
+    },
+    "/_panel/processings/graph": {
+      "filePath": "_panel/processings/graph.lazy.tsx",
+      "parent": "/_panel"
+    },
+    "/_panel/processings/upload": {
+      "filePath": "_panel/processings/upload.lazy.tsx",
       "parent": "/_panel"
     }
   }
