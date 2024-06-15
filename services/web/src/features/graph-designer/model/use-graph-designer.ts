@@ -36,6 +36,7 @@ export function useGraphDesigner() {
 
         if (
             target.data.requirement !== 'any' &&
+            source.data.requirement !== 'any' &&
             target.data.requirement !== source.data.dataType
         ) {
             return;

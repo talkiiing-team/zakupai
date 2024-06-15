@@ -15,29 +15,31 @@ type Props = {
 export const Inventory: FC<Props> = ({ inventory }) => {
     return (
         <div className="flex flex-col gap-4 overflow-scroll border-r border-zinc-300 bg-white p-4">
-            {inventory.map(({ type, displayName, defaultData, color }) => (
-                <div
-                    className={clsx(
-                        'rounded border border-zinc-300 p-2 text-center shadow-md',
-                        mapColor[color],
-                    )}
-                    onDragStart={(event) => {
-                        event.dataTransfer.setData(
-                            'application/reactflow-type',
-                            type,
-                        );
-                        event.dataTransfer.setData(
-                            'application/reactflow-data',
-                            JSON.stringify(defaultData),
-                        );
-                        event.dataTransfer.effectAllowed = 'move';
-                    }}
-                    key={type}
-                    draggable
-                >
-                    {displayName}
-                </div>
-            ))}
+            {inventory
+                .sort((a, b) => (a.color < b.color ? 1 : -1))
+                .map(({ type, displayName, defaultData, color }) => (
+                    <div
+                        className={clsx(
+                            'rounded border border-zinc-300 p-2 text-center shadow-md',
+                            mapColor[color],
+                        )}
+                        onDragStart={(event) => {
+                            event.dataTransfer.setData(
+                                'application/reactflow-type',
+                                type,
+                            );
+                            event.dataTransfer.setData(
+                                'application/reactflow-data',
+                                JSON.stringify(defaultData),
+                            );
+                            event.dataTransfer.effectAllowed = 'move';
+                        }}
+                        key={type}
+                        draggable
+                    >
+                        {displayName}
+                    </div>
+                ))}
         </div>
     );
 };

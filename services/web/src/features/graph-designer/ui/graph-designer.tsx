@@ -32,6 +32,7 @@ export const GraphDesigner: FC = () => {
                 onDrop={onDrop}
                 onDragOver={onDragOver}
                 nodeTypes={nodeTypes}
+                snapToGrid
             >
                 <Controls />
                 <Background

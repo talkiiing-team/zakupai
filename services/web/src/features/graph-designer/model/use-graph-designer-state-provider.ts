@@ -6,7 +6,11 @@ export function useGraphDesignerStateProvider() {
         {
             id: 'root',
             type: 'root',
-            data: { type: 'root' },
+            data: {
+                type: 'root',
+                requirement: 'any',
+                dataType: 'any',
+            },
             position: { x: 100, y: 100 },
         },
     ]);
