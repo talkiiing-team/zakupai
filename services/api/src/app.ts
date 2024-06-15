@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
 import { showRoutes } from 'hono/dev';
+import { cors } from 'hono/cors';
 import { serve } from '@hono/node-server';
 import { swaggerUI } from '@hono/swagger-ui';
 
@@ -8,6 +9,8 @@ import { logger } from '@/logger';
 import { v1Routes } from '@/routes/v1';
 
 export const app = new Hono();
+
+app.use('*', cors());
 
 app.get('/docs', swaggerUI({ url: '/' }));
 
