@@ -62,4 +62,16 @@ app.post('/dataset', async (c) => {
     console.log('finished python');
 });
 
+app.get('/features', async (c) => {
+    const [json] = await PythonShell.run('unpickle.py', {
+        mode: 'text',
+        scriptPath: path.join(import.meta.dirname, '../../../ml'),
+        args: ['/mnt/bucket/features.pkl'],
+    });
+
+    const features = JSON.parse(json);
+
+    return c.json(features);
+});
+
 export default app;
