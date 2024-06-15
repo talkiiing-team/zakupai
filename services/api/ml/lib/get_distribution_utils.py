@@ -25,9 +25,9 @@ def get_disrib_sums(res_by_prime, unique_primes, numeric_features):
         for old_metric in metric_values:
             if sum_metric == 0:
                 # если сумма метрик = 0 -- делим пропорционально
-                sum_metric = len(metric_values)
-                old_metric = 1
-            new_metrics.append(old_metric / sum_metric * full_sum_rub)
+                new_metrics.append(1 / len(metric_values) * full_sum_rub)
+            else:
+                new_metrics.append(old_metric / sum_metric * full_sum_rub)
 
         # добиваем остаток после округления чтобы красиво все было
         new_metrics = [round(i, 2) for i in new_metrics]

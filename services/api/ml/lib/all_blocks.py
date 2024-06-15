@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 from collections import defaultdict
 
-cur_metric = 0
+cur_metric = 1
 
 dct_blok_to_next_blocks = defaultdict(list) # по id-шнику лежат все следующие блоки
 # в случае ветвлений лежит список [[ребра да][ребра нет]]
@@ -51,7 +51,7 @@ def reset_graph():
 
 def init_run():
     global cur_metric, count_calls
-    cur_metric = 0
+    cur_metric = 1
     count_calls = 0
 
 
@@ -173,10 +173,30 @@ class AddFeatureDistribution(Block):
     def forward(self, row, input=None):
         global cur_metric, dct_sum_by_feature
 
+        if input is None: raise Exception(f"У блока: {self} не указан тип входных данных")
+
         value = row[input]
         sum_cur_feature = dct_sum_by_feature[input]
         if sum_cur_feature == 0: sum_cur_feature += 1e-6
         cur_metric += self.x * value / sum_cur_feature
+
+        run_all_next_blocks(dct_blok_to_next_blocks[self.id_block], row, input)
+
+
+class MulFeatureDistribution(Block):
+    def __init__(self, id_block, x):
+        self.x = x
+        self.id_block = id_block
+
+    def forward(self, row, input=None):
+        global cur_metric, dct_sum_by_feature
+
+        if input is None: raise Exception(f"У блока: {self} не указан тип входных данных")
+
+        value = row[input]
+        sum_cur_feature = dct_sum_by_feature[input]
+        if sum_cur_feature == 0: sum_cur_feature += 1e-6
+        cur_metric *= self.x * value / sum_cur_feature
 
         run_all_next_blocks(dct_blok_to_next_blocks[self.id_block], row, input)
 
@@ -189,6 +209,8 @@ class IfBlockByValue(Block):
         self.compare_op = compare_op
 
     def forward(self, row, input=None):
+        if input is None: raise Exception(f"У блока: {self} не указан тип входных данных")
+
         blocks_to_go = dct_blok_to_next_blocks[self.id_block][0]
         if compare_values(row[input], self.x, self.compare_op):
             blocks_to_go = dct_blok_to_next_blocks[self.id_block][1]
@@ -201,6 +223,8 @@ class IfBlockByCat(Block):
         self.id_block = id_block
 
     def forward(self, row, input=None):
+        if input is None: raise Exception(f"У блока: {self} не указан тип входных данных")
+
         blocks_to_go = dct_blok_to_next_blocks[self.id_block][0]
         if not pd.isnull(row[input]) and int(row[input]) == 1:
             blocks_to_go = dct_blok_to_next_blocks[self.id_block][1]
@@ -215,6 +239,8 @@ class IfBlockByDatetime(Block):
         self.id_block = id_block
 
     def forward(self, row, input=None):
+        if input is None: raise Exception(f"У блока: {self} не указан тип входных данных")
+
         blocks_to_go = dct_blok_to_next_blocks[self.id_block][0]
         if row[input] > self.x:
             blocks_to_go = dct_blok_to_next_blocks[self.id_block][1]
@@ -223,7 +249,7 @@ class IfBlockByDatetime(Block):
 
 def get_block(block_dct, features):
     # запоминаем по какому типу какой сотлбец дергать
-    dct_feature_type_to_column = {ft:cn for _, ft, cn in features}
+    dct_feature_type_to_column = {typ:clmn for clmn, typ, _ in features}
 
     block_type = block_dct["type"]
     block_id = block_dct["id"]
@@ -234,21 +260,21 @@ def get_block(block_dct, features):
     # ПРИЗНАКИ
 
     #################### С НОВЫМ РЕДАКТОРОМ ГРАФОВ ВОТ ЭТО УБРАТЬ
-    if block_type == "usage_variants":
-        return Feature(block_id, 'Признак "Способ использования"')
-
-    if block_type == "used_in_core":
-        return Feature(block_id, 'Признак "Используется в основной деятельности"')
-
-    if block_type == "asset_area":
-        return Feature(block_id, 'Площадь ОС')
-
-    if block_type == "usage_start":
-        return Feature(block_id, "Дата ввода в эксплуатацию")
+    # if block_type == "usage_variants":
+    #     return Feature(block_id, 'Признак "Способ использования"')
+    #
+    # if block_type == "used_in_core":
+    #     return Feature(block_id, 'Признак "Используется в основной деятельности"')
+    #
+    # if block_type == "asset_area":
+    #     return Feature(block_id, 'Площадь ОС')
+    #
+    # if block_type == "usage_start":
+    #     return Feature(block_id, "Дата ввода в эксплуатацию")
     ########################################## ВОТ ЭТО ДОБАВИТЬ
 
-    # if block_type in dct_feature_type_to_column.keys():
-    #     return Feature(block_id, dct_feature_type_to_column[block_type])
+    if block_type in dct_feature_type_to_column.keys():
+        return Feature(block_id, dct_feature_type_to_column[block_type])
 
 
     # TARGET OPERATIONS
@@ -275,8 +301,11 @@ def get_block(block_dct, features):
     if block_type == "date_condition":
         return IfBlockByDatetime(block_id, x=block_dct["data"]["date"])
 
-    if block_type == "use_feature_distribution":
+    if block_type == "add_with_coef":
         return AddFeatureDistribution(block_id, x=block_dct["data"]["x"])
+
+    if block_type == "mul_with_coef":
+        return MulFeatureDistribution(block_id, x=block_dct["data"]["x"])
 
     print(f"Warning: unknown block: {block_dct}")
 
