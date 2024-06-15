@@ -28,6 +28,14 @@ def get_disrib_sums(res_by_prime, unique_primes, numeric_features):
                 sum_metric = len(metric_values)
                 old_metric = 1
             new_metrics.append(old_metric / sum_metric * full_sum_rub)
+
+        # добиваем остаток после округления чтобы красиво все было
+        new_metrics = [round(i, 2) for i in new_metrics]
+        delta = full_sum_rub - sum(new_metrics)
+        for i in range(len(new_metrics)):
+            if new_metrics[i] + delta > 0:
+                new_metrics[i] += delta
+                break
         distrib_sums[prime_id] = new_metrics.copy()
 
     return distrib_sums
