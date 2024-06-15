@@ -1,16 +1,25 @@
 import { FC } from 'react';
-
-import { inventory } from '@/features/graph-designer/model/inventory';
 import clsx from 'clsx';
 
-export const Inventory: FC = () => {
+import { NodeColor, mapColor } from '@/features/graph-designer/model/color';
+
+type Props = {
+    inventory: Array<{
+        type: string;
+        displayName: string;
+        color: NodeColor;
+        defaultData: object;
+    }>;
+};
+
+export const Inventory: FC<Props> = ({ inventory }) => {
     return (
-        <div className="flex flex-col gap-4 border-r border-zinc-300 bg-white p-4">
+        <div className="flex flex-col gap-4 overflow-scroll border-r border-zinc-300 bg-white p-4">
             {inventory.map(({ type, displayName, defaultData, color }) => (
                 <div
                     className={clsx(
                         'rounded border border-zinc-300 p-2 text-center shadow-md',
-                        color,
+                        mapColor[color],
                     )}
                     onDragStart={(event) => {
                         event.dataTransfer.setData(

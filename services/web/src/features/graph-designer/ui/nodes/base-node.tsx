@@ -2,21 +2,13 @@ import { FC, ReactNode } from 'react';
 import { Handle, HandleType, Position } from 'reactflow';
 import clsx from 'clsx';
 
-type Color = 'gray' | 'yellow' | 'blue' | 'green' | 'red';
+import { NodeColor, mapColor } from '@/features/graph-designer/model/color';
 
 type Props = {
     children?: ReactNode;
     title: string;
-    color: Color;
+    color: NodeColor;
     handles: Array<{ type: HandleType; position: Position; id?: string }>;
-};
-
-const mapColor: Record<Color, string> = {
-    gray: 'bg-gray-200',
-    yellow: 'bg-yellow-200',
-    blue: 'bg-blue-200',
-    green: 'bg-green-200',
-    red: 'bg-red-200',
 };
 
 export const BaseNode: FC<Props> = ({ children, title, color, handles }) => {

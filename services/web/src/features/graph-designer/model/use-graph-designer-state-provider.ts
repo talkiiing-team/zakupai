@@ -1,10 +1,8 @@
 import { Node, Edge } from 'reactflow';
 import { useSignal } from '@preact/signals-react';
 
-import { ProcessingNodeData } from '@/features/graph-designer/model/processing-node';
-
 export function useGraphDesignerStateProvider() {
-    const nodes = useSignal<Array<Node<ProcessingNodeData>>>([
+    const nodes = useSignal<Array<Node>>([
         {
             id: 'root',
             type: 'root',

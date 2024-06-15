@@ -3,12 +3,12 @@ import ReactFlow, { Controls, Background, BackgroundVariant } from 'reactflow';
 import { useSignals } from '@preact/signals-react/runtime';
 
 import { Inventory } from '@/features/graph-designer/ui/inventory';
-import { nodeTypes } from '@/features/graph-designer/ui/nodes/node-types';
 import { DownloadGraph } from '@/features/graph-designer/ui/download-graph';
 import { useGraphDesigner } from '@/features/graph-designer/model/use-graph-designer';
 import { useGraphDesignerState } from '@/features/graph-designer/model/use-graph-designer-state';
 
 import 'reactflow/dist/style.css';
+import { useGraphDesignerNodeTypes } from '@/features/graph-designer/model/use-graph-designer-node-types';
 
 export const GraphDesigner: FC = () => {
     useSignals();
@@ -18,9 +18,11 @@ export const GraphDesigner: FC = () => {
     const { onConnect, onEdgesChange, onNodesChange, onDrop, onDragOver } =
         useGraphDesigner();
 
+    const { nodeTypes, inventory } = useGraphDesignerNodeTypes();
+
     return (
         <div className="relative flex h-full w-full flex-row">
-            <Inventory />
+            <Inventory inventory={inventory} />
             <ReactFlow
                 nodes={nodes.value}
                 edges={edges.value}

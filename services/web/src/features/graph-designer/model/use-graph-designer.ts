@@ -7,15 +7,11 @@ import {
     applyNodeChanges,
     addEdge,
     useReactFlow,
+    Node,
 } from 'reactflow';
 import { nanoid } from 'nanoid';
 
 import { useGraphDesignerState } from '@/features/graph-designer/model/use-graph-designer-state';
-import {
-    ProcessingNode,
-    ProcessingNodeData,
-    ProcessingNodeType,
-} from '@/features/graph-designer/model/processing-node';
 
 export function useGraphDesigner() {
     const reactFlow = useReactFlow();
@@ -31,6 +27,20 @@ export function useGraphDesigner() {
     }, []);
 
     const onConnect = useCallback((connection: Connection) => {
+        const source = nodes.value.find((it) => it.id === connection.source);
+        const target = nodes.value.find((it) => it.id === connection.target);
+
+        if (!target || !source) {
+            return;
+        }
+
+        if (
+            target.data.requirement !== 'any' &&
+            target.data.requirement !== source.data.dataType
+        ) {
+            return;
+        }
+
         edges.value = addEdge(connection, edges.value);
     }, []);
 
@@ -40,7 +50,7 @@ export function useGraphDesigner() {
 
             const type = event.dataTransfer.getData(
                 'application/reactflow-type',
-            ) as ProcessingNodeType;
+            );
 
             if (!type) {
                 return;
@@ -53,13 +63,13 @@ export function useGraphDesigner() {
 
             const data = JSON.parse(
                 event.dataTransfer.getData('application/reactflow-data'),
-            ) as ProcessingNodeData;
+            );
 
             if (!data) {
                 return;
             }
 
-            const newNode: ProcessingNode = {
+            const newNode: Node = {
                 id: nanoid(),
                 type,
                 position,

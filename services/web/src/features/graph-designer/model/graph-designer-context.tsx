@@ -2,11 +2,10 @@ import { FC, ReactNode, createContext } from 'react';
 import { Edge, Node } from 'reactflow';
 import { Signal } from '@preact/signals-react';
 
-import { ProcessingNodeData } from '@/features/graph-designer/model/processing-node';
 import { useGraphDesignerStateProvider } from '@/features/graph-designer/model/use-graph-designer-state-provider';
 
 type GraphDesignerContext = {
-    nodes: Signal<Array<Node<ProcessingNodeData>>>;
+    nodes: Signal<Array<Node>>;
     edges: Signal<Array<Edge>>;
 };
 
