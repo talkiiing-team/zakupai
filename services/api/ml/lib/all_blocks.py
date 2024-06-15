@@ -154,15 +154,15 @@ class SetEqualMainMetric(Block):
         run_all_next_blocks(dct_blok_to_next_blocks[self.id_block], row, input)
 
 
-class SetProportionalWithCoef(Block):
-    def __init__(self, id_block, x):
-        self.x = x
-        self.id_block = id_block
-
-    def forward(self, row, input=None):
-        global dct_sum_by_feature, cur_metric
-        cur_metric += self.x * (row[input] / dct_sum_by_feature[input])
-        run_all_next_blocks(dct_blok_to_next_blocks[self.id_block], row, input)
+# class SetProportionalWithCoef(Block):
+#     def __init__(self, id_block, x):
+#         self.x = x
+#         self.id_block = id_block
+#
+#     def forward(self, row, input=None):
+#         global dct_sum_by_feature, cur_metric
+#         cur_metric += self.x * (row[input] / dct_sum_by_feature[input])
+#         run_all_next_blocks(dct_blok_to_next_blocks[self.id_block], row, input)
 
 
 class AddFeatureDistribution(Block):
@@ -175,6 +175,7 @@ class AddFeatureDistribution(Block):
 
         value = row[input]
         sum_cur_feature = dct_sum_by_feature[input]
+        if sum_cur_feature == 0: sum_cur_feature += 1e-6
         cur_metric += self.x * value / sum_cur_feature
 
         run_all_next_blocks(dct_blok_to_next_blocks[self.id_block], row, input)
@@ -240,7 +241,7 @@ def get_block(block_dct, features):
         return Feature(block_id, 'Признак "Используется в основной деятельности"')
 
     if block_type == "asset_area":
-        return Feature(block_id, 'Площадь')
+        return Feature(block_id, 'Площадь ОС')
 
     if block_type == "usage_start":
         return Feature(block_id, "Дата ввода в эксплуатацию")

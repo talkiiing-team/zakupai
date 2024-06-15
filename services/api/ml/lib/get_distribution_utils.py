@@ -19,11 +19,16 @@ def get_disrib_sums(res_by_prime, unique_primes, numeric_features):
         metric_values = []
         for _, row in prime_features_group.iterrows():
             metric_values.append(all_blocks.run_algo(row, dct_sum_by_feature))
-        distrib_sums[prime_id] = metric_values
 
-        sum_metric = sum(distrib_sums.values())
-        for prime_id, metric_value in distrib_sums.items():
-            distrib_sums[prime_id] = metric_value / sum_metric * full_sum_rub
+        sum_metric = sum(metric_values)
+        new_metrics = []
+        for old_metric in metric_values:
+            if sum_metric == 0:
+                # если сумма метрик = 0 -- делим пропорционально
+                sum_metric = len(metric_values)
+                old_metric = 1
+            new_metrics.append(old_metric / sum_metric * full_sum_rub)
+        distrib_sums[prime_id] = new_metrics.copy()
 
     return distrib_sums
 
