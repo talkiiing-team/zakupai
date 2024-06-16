@@ -36,7 +36,7 @@ def prepare_data(data, check_ID):
     for col in tqdm(daily_df.columns):
         if daily_df.loc[check_ID, col] < 1000 or pd.isna(daily_df.loc[check_ID, col]):
             previous_data = daily_df.loc[check_ID, :col]    # .replace(0, np.nan)
-                df_filled.loc[check_ID, col] = previous_data.mean()
+            df_filled.loc[check_ID, col] = previous_data.mean()
 
     # Удаление выбросов
     # daily_df = daily_df.apply(remove_outliers, axis=1)
@@ -61,7 +61,7 @@ def make_predict_timeseries(data, check_ID, forecast_period):
 
     # Прогнозирование
     forecast = model_fit.get_forecast(steps=forecast_period).predicted_mean
-    print(type(forecast), forecast)
+
     # Подготовка дат для графика
     start_date = df_filled.loc[check_ID].first_valid_index()
     dates = pd.date_range(start=start_date, periods=len(values))
