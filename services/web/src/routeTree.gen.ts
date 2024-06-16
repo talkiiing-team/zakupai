@@ -29,6 +29,9 @@ const PanelProcessingsProcessingsUploadLazyImport = createFileRoute(
 const PanelProcessingsProcessingsGraphLazyImport = createFileRoute(
   '/_panel/_processings/processings/graph',
 )()
+const PanelProcessingsProcessingsForecastLazyImport = createFileRoute(
+  '/_panel/_processings/processings/forecast',
+)()
 const PanelProcessingsProcessingsDistributionLazyImport = createFileRoute(
   '/_panel/_processings/processings/distribution',
 )()
@@ -85,6 +88,16 @@ const PanelProcessingsProcessingsGraphLazyRoute =
     ),
   )
 
+const PanelProcessingsProcessingsForecastLazyRoute =
+  PanelProcessingsProcessingsForecastLazyImport.update({
+    path: '/processings/forecast',
+    getParentRoute: () => PanelProcessingsRoute,
+  } as any).lazy(() =>
+    import('./routes/_panel/_processings/processings/forecast.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
 const PanelProcessingsProcessingsDistributionLazyRoute =
   PanelProcessingsProcessingsDistributionLazyImport.update({
     path: '/processings/distribution',
@@ -134,6 +147,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PanelProcessingsProcessingsDistributionLazyImport
       parentRoute: typeof PanelProcessingsImport
     }
+    '/_panel/_processings/processings/forecast': {
+      id: '/_panel/_processings/processings/forecast'
+      path: '/processings/forecast'
+      fullPath: '/processings/forecast'
+      preLoaderRoute: typeof PanelProcessingsProcessingsForecastLazyImport
+      parentRoute: typeof PanelProcessingsImport
+    }
     '/_panel/_processings/processings/graph': {
       id: '/_panel/_processings/processings/graph'
       path: '/processings/graph'
@@ -165,6 +185,7 @@ export const routeTree = rootRoute.addChildren({
   PanelRoute: PanelRoute.addChildren({
     PanelProcessingsRoute: PanelProcessingsRoute.addChildren({
       PanelProcessingsProcessingsDistributionLazyRoute,
+      PanelProcessingsProcessingsForecastLazyRoute,
       PanelProcessingsProcessingsGraphLazyRoute,
       PanelProcessingsProcessingsUploadLazyRoute,
       PanelProcessingsProcessingsIndexLazyRoute,
@@ -200,6 +221,7 @@ export const routeTree = rootRoute.addChildren({
       "parent": "/_panel",
       "children": [
         "/_panel/_processings/processings/distribution",
+        "/_panel/_processings/processings/forecast",
         "/_panel/_processings/processings/graph",
         "/_panel/_processings/processings/upload",
         "/_panel/_processings/processings/"
@@ -210,6 +232,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_panel/_processings/processings/distribution": {
       "filePath": "_panel/_processings/processings/distribution.lazy.tsx",
+      "parent": "/_panel/_processings"
+    },
+    "/_panel/_processings/processings/forecast": {
+      "filePath": "_panel/_processings/processings/forecast.lazy.tsx",
       "parent": "/_panel/_processings"
     },
     "/_panel/_processings/processings/graph": {

@@ -13,7 +13,7 @@ export const Route = createLazyFileRoute(
                     download="distribution.csv"
                     target="_blank"
                 >
-                    Скачать результаты.csv
+                    Скачать distribution_result.csv
                 </a>
             </div>
         </main>

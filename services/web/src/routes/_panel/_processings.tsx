@@ -16,6 +16,9 @@ export const Route = createFileRoute('/_panel/_processings')({
                             Распределение
                         </Link>
                     </li>
+                    <li>
+                        <Link to="/processings/forecast">Предсказание</Link>
+                    </li>
                 </ul>
             </nav>
             <Outlet />
