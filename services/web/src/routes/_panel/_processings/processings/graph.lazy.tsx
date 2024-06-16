@@ -6,7 +6,7 @@ import {
     GraphDesignerContextProvider,
 } from '@/features/graph-designer';
 
-export const Route = createLazyFileRoute('/_panel/processings/graph')({
+export const Route = createLazyFileRoute('/_panel/_processings/processings/graph')({
     component: () => {
         return (
             <main className="h-full w-full">

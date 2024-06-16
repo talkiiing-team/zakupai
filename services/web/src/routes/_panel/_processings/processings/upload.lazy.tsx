@@ -2,7 +2,7 @@ import { createLazyFileRoute } from '@tanstack/react-router';
 
 import { DatasetUploadForm } from '@/features/dataset-upload';
 
-export const Route = createLazyFileRoute('/_panel/processings/upload')({
+export const Route = createLazyFileRoute('/_panel/_processings/processings/upload')({
     component: () => (
         <main className="relative flex h-full w-full flex-row">
             <div className="m-24 w-full">
