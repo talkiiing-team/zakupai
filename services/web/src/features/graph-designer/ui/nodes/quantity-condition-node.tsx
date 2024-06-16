@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback } from 'react';
+import { ChangeEvent, FC, useCallback, useState } from 'react';
 import { Position } from 'reactflow';
 
 import { BaseNode } from '@/features/graph-designer/ui/nodes/base-node';
@@ -24,6 +24,8 @@ type Props = {
 export const QuantityConditionNode: FC<Props> = ({ id, data }) => {
     const { nodes } = useGraphDesignerState();
 
+    const [input, setInput] = useState(String(data.threshold));
+
     const onSelect = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
         const value = event.currentTarget
             .value as QuantityConditionCompareOperator;
@@ -44,9 +46,13 @@ export const QuantityConditionNode: FC<Props> = ({ id, data }) => {
     }, []);
 
     const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-        const value = Number(event.currentTarget.value);
+        const { value } = event.currentTarget;
 
-        if (Number.isNaN(value)) {
+        setInput(value);
+
+        const num = Number(value);
+
+        if (Number.isNaN(num)) {
             return;
         }
 
@@ -56,7 +62,7 @@ export const QuantityConditionNode: FC<Props> = ({ id, data }) => {
                     ...node,
                     data: {
                         ...node.data,
-                        threshold: value,
+                        threshold: num,
                     },
                 };
             } else {
@@ -92,7 +98,7 @@ export const QuantityConditionNode: FC<Props> = ({ id, data }) => {
                 <input
                     className="nodrag w-[6ch] rounded-md border border-zinc-300 px-2 py-1"
                     type="text"
-                    value={data.threshold}
+                    value={input}
                     onChange={onChange}
                 />
             </label>
