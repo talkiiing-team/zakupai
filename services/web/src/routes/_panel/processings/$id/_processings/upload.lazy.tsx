@@ -15,8 +15,12 @@ export const Route = createLazyFileRoute(
             from: '/_panel/processings/$id/_processings/upload',
         });
 
-        const proc = useSWR(['v1/processings', procId], ([, id]) =>
-            getProcessingById(id),
+        const proc = useSWR(
+            ['v1/processings', procId],
+            ([, id]) => getProcessingById(id),
+            {
+                refreshInterval: 5_000,
+            },
         );
 
         return (

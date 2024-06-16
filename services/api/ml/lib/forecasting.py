@@ -24,7 +24,7 @@ def load_data(path, type_in):
 #     return series.apply(lambda x: np.nan if x < lower_bound or x > upper_bound else x)
 
 # Подготовка данных
-def prepare_data(data, check_ID):
+def prepare_data(data, asset_id):
     data['Дата отражения в учетной системе'] = pd.to_datetime(data['Дата отражения в учетной системе'].astype(str),
                                                               format="mixed",errors = 'coerce')
     grouped_df = data.groupby(['ID основного средства', 'Дата отражения в учетной системе']).agg({'Сумма распределения': 'sum'}).reset_index()
@@ -34,21 +34,21 @@ def prepare_data(data, check_ID):
     # Заполнение пропущенных значений
     df_filled = daily_df.copy()
     for col in tqdm(daily_df.columns):
-        if daily_df.loc[check_ID, col] < 1000 or pd.isna(daily_df.loc[check_ID, col]):
-            previous_data = daily_df.loc[check_ID, :col]    # .replace(0, np.nan)
-            df_filled.loc[check_ID, col] = previous_data.mean()
+        if daily_df.loc[asset_id, col] < 1000 or pd.isna(daily_df.loc[asset_id, col]):
+            previous_data = daily_df.loc[asset_id, :col]    # .replace(0, np.nan)
+            df_filled.loc[asset_id, col] = previous_data.mean()
 
     # Удаление выбросов
     # daily_df = daily_df.apply(remove_outliers, axis=1)
 
-    values = df_filled.loc[check_ID].values
+    values = df_filled.loc[asset_id].values
     values = values[~np.isnan(values)]
 
     return values, df_filled
 
 # Основная функция
-def make_predict_timeseries(data, check_ID, forecast_period):
-    values, df_filled = prepare_data(data, check_ID)
+def make_predict_timeseries(data, asset_id, forecast_period):
+    values, df_filled = prepare_data(data, asset_id)
     # values[0] += 1e-6
 
     # Set the SARIMAX parameters manually
@@ -63,7 +63,7 @@ def make_predict_timeseries(data, check_ID, forecast_period):
     forecast = model_fit.get_forecast(steps=forecast_period).predicted_mean
 
     # Подготовка дат для графика
-    start_date = df_filled.loc[check_ID].first_valid_index()
+    start_date = df_filled.loc[asset_id].first_valid_index()
     dates = pd.date_range(start=start_date, periods=len(values))
     forecast_dates = pd.date_range(start=dates[-1] + pd.Timedelta(days=1), periods=forecast_period, freq='D')
 
@@ -77,12 +77,11 @@ def make_predict_timeseries(data, check_ID, forecast_period):
     plt.legend()
     plt.grid(True, linestyle='--', alpha=0.7)
     plt.tight_layout()
-    plt.show()
 
     # Сохранение предсказаний и дат в DataFrame
     forecast_df = pd.DataFrame({'Дата': forecast_dates, 'Прогноз': forecast})
 
-    return model_fit, df_filled, forecast_df
+    return model_fit, df_filled, forecast_df, plt
 
 # Пример использования
 # data = load_data('path_to_file.xlsx', 'xlsx')

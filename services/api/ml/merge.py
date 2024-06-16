@@ -12,7 +12,14 @@ main_costs_df = pd.read_excel(f"/mnt/bucket/{proc_id}/mainCosts.xlsx")
 squares_df = pd.read_excel(f"/mnt/bucket/{proc_id}/squares.xlsx")
 serv_codes_df = pd.read_excel(f"/mnt/bucket/{proc_id}/servCodes.xlsx")
 
-pays_df = pd.concat(map(lambda x: pd.read_excel(x), glob(f"/mnt/bucket/{proc_id}/pay*.xlsx")), axis=0)
+pays_dfs = list(map(lambda x: pd.read_excel(x), glob(f"/mnt/bucket/{proc_id}/pay*.xlsx")))
+
+for pay in pays_dfs:
+    if pay["Стоимость без НДС"].dtype == "object":
+        pay["Стоимость без НДС"] = pay["Стоимость без НДС"].map(lambda x: x.replace(",", ".").replace(" ", ""))
+        pay["Стоимость без НДС"] = pay["Стоимость без НДС"].astype(float)
+
+pays_df = pd.concat(pays_dfs, axis=0)
 
 print("loaded all dataframes")
 

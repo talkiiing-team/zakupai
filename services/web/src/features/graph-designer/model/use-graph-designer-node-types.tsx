@@ -145,8 +145,12 @@ const colorByDataType: Record<FeatureDataType, NodeColor> = {
 };
 
 export const useGraphDesignerNodeTypes = (procId: number | string) => {
-    const features = useSWR(['v1/processings/features', procId], ([, id]) =>
-        getFeatures(id),
+    const features = useSWR(
+        ['v1/processings/features', procId],
+        ([, id]) => getFeatures(id),
+        {
+            refreshInterval: 5_000,
+        },
     );
 
     return useMemo(() => {

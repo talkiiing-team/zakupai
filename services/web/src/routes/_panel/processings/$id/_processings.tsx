@@ -15,8 +15,12 @@ export const Route = createFileRoute('/_panel/processings/$id/_processings')({
             from: '/_panel/processings/$id/_processings',
         });
 
-        const proc = useSWR(['v1/processings', procId], ([, id]) =>
-            getProcessingById(id),
+        const proc = useSWR(
+            ['v1/processings', procId],
+            ([, id]) => getProcessingById(id),
+            {
+                refreshInterval: 5_000,
+            },
         );
 
         return (

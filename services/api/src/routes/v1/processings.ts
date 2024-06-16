@@ -53,12 +53,18 @@ app.post('/:id/dataset', async (c) => {
         mainCosts: File;
         squares: File;
         servCodes: File;
-        pays: File[];
+        pays: File[] | File;
     } = await c.req.parseBody({ all: true });
 
     /** Не самый элегантный трюк для сохранения порядка файлов */
     const { merger, mainCosts, squares, servCodes, pays } = body;
-    const files = [merger, mainCosts, squares, servCodes, ...pays];
+    const files = [merger, mainCosts, squares, servCodes];
+
+    if (Array.isArray(pays)) {
+        files.push(...pays);
+    } else {
+        files.push(pays);
+    }
 
     await db
         .update(processings)
@@ -163,45 +169,54 @@ app.post('/:id/distribution', async (c) => {
 app.post('/:id/forecast', async (c) => {
     const id = c.req.param('id');
 
-    const checkid = c.req.query('checkid')!;
+    const assetid = c.req.query('assetid')!;
 
-    await db
-        .update(processings)
-        .set({ status: 'forecasting' })
-        .where(eq(processings.id, Number(id)));
+    try {
+        await db
+            .update(processings)
+            .set({ status: 'forecasting' })
+            .where(eq(processings.id, Number(id)));
 
-    await new Promise<void>((resolve, reject) => {
-        const py = new PythonShell('forecast.py', {
-            mode: 'text',
-            scriptPath: path.join(import.meta.dirname, '../../../ml'),
-            pythonOptions: ['-u'],
-            args: [id, checkid],
+        await new Promise<void>((resolve, reject) => {
+            const py = new PythonShell('forecast.py', {
+                mode: 'text',
+                scriptPath: path.join(import.meta.dirname, '../../../ml'),
+                pythonOptions: ['-u'],
+                args: [id, assetid],
+            });
+
+            py.on('message', (msg) => logger.debug(msg));
+            py.on('close', resolve);
+            py.on('error', reject);
+            py.on('pythonError', reject);
         });
 
-        py.on('message', (msg) => logger.debug(msg));
-        py.on('close', resolve);
-        py.on('error', reject);
-        py.on('pythonError', reject);
-    });
+        await new Promise<void>((resolve, reject) => {
+            const py = new PythonShell('forecast_plots.py', {
+                mode: 'text',
+                scriptPath: path.join(import.meta.dirname, '../../../ml'),
+                pythonOptions: ['-u'],
+                args: [id, assetid],
+            });
 
-    await new Promise<void>((resolve, reject) => {
-        const py = new PythonShell('forecast_plots.py', {
-            mode: 'text',
-            scriptPath: path.join(import.meta.dirname, '../../../ml'),
-            pythonOptions: ['-u'],
-            args: [id, checkid],
+            py.on('message', (msg) => logger.debug(msg));
+            py.on('close', resolve);
+            py.on('error', reject);
+            py.on('pythonError', reject);
         });
 
-        py.on('message', (msg) => logger.debug(msg));
-        py.on('close', resolve);
-        py.on('error', reject);
-        py.on('pythonError', reject);
-    });
+        await db
+            .update(processings)
+            .set({ status: 'done' })
+            .where(eq(processings.id, Number(id)));
+    } catch (error) {
+        await db
+            .update(processings)
+            .set({ status: 'distributed' })
+            .where(eq(processings.id, Number(id)));
 
-    await db
-        .update(processings)
-        .set({ status: 'done' })
-        .where(eq(processings.id, Number(id)));
+        throw error;
+    }
 
     return c.json({ messsage: 'successful' }, 201);
 });

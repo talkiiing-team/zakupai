@@ -11,10 +11,11 @@ import { useGraphDesignerState } from '@/features/graph-designer/model/use-graph
 import { useGraphDesignerNodeTypes } from '@/features/graph-designer/model/use-graph-designer-node-types';
 import { RunDistributionButton } from '@/features/graph-designer/ui/run-distribution-button';
 import { getProcessingById } from '@/features/processings/api';
-
-import 'reactflow/dist/style.css';
 import { ProcessingStatus } from '@/features/processings/model';
 import { SaveGraphButton } from '@/features/graph-designer/ui/save-graph-button';
+import { DocsButton } from '@/features/graph-designer/ui/docs-button';
+
+import 'reactflow/dist/style.css';
 
 export const GraphDesigner: FC = () => {
     useSignals();
@@ -28,8 +29,12 @@ export const GraphDesigner: FC = () => {
         from: '/_panel/processings/$id/_processings/graph',
     });
 
-    const proc = useSWR(['v1/processings', procId], ([, id]) =>
-        getProcessingById(id),
+    const proc = useSWR(
+        ['v1/processings', procId],
+        ([, id]) => getProcessingById(id),
+        {
+            refreshInterval: 5_000,
+        },
     );
 
     const { nodeTypes, inventory } = useGraphDesignerNodeTypes(procId);
@@ -64,6 +69,7 @@ export const GraphDesigner: FC = () => {
             />
             <SaveGraphButton procId={procId} />
             <DownloadGraphJSONButton />
+            <DocsButton />
         </div>
     );
 };

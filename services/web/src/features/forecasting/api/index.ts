@@ -2,10 +2,10 @@ import ky from 'ky';
 
 export const runForecasting = async (
     procId: number | string,
-    checkid: number | string,
+    assetid: number | string,
 ) => {
     const res = await ky.post(
-        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/${procId}/forecast?checkid=${checkid}`,
+        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/${procId}/forecast?assetid=${assetid}`,
         {
             timeout: 60_000,
         },
@@ -19,6 +19,8 @@ export const runForecasting = async (
 export const getForecastPlots = async (
     procId: number | string,
 ): Promise<object> => {
+    type Response = Record<string, string>;
+
     const res = await ky.get(
         `${import.meta.env.VITE_S3_BASE_URL}/${procId}/forecast_plots.json`,
     );
@@ -27,5 +29,5 @@ export const getForecastPlots = async (
         throw new Error(res.statusText);
     }
 
-    return await res.json();
+    return await res.json<Response>();
 };

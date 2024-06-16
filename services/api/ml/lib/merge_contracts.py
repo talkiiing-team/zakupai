@@ -3,7 +3,7 @@ import numpy as np
 from datetime import datetime
 import multiprocessing as mp
 from multiprocessing import Pool
-from outer_data_parser import get_year_inflation, get_price_by_meter
+from lib.outer_data_parser import get_year_inflation, get_price_by_meter
 
 
 cols = [
@@ -172,7 +172,7 @@ class ContractsMerger:
             if col in cost_cols:
                 cost_cols.remove(col)
         numerical_cols = []
-        
+
         for i, col in enumerate(cost_cols):
             try:
                 tmp = res[col].copy().dropna()

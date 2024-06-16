@@ -42,7 +42,7 @@ def generate_preds(pays_df, serv_codes, preds_df, distrib_sums):
 
 		group_res["Класс услуги"] = group_res["Услуга"].map(serv_codes_dct)
 		group_res["Сумма распределения"] = [i for i in distrib_sums[prime_id]]
-		group_res["Номер позиции распределения"] = [i for i in range(len(group_res))]
+		group_res["Номер позиции распределения"] = [i + 1 for i in range(len(group_res))]
 
 		group_res = group_res[['Компания', 'Год счета', 'Номер счета', 'Позиция счета',
 					   'Номер позиции распределения', 'Дата отражения в учетной системе',

@@ -12,7 +12,7 @@ def convert_dates(date_series):
     for date in date_series:
         try:
             # Attempt to parse standard date formats
-            converted_dates.append(pd.to_datetime(date, format='%Y-%m-%d %H:%M:%S', errors='coerce'))
+            converted_dates.append(pd.to_datetime(date, format='%Y-%m-%d', errors='coerce'))
         except:
             try:
                 # Handle Excel serial date numbers

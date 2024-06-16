@@ -9,13 +9,16 @@
 Эта функция загружает данные из указанного файла. Она поддерживает форматы файлов CSV и Excel.
 
 #### Параметры:
-- `path` (str): Путь к файлу с данными.
-- `type_in` (str): Тип файла для загрузки. Может быть либо `"csv"`, либо `"xlsx"`.
+
+-   `path` (str): Путь к файлу с данными.
+-   `type_in` (str): Тип файла для загрузки. Может быть либо `"csv"`, либо `"xlsx"`.
 
 #### Возвращает:
-- `data` (DataFrame): Загруженные данные в виде pandas DataFrame.
+
+-   `data` (DataFrame): Загруженные данные в виде pandas DataFrame.
 
 #### Пример использования:
+
 ```python
 data = load_data('path_to_file.xlsx', 'xlsx')
 ```
@@ -25,16 +28,19 @@ data = load_data('path_to_file.xlsx', 'xlsx')
 Эта функция подготавливает данные для анализа временных рядов. Она включает агрегацию данных, создание сводной таблицы, заполнение пропущенных значений и удаление выбросов.
 
 #### Параметры:
-- `data` (DataFrame): Исходные данные в виде pandas DataFrame.
-- `check_ID` (int): ID основного средства, которое будет проверено и использовано для прогнозирования.
+
+-   `data` (DataFrame): Исходные данные в виде pandas DataFrame.
+-   `asset_id` (int): ID основного средства, которое будет проверено и использовано для прогнозирования.
 
 #### Возвращает:
-- `values` (ndarray): Подготовленные значения временного ряда для указанного `check_ID`.
-- `df_filled` (DataFrame): DataFrame с заполненными пропущенными значениями.
+
+-   `values` (ndarray): Подготовленные значения временного ряда для указанного `asset_id`.
+-   `df_filled` (DataFrame): DataFrame с заполненными пропущенными значениями.
 
 #### Пример использования:
+
 ```python
-values, df_filled = prepare_data(data, check_ID=38006080400228630)
+values, df_filled = prepare_data(data, asset_id=38006080400228630)
 ```
 
 ### 3. `make_predict_timeseries`
@@ -42,18 +48,21 @@ values, df_filled = prepare_data(data, check_ID=38006080400228630)
 Это основная функция, которая выполняет прогнозирование временных рядов с использованием модели SARIMAX. Она вызывает `prepare_data` для подготовки данных, обучает модель SARIMAX и выполняет прогнозирование.
 
 #### Параметры:
-- `data` (DataFrame): Исходные данные в виде pandas DataFrame.
-- `check_ID` (int): ID основного средства, которое будет проверено и использовано для прогнозирования.
-- `forecast_period` (int): Количество периодов для прогнозирования в будущем.
+
+-   `data` (DataFrame): Исходные данные в виде pandas DataFrame.
+-   `asset_id` (int): ID основного средства, которое будет проверено и использовано для прогнозирования.
+-   `forecast_period` (int): Количество периодов для прогнозирования в будущем.
 
 #### Возвращает:
-- `model_fit` (SARIMAXResultsWrapper): Обученная модель SARIMAX.
-- `df_filled` (DataFrame): DataFrame с заполненными пропущенными значениями.
-- `forecast_df` (DataFrame): DataFrame, содержащий прогнозируемые значения и соответствующие даты.
+
+-   `model_fit` (SARIMAXResultsWrapper): Обученная модель SARIMAX.
+-   `df_filled` (DataFrame): DataFrame с заполненными пропущенными значениями.
+-   `forecast_df` (DataFrame): DataFrame, содержащий прогнозируемые значения и соответствующие даты.
 
 #### Пример использования:
+
 ```python
-model_fit, df_filled, forecast_df = make_predict_timeseries(data, check_ID=38006080400228630, forecast_period=120)
+model_fit, df_filled, forecast_df = make_predict_timeseries(data, asset_id=38006080400228630, forecast_period=120)
 ```
 
 ## Пример использования скрипта
@@ -65,18 +74,18 @@ model_fit, df_filled, forecast_df = make_predict_timeseries(data, check_ID=38006
 data = load_data('path_to_file.xlsx', 'xlsx')
 
 # Выполнение прогнозирования временных рядов
-model_fit, df_filled, forecast_df = make_predict_timeseries(data, check_ID=38006080400228630, forecast_period=120)
+model_fit, df_filled, forecast_df = make_predict_timeseries(data, asset_id=38006080400228630, forecast_period=120)
 ```
 
 ## Подробные шаги
 
 1. **Загрузка данных:**
-   - Функция `load_data` читает данные из файла CSV или Excel и возвращает их в виде pandas DataFrame.
+
+    - Функция `load_data` читает данные из файла CSV или Excel и возвращает их в виде pandas DataFrame.
 
 2. **Подготовка данных:**
-   - Функция `prepare_data` преобразует даты в формат datetime, группирует данные по ID основного средства и дате, создает сводную таблицу, заполняет пропущенные значения и подготавливает значения временного ряда для указанного `check_ID`.
+
+    - Функция `prepare_data` преобразует даты в формат datetime, группирует данные по ID основного средства и дате, создает сводную таблицу, заполняет пропущенные значения и подготавливает значения временного ряда для указанного `asset_id`.
 
 3. **Выполнение прогнозирования:**
-   - Функция `make_predict_timeseries` использует модель SARIMAX для обучения на подготовленных данных временного ряда, выполняет прогнозирование будущих значений и визуализирует результаты с помощью matplotlib. Также она возвращает обученную модель, заполненный DataFrame и DataFrame с прогнозами.
-
-
+    - Функция `make_predict_timeseries` использует модель SARIMAX для обучения на подготовленных данных временного ряда, выполняет прогнозирование будущих значений и визуализирует результаты с помощью matplotlib. Также она возвращает обученную модель, заполненный DataFrame и DataFrame с прогнозами.
