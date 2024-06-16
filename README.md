@@ -70,9 +70,12 @@
 ----------
 
 ## Примеры кода для запуска core алгоритмов
-**Пример запуска pipeline-а модуля:** **[pipeline_example.ipynb](https://github.com/talkiiing-team/zakupai/blob/main/services/api/ml/lib/pipeline_example.ipynb)**.
-Представлен весь пайплайн из core алгоритмов - начиная с загрузки данных, заканчивая предсказанием затрат по основным средствам на будущее
+![](docs/images/catboost.png)
 
 **Код для обучения модели определения счета главной книги:** **[predict_main_book.ipynb](https://github.com/talkiiing-team/zakupai/blob/main/services/api/ml/lib/predict_main_book.ipynb)**.
 Код для обучения модели градиентного бустинга определения счет главной книги. Используются данные исходного датасета и сгенерированные признаки с помощью metrge_contract.py
+
+**Пример запуска pipeline-а модуля:** **[pipeline_example.ipynb](https://github.com/talkiiing-team/zakupai/blob/main/services/api/ml/lib/pipeline_example.ipynb)**.
+Представлен весь пайплайн из core алгоритмов - начиная с загрузки данных, заканчивая предсказанием затрат по основным средствам на будущее
+
 
