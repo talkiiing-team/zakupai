@@ -7,5 +7,5 @@
     "allowSyntheticDefaultImports": true,
     "strict": true
   },
-  "include": ["vitest.config.ts"]
+  "include": ["vitest.config.ts", "drizzle.config.ts"]
 }
