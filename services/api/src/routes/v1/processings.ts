@@ -6,6 +6,8 @@ import { PythonShell } from 'python-shell';
 
 import { auth } from '@/middlewares/auth';
 import { logger } from '@/logger';
+import { zValidator } from '@hono/zod-validator';
+import { z } from 'zod';
 
 const app = new Hono();
 
@@ -79,6 +81,26 @@ app.post('/distribution', async (c) => {
             mode: 'text',
             scriptPath: path.join(import.meta.dirname, '../../../ml'),
             pythonOptions: ['-u'],
+        });
+
+        py.on('message', (msg) => logger.debug(msg));
+        py.on('close', resolve);
+        py.on('error', reject);
+        py.on('pythonError', reject);
+    });
+
+    return c.json({ messsage: 'successful' }, 201);
+});
+
+app.post('/forecast', async (c) => {
+    const checkid = c.req.query('checkid')!;
+
+    await new Promise<void>((resolve, reject) => {
+        const py = new PythonShell('forecast.py', {
+            mode: 'text',
+            scriptPath: path.join(import.meta.dirname, '../../../ml'),
+            pythonOptions: ['-u'],
+            args: [checkid],
         });
 
         py.on('message', (msg) => logger.debug(msg));
