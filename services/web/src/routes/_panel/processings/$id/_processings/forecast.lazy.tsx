@@ -4,6 +4,9 @@ import { createLazyFileRoute, useParams } from '@tanstack/react-router';
 import useSWR from 'swr';
 
 import { getForecastPlots, runForecasting } from '@/features/forecasting/api';
+import { getProcessingById } from '@/features/processings/api';
+import { ProcessingStatus } from '@/features/processings/model';
+import { Spinner } from '@/common/ui/spinner';
 
 export const Route = createLazyFileRoute(
     '/_panel/processings/$id/_processings/forecast',
@@ -12,6 +15,10 @@ export const Route = createLazyFileRoute(
         const { id: procId } = useParams({
             from: '/_panel/processings/$id/_processings/forecast',
         });
+
+        const proc = useSWR(['v1/processings', procId], ([, id]) =>
+            getProcessingById(id),
+        );
 
         const [checkid, setCheckid] = useState(0);
 
@@ -45,22 +52,35 @@ export const Route = createLazyFileRoute(
                             className="nodrag w-[20ch] rounded-md border border-zinc-300 px-2 py-1"
                         />
                     </span>
-                    <button
-                        className="mb-4 w-fit rounded-md border border-zinc-300 bg-white px-4 py-2 text-xl shadow-md"
-                        onClick={async () => {
-                            await runForecasting(checkid);
-                        }}
-                    >
-                        Предсказать
-                    </button>
-                    <a
-                        className="block w-fit rounded-md border border-zinc-300 px-4 py-2 text-xl shadow-md"
-                        href={`${import.meta.env.VITE_S3_BASE_URL}/forecast.csv`}
-                        download="distribution.csv"
-                        target="_blank"
-                    >
-                        Скачать forecast.csv
-                    </a>
+                    {proc.data &&
+                    proc.data.status <= ProcessingStatus.DISTRIBUTED ? (
+                        <button
+                            className="mb-4 w-fit rounded-md border border-zinc-300 bg-white px-4 py-2 text-xl shadow-md"
+                            onClick={async () => {
+                                await runForecasting(procId, checkid);
+                            }}
+                        >
+                            Предсказать
+                        </button>
+                    ) : (
+                        <>
+                            <h1 className="mb-4 text-3xl">
+                                Данные обрабатываются
+                            </h1>
+                            <Spinner />
+                        </>
+                    )}
+                    {proc.data &&
+                        proc.data.status === ProcessingStatus.DONE && (
+                            <a
+                                className="block w-fit rounded-md border border-zinc-300 px-4 py-2 text-xl shadow-md"
+                                href={`${import.meta.env.VITE_S3_BASE_URL}/forecast.csv`}
+                                download="distribution.csv"
+                                target="_blank"
+                            >
+                                Скачать forecast.csv
+                            </a>
+                        )}
                 </div>
             </main>
         );

@@ -1,8 +1,11 @@
 import ky from 'ky';
 
-export const runForecasting = async (checkid: number | string) => {
+export const runForecasting = async (
+    procId: number | string,
+    checkid: number | string,
+) => {
     const res = await ky.post(
-        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/forecast?checkid=${checkid}`,
+        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/${procId}/forecast?checkid=${checkid}`,
         {
             timeout: 60_000,
         },
