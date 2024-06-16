@@ -3,8 +3,7 @@
 <img src="docs/images/logo.png" width="320"  align="right" >
 
 ### by Singularity team
-<p style="color:green">by Singularity team</p>
-
+<font size="6" color="#fa8e47" face="serif">by Singularity team"</font>
 
 
 
