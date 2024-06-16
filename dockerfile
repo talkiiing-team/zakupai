@@ -20,8 +20,8 @@ ENV PYTHONUNBUFFERED=1
 RUN apt install -y python3 python3-pip
 RUN python3 -m pip install --no-cache --upgrade pip setuptools
 
-RUN python3 -m pip install --no-cache catboost==1.2.5
-RUN python3 -m pip install --no-cache scikit-learn numpy pandas openpyxl matplotlib statsmodels tqdm
+RUN python3 -m pip install --no-cache catboost==1.2
+RUN python3 -m pip install --no-cache scikit-learn==1.3.1 numpy==1.25.2 pandas openpyxl matplotlib statsmodels tqdm
 
 RUN wget https://github.com/yandex-cloud/geesefs/releases/latest/download/geesefs-linux-amd64 && chmod a+x geesefs-linux-amd64
 RUN mkdir -p /mnt/bucket
