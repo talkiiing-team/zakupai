@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
+import pandas as pd
 # Helper function to convert Excel date serial numbers to datetime
 def excel_date(num):
     return pd.to_datetime('1899-12-30') + pd.to_timedelta(num, 'D')
