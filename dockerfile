@@ -14,7 +14,7 @@ FROM base AS api
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 RUN apk add --no-cache python3 py3-pip py3-scikit-learn py3-numpy py3-pandas py3-openpyxl py3-matplotlib py3-statsmodels py3-tqdm wget fuse curl gcc
-RUN curl –proto ‘=https’ –tlsv1.2 -sSf https://sh.rustup.rs | sh
+RUN curl -proto '=https' -tlsv1.2 -sSf https://sh.rustup.rs | sh
 RUN source $HOME/.cargo/env
 RUN ln -sf python3 /usr/bin/python
 RUN python3 -m pip install --no-cache --upgrade pip setuptools --break-system-packages
