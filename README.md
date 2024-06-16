@@ -1,7 +1,10 @@
-<img src="docs/images/logo.png" width="320"  align="right">
 
 # [РаспределяйAI](https://xn--80aicbulygci4n.xn--p1ai)
+<img src="docs/images/logo.png" width="320"  align="right" >
+
 ### by Singularity team
+
+
 
 
 РаспределAI - это low-code сервис для распределения основных средств, определения и прогнозирования расходов с помощью машинного обучения
