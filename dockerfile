@@ -14,10 +14,10 @@ FROM base AS api
 WORKDIR /app
 
 RUN apt update
-RUN apt install wget gcc fuse
+RUN apt install -y wget gcc fuse
 
 ENV PYTHONUNBUFFERED=1
-RUN apt install python3
+RUN apt install -y python3
 RUN python3 -m ensurepip
 RUN python3 -m pip install --no-cache --upgrade pip setuptools --break-system-packages
 
