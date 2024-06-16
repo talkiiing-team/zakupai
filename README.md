@@ -68,7 +68,8 @@
 ----------
 
 ## Примеры кода для запуска core алгоритмов
-**Пример запуска pipeline-а модуля:** **[forecating.md](https://github.com/talkiiing-team/zakupai/blob/main/services/api/ml/lib/pipeline_example.ipynb)**.
-**Код для обучения модели определения счета главной книги:** **[forecating.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/predict_main_book.ipynb)**.
+**Пример запуска pipeline-а модуля:** **[pipeline_example.ipynb](https://github.com/talkiiing-team/zakupai/blob/main/services/api/ml/lib/pipeline_example.ipynb)**.
+
+**Код для обучения модели определения счета главной книги:** **[predict_main_book.ipynb](https://github.com/talkiiing-team/zakupai/blob/main/services/api/ml/lib/predict_main_book.ipynb)**.
 
 
