@@ -2,7 +2,7 @@ from tqdm import tqdm
 import pandas as pd
 from datetime import datetime
 
-import all_blocks
+from lib import all_blocks
 
 def get_disrib_sums(res_by_prime, unique_primes, numeric_features):
     distrib_sums = dict()
