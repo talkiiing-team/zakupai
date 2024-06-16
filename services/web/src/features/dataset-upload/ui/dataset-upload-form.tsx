@@ -1,6 +1,8 @@
 import { FC, ChangeEvent, useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 
-import { mergeDataset, uploadDataset } from '@/features/dataset-upload/api';
+import { uploadDataset } from '@/features/dataset-upload/api';
+import { Spinner } from '@/common/ui/spinner';
 
 type FilesState = {
     merger?: File;
@@ -10,8 +12,15 @@ type FilesState = {
     pays?: Array<File>;
 };
 
-export const DatasetUploadForm: FC = () => {
+type Props = {
+    procId: number | string;
+    isLoading: boolean;
+};
+
+export const DatasetUploadForm: FC<Props> = ({ procId, isLoading }) => {
     const [files, setFiles] = useState<FilesState>({});
+
+    const navigate = useNavigate({ from: '/processings/$id/upload' });
 
     const handleSingleFile =
         (key: keyof FilesState) => (event: ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +58,7 @@ export const DatasetUploadForm: FC = () => {
             return;
         }
 
-        await uploadDataset({
+        await uploadDataset(procId, {
             merger,
             mainCosts,
             squares,
@@ -57,7 +66,10 @@ export const DatasetUploadForm: FC = () => {
             pays,
         });
 
-        await mergeDataset();
+        await navigate({
+            to: '/processings/$id/graph',
+            params: { id: String(procId) },
+        });
     };
 
     return (
@@ -104,7 +116,7 @@ export const DatasetUploadForm: FC = () => {
                 className="mt-4 rounded-md border border-zinc-300 px-4 py-2 text-xl shadow-md"
                 onClick={upload}
             >
-                Загрузить
+                {isLoading ? <Spinner /> : 'Загрузить'}
             </button>
         </form>
     );

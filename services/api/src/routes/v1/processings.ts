@@ -29,6 +29,8 @@ app.post('/', async (c) => {
         .orderBy(desc(processings.createdAt))
         .limit(1);
 
+    await fs.mkdir(`/mnt/bucket/${proc.id}`);
+
     return c.json(proc);
 });
 
@@ -77,12 +79,6 @@ app.post('/:id/dataset', async (c) => {
         .set({ status: 'dataset-uploaded' })
         .where(eq(processings.id, Number(id)));
 
-    return c.json({ message: 'successful' }, 201);
-});
-
-app.post('/:id/merge', async (c) => {
-    const id = c.req.param('id');
-
     await db
         .update(processings)
         .set({ status: 'merging' })
@@ -107,7 +103,7 @@ app.post('/:id/merge', async (c) => {
         .set({ status: 'merged' })
         .where(eq(processings.id, Number(id)));
 
-    return c.json({ message: 'successful' }, 200);
+    return c.json({ message: 'successful' }, 201);
 });
 
 app.get('/:id/features', async (c) => {

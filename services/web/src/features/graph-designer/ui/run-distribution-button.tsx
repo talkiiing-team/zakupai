@@ -1,22 +1,15 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 import { Spinner } from '@/common/ui/spinner';
-import { useGraphDesignerState } from '@/features/graph-designer/model/use-graph-designer-state';
-import { runDistribution, uploadGraph } from '@/features/graph-designer/api';
+import { runDistribution } from '@/features/graph-designer/api';
 
-export const RunDistributionButton: FC = () => {
-    const [isLoading, setIsLoading] = useState(false);
+type Props = {
+    isLoading: boolean;
+};
 
-    const { nodes, edges } = useGraphDesignerState();
-
+export const RunDistributionButton: FC<Props> = ({ isLoading }) => {
     const run = async () => {
-        try {
-            setIsLoading(true);
-            await uploadGraph({ nodes: nodes.value, edges: edges.value });
-            await runDistribution();
-        } finally {
-            setIsLoading(false);
-        }
+        await runDistribution();
     };
 
     return (

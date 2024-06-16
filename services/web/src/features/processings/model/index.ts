@@ -14,5 +14,5 @@ export enum ProcessingStatus {
 export type Processing = {
     id: number;
     status: ProcessingStatus;
-    createdAt: number;
+    createdAt: string;
 };

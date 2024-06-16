@@ -17,7 +17,7 @@ const mapStatus: Record<ProcessingDTO['status'], ProcessingStatus> = {
 
 type ProcessingDTO = {
     id: number;
-    createdAt: number;
+    createdAt: string;
     status:
         | 'created'
         | 'dataset-uploading'

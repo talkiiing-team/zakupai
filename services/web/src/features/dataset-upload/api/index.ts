@@ -9,6 +9,7 @@ type UploadDatasetParameters = {
 };
 
 export const uploadDataset = async (
+    procId: number | string,
     params: UploadDatasetParameters,
 ): Promise<void> => {
     const formData = new FormData();
@@ -23,23 +24,12 @@ export const uploadDataset = async (
     );
 
     const res = await ky.post(
-        new URL(`${import.meta.env.VITE_API_BASE_URL}/v1/processings/dataset`),
+        new URL(
+            `${import.meta.env.VITE_API_BASE_URL}/v1/processings/${procId}/dataset`,
+        ),
         {
             body: formData,
             timeout: 30_000,
-        },
-    );
-
-    if (!res.ok) {
-        throw new Error(res.statusText);
-    }
-};
-
-export const mergeDataset = async () => {
-    const res = await ky.post(
-        new URL(`${import.meta.env.VITE_API_BASE_URL}/v1/processings/merge`),
-        {
-            timeout: 300_000,
         },
     );
 

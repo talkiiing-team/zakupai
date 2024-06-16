@@ -27,7 +27,7 @@ export const DownloadGraphJSONButton: FC = () => {
 
     return (
         <button
-            className="absolute right-4 top-20 rounded-md border border-zinc-300 bg-white px-4 py-2 shadow-md"
+            className="absolute right-4 top-36 rounded-md border border-zinc-300 bg-white px-4 py-2 shadow-md"
             onClick={downloadGraphJSON}
         >
             JSON
