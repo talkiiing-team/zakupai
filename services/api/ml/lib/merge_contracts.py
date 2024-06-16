@@ -3,6 +3,7 @@ import numpy as np
 from datetime import datetime
 import multiprocessing as mp
 from multiprocessing import Pool
+from outer_data_parser import get_year_inflation, get_price_by_meter
 
 
 cols = [
@@ -151,11 +152,27 @@ class ContractsMerger:
         res = res.transpose()
         res = res.loc[:, ~res.columns.duplicated()].copy()
 
+        try:
+            inflation = get_year_inflation()
+            res["Уровень годовой инфляции"] = inflation
+        except Exception as e:
+            print("inflation parsing error:", e)
+            pass
+
+        try:
+            prices_by_meter = get_price_by_meter()
+            for k, v in prices_by_meter.items():
+                res["Цена за кв. метр на " + k] = v
+        except Exception as e:
+            print("meter prices error:", e)
+            pass
+
         cost_cols = set(res.columns) - set(cols)
         for col in garanted_bad_cols:
             if col in cost_cols:
                 cost_cols.remove(col)
         numerical_cols = []
+        
         for i, col in enumerate(cost_cols):
             try:
                 tmp = res[col].copy().dropna()
