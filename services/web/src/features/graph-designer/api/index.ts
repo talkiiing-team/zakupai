@@ -33,3 +33,16 @@ export const uploadGraph = async (graph: object) => {
         throw new Error(res.statusText);
     }
 };
+
+export const runDistribution = async () => {
+    const res = await ky.post(
+        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/distribution`,
+        {
+            timeout: 60_000,
+        },
+    );
+
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
+};

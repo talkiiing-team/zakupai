@@ -10,6 +10,7 @@ services:
       - caddy_data:/data
 
   api:
+    restart: always
     build:
       context: .
       dockerfile: dockerfile
@@ -27,6 +28,15 @@ services:
       dockerfile: dockerfile
       target: web
 
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    volumes:
+      - mysql_data:/var/lib/mysql
+
 volumes:
   caddy_data:
   s3_bucket:
+  mysql_data:
