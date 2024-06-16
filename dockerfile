@@ -13,10 +13,10 @@ RUN pnpm deploy --filter=web /build/web
 FROM base AS api
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
-RUN apk add --no-cache python3 py3-pip wget fuse
+RUN apk add --no-cache python3 py3-pip py3-scikit-learn py3-numpy py3-pandas py3-openpyxl py3-matplotlib py3-statsmodels wget fuse
 RUN ln -sf python3 /usr/bin/python
 RUN python3 -m pip install --no-cache --upgrade pip setuptools --break-system-packages
-RUN python3 -m pip install --no-cache pandas numpy openpyxl plotly statsmodels matplotlib scikit-learn tqdm --break-system-packages
+RUN python3 -m pip install --no-cache tqdm catboost --break-system-packages
 RUN wget https://github.com/yandex-cloud/geesefs/releases/latest/download/geesefs-linux-amd64 && chmod a+x geesefs-linux-amd64
 RUN mkdir -p /mnt/bucket
 COPY --from=build /build/api /app
