@@ -11,9 +11,30 @@
 Инструкция по запуску сервисов описана в **[quick-start.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/quick-start.md)**.
 
 ## Документация к различным модулям core-алгоритмов (python)
+### Модуль предобработки данных (
+Документация к модулю: **[merge_contracts.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/merge_contracts.md)**.
+
+Код модуля: **[merge_contracts.py](https://github.com/talkiiing-team/zakupai/tree/main/services/api/ml/lib/merge_contracts.py)**.
+
+Описание модуля: реализует начальную предобработку данных - генерирует признаки в разрезе "основное средство-здание-договор-счет"
+
+
+### Модуль запуска алгоритма распределения
+**[get_distribution_utils.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/get_distribution_utils.md)**.
+
+Код модуля: **[get_distribution_utils.py](https://github.com/talkiiing-team/zakupai/tree/main/services/api/ml/lib/get_distribution_utils.py)**.
+
+
+- Модуль с кодом обработки графа (проход по графу, созданному пользователем и расчет метрики, нужной для распредления)
+Через этот модуль можно увеличивать функционал платформы - создавать новые блоки, обработчики связей.
+Базовые классы графов и блоков при этом остаются неизменными.
+**[all_blocks.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/all_blocks.md)**.
+Код модуля: **[all_blocks.py](https://github.com/talkiiing-team/zakupai/tree/main/services/api/ml/lib/all_blocks.py)**.
+
+- Модуль получения файла с результатами распределения (в этом модуле происходит определение счета главной книги с помощью обученной модели)
+**[generate_test.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/generate_test.md)**.
+Код модуля: **[generate_test.py](https://github.com/talkiiing-team/zakupai/tree/main/services/api/ml/lib/generate_test.py)**.
+
 - Модуль прогнозирования расходов **[forecating.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/forecasting.md)**.
 Код модуля: **[forecasting.py](https://github.com/talkiiing-team/zakupai/tree/main/services/api/ml/lib/forecasting.py)**.
-
-- Модуль запуска алгоритма распределения **[get_distribution_utils.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/get_distribution_utils.md)**.
-Код модуля: **[get_distribution_utils.py](https://github.com/talkiiing-team/zakupai/tree/main/services/api/ml/lib/get_distribution_utils.py)**.
 
