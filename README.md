@@ -10,14 +10,16 @@
 ## Основная информация
 Приложение развернуто на наших мощностях для удобства демонстрации на домене **[распределяй.рф](https://xn--80aicbulygci4n.xn--p1ai)**.
 
-Пользовательская документация **[Пользовательская документация](https://evergreen-scarer-984.notion.site/f960dc52059049dea0c9f63e7ee0e761?pvs=4)**
+**Инструкция по запуску сервисов** описана в **[quick-start.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/quick-start.md)**.
 
-Инструкция по запуску сервисов описана в **[quick-start.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/quick-start.md)**.
+Пользовательская документация доступна: **[здесь](https://evergreen-scarer-984.notion.site/f960dc52059049dea0c9f63e7ee0e761?pvs=4)**
 
-Вся документация к модулям платформы расположена в **[docs.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/)**.
+Вся документация к модулям платформы расположена в **[docs](https://github.com/talkiiing-team/zakupai/blob/main/docs/)**.
 Для навигации по ней используйте текущую страницу
 
 ## Документация к core-модулям
+
+![](docs/images/ZAKUPAI_sheme.png)
 
 ------------
 
