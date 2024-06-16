@@ -1,6 +1,6 @@
 import ky from 'ky';
 
-export const runForecasting = async (checkid: number) => {
+export const runForecasting = async (checkid: number | string) => {
     const res = await ky.post(
         `${import.meta.env.VITE_API_BASE_URL}/v1/processings/forecast?checkid=${checkid}`,
         {
@@ -13,9 +13,11 @@ export const runForecasting = async (checkid: number) => {
     }
 };
 
-export const getForecastPlots = async (): Promise<object> => {
+export const getForecastPlots = async (
+    procId: number | string,
+): Promise<object> => {
     const res = await ky.get(
-        `${import.meta.env.VITE_S3_BASE_URL}/forecast_plots.json`,
+        `${import.meta.env.VITE_S3_BASE_URL}/${procId}/forecast_plots.json`,
     );
 
     if (!res.ok) {

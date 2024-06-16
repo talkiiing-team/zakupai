@@ -1,13 +1,17 @@
 import { ChangeEvent, useState } from 'react';
-import { createLazyFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute, useParams } from '@tanstack/react-router';
 import useSWR from 'swr';
 
 import { getForecastPlots, runForecasting } from '@/features/forecasting/api';
 
 export const Route = createLazyFileRoute(
-    '/_panel/_processings/processings/$id/forecast',
+    '/_panel/processings/$id/_processings/forecast',
 )({
     component: () => {
+        const { id: procId } = useParams({
+            from: '/_panel/processings/$id/_processings/forecast',
+        });
+
         const [checkid, setCheckid] = useState(0);
 
         const onInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +26,9 @@ export const Route = createLazyFileRoute(
             setCheckid(num);
         };
 
-        const plots = useSWR('forecast_plots.json', getForecastPlots);
+        const plots = useSWR(['s3/forecast_plots.json', procId], ([, procId]) =>
+            getForecastPlots(procId),
+        );
 
         console.log(plots);
 
