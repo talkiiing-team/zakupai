@@ -1,9 +1,8 @@
 
-# [РаспределяйAI](https://xn--80aicbulygci4n.xn--p1ai)
+# [РаспределAI](https://xn--80aicbulygci4n.xn--p1ai)
 <img src="docs/images/logo.png" width="320"  align="right" >
 
 ### by Singularity team
-<font size="6" color="#fa8e47" face="serif">by Singularity team"</font>
 
 
 
