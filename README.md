@@ -14,6 +14,6 @@
 - Модуль прогнозирования расходов **[forecating.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/forecasting.md)**.
 Код модуля: **[forecasting.py](https://github.com/talkiiing-team/zakupai/tree/main/services/api/ml/lib/forecasting.py)**.
 
-- Модуль запуска алгоритма распределения **[get_distribution_utils.py](https://github.com/talkiiing-team/zakupai/blob/main/docs/get_distribution_utils.md)
--
+- Модуль запуска алгоритма распределения **[get_distribution_utils.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/get_distribution_utils.md)**.
+Код модуля: **[get_distribution_utils.py](https://github.com/talkiiing-team/zakupai/tree/main/services/api/ml/lib/get_distribution_utils.py)**.
 
