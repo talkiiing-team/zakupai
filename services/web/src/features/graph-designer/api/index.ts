@@ -20,11 +20,12 @@ export const getFeatures = async () => {
     }));
 };
 
-export const saveGraph = async () => {
-    const res = await ky.get(
-        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/features`,
+export const uploadGraph = async (graph: object) => {
+    const res = await ky.post(
+        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/graph`,
         {
-            timeout: 30_000,
+            json: graph,
+            timeout: 10_000,
         },
     );
 

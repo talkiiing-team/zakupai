@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react';
 
 import { useGraphDesignerState } from '@/features/graph-designer/model/use-graph-designer-state';
 
-export const DownloadGraph: FC = () => {
+export const DownloadGraphJSONButton: FC = () => {
     const { nodes, edges } = useGraphDesignerState();
 
     const downloadGraphJSON = useCallback(() => {
@@ -27,7 +27,7 @@ export const DownloadGraph: FC = () => {
 
     return (
         <button
-            className="absolute right-4 top-12 rounded-md border border-zinc-300 bg-white px-4 py-2 shadow-md"
+            className="absolute right-4 top-20 rounded-md border border-zinc-300 bg-white px-4 py-2 shadow-md"
             onClick={downloadGraphJSON}
         >
             JSON

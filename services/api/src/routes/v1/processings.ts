@@ -63,7 +63,7 @@ app.get('/features', async (c) => {
 app.post('/graph', async (c) => {
     const graph = await c.req.json();
 
-    await fs.writeFile('/mnt/bucket/graph.csv', graph);
+    await fs.writeFile('/mnt/bucket/graph.json', JSON.stringify(graph));
 });
 
 app.post('/distribution', async (c) => {

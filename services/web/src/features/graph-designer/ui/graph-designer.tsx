@@ -3,12 +3,13 @@ import ReactFlow, { Controls, Background, BackgroundVariant } from 'reactflow';
 import { useSignals } from '@preact/signals-react/runtime';
 
 import { Inventory } from '@/features/graph-designer/ui/inventory';
-import { DownloadGraph } from '@/features/graph-designer/ui/download-graph';
+import { DownloadGraphJSONButton } from '@/features/graph-designer/ui/download-graph-json-button';
 import { useGraphDesigner } from '@/features/graph-designer/model/use-graph-designer';
 import { useGraphDesignerState } from '@/features/graph-designer/model/use-graph-designer-state';
+import { useGraphDesignerNodeTypes } from '@/features/graph-designer/model/use-graph-designer-node-types';
 
 import 'reactflow/dist/style.css';
-import { useGraphDesignerNodeTypes } from '@/features/graph-designer/model/use-graph-designer-node-types';
+import { RunDistributionButton } from '@/features/graph-designer/ui/run-distribution-button';
 
 export const GraphDesigner: FC = () => {
     useSignals();
@@ -41,7 +42,8 @@ export const GraphDesigner: FC = () => {
                     variant={BackgroundVariant.Dots}
                 />
             </ReactFlow>
-            <DownloadGraph />
+            <DownloadGraphJSONButton />
+            <RunDistributionButton />
         </div>
     );
 };
