@@ -17,8 +17,7 @@ RUN apt update
 RUN apt install -y wget gcc fuse
 
 ENV PYTHONUNBUFFERED=1
-RUN apt install -y python3
-RUN python3 -m ensurepip
+RUN apt install -y python3 python3-pip
 RUN python3 -m pip install --no-cache --upgrade pip setuptools --break-system-packages
 
 RUN python3 -m pip install --no-cache catboost==1.2.5 --break-system-packages
