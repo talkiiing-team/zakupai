@@ -96,5 +96,6 @@
 ![](docs/images/catboost.png)
 
 
+
 ## Наша команда
 ![](docs/images/team.png)
