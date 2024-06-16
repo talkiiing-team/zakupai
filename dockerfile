@@ -13,6 +13,7 @@ RUN pnpm deploy --filter=web /build/web
 FROM base AS api
 WORKDIR /app
 ENV PYTHONUNBUFFERED=1
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
 RUN apk add --no-cache python3 py3-pip wget fuse
 RUN ln -sf python3 /usr/bin/python
 RUN python3 -m ensurepip
