@@ -11,7 +11,7 @@ features = pickle.load(open("/mnt/bucket/features.pkl", "rb"))
 res = pd.read_csv("/mnt/bucket/res_datetimes.csv", index_col=0)
 raw_graph = json.load(open("/mnt/bucket/graph.json", "r"))
 pays_df = pd.concat(map(lambda x: pd.read_excel(x), glob('/mnt/bucket/pay*.xlsx')), axis=0)
-serv_codes_df = pd.read_excel('/mnt/bucket/servCodex.xlsx')
+serv_codes_df = pd.read_excel('/mnt/bucket/servCodes.xlsx')
 
 numeric_features = [i[0] for i in features if i[2] != "date"]
 date_features = [i[0] for i in features if i[2] == "date"]
