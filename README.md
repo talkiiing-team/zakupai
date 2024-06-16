@@ -1,7 +1,7 @@
 <img src="docs/images/logo.png" width="120"  align="left">
 
 [//]: # ([РаспределяйAI]&#40;https://xn--80aicbulygci4n.xn--p1ai&#41;)
-<span style="font-size:3.5em; color:#615AE6"  >РаспределяйAI</span>
+<span style="color:#615AE6"  >РаспределяйAI</span>
 <a href="https://распределяй.рф"> <span style="font-size:3.5em; color:#615AE6"  >РаспределяйAI</span>  </a>
 <span style="font-size:1.5em; color:#615AE6"  >by Singularity team</span>
 
