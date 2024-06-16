@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { createLazyFileRoute, useParams } from '@tanstack/react-router';
 
 export const Route = createLazyFileRoute(

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
     Link,
     Outlet,
@@ -40,7 +41,12 @@ export const Route = createFileRoute('/_panel/processings/$id/_processings')({
                             </Link>
                         </li>
                         <li>
-                            <Link to="/processings/forecast">Предсказание</Link>
+                            <Link
+                                to="/processings/$id/forecast"
+                                params={{ id: procId }}
+                            >
+                                Предсказание
+                            </Link>
                         </li>
                     </ul>
                 </nav>

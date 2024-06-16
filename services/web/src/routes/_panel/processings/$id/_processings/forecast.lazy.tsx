@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { ChangeEvent, useState } from 'react';
 import { createLazyFileRoute, useParams } from '@tanstack/react-router';
 import useSWR from 'swr';
