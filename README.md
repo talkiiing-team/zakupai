@@ -1,19 +1,26 @@
 # [РаспределяйAI](https://xn--80aicbulygci4n.xn--p1ai)
 
+
 [Демонстрационный стенд](#демонстрационный-стенд)
+[Пользовательская документация](#пользовательская-документация)
+[Воспроизведение.Быстрый старт](#воспроизведение-быстрый-старт)
+[Документация к core алгоритмам (python)](#документация-к-core-модулям)
 
 
 ## Демонстрационный стенд
-
 Приложение развернуто на наших мощностях для удобства демонстрации на домене **[распределяй.рф](https://xn--80aicbulygci4n.xn--p1ai)**.
+
 
 ## Пользовательская документация
 Описание платформы для пользователей **[Пользовательская документация](https://evergreen-scarer-984.notion.site/f960dc52059049dea0c9f63e7ee0e761?pvs=4)**
 
+
 ## Воспроизвдение. Быстрый старт
 Инструкция по запуску сервисов описана в **[quick-start.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/quick-start.md)**.
 
-## Документация к различным модулям core-алгоритмов (python)
+
+## Документация к core-модулям
+
 ### Модуль предобработки данных
 **Документация к модулю**: **[merge_contracts.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/merge_contracts.md)**.
 
@@ -24,7 +31,7 @@
 -----------
 
 ### Модуль запуска алгоритма распределения
-**[get_distribution_utils.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/get_distribution_utils.md)**.
+**Документация модуля:** **[get_distribution_utils.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/get_distribution_utils.md)**.
 
 **Код модуля**: **[get_distribution_utils.py](https://github.com/talkiiing-team/zakupai/tree/main/services/api/ml/lib/get_distribution_utils.py)**.
 
@@ -33,7 +40,7 @@
 ------
 
 ### Модуль с кодом обработки графа
-**[all_blocks.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/all_blocks.md)**.
+**Документация модуля:** **[all_blocks.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/all_blocks.md)**.
 
 **Код модуля**: **[all_blocks.py](https://github.com/talkiiing-team/zakupai/tree/main/services/api/ml/lib/all_blocks.py)**.
 
