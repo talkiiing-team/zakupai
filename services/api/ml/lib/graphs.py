@@ -28,11 +28,11 @@ def generate_interactive_plots(data, asset=None, check_id = None):
         #Drop rows with NaT dates if necessary
     data = data.dropna(subset=['Дата отражения в учетной системе'])
     if asset:
-        
+
         data_asset = data[data['ID основного средства'] == asset]
 
         # График Time-series по сумме распределения
-        
+
         daily_agg = data_asset.set_index('Дата отражения в учетной системе').resample('D').agg({'Сумма распределения': 'sum'}).reset_index()
         daily_agg = daily_agg[daily_agg['Сумма распределения'] > 0]
         fig = go.Figure()
@@ -49,10 +49,10 @@ def generate_interactive_plots(data, asset=None, check_id = None):
 
     elif check_id:
         check_data = data[data['Номер счета'] == check_id]
-        
+
         # График суммы распределения по ID услуги
         check_data['Услуга'] = check_data['ID услуги'].astype(str)  # Преобразуем значения оси X в строки
-        fig = px.bar(check_data, x='ID услуги', y='Сумма распределения', 
+        fig = px.bar(check_data, x='ID услуги', y='Сумма распределения',
                       labels={'Услуга': 'Услуга', 'Сумма распределения': 'Сумма распределения'},
                       title=f'Сумма распределения по каждому ID услуги в cчёте - {check_id}')
         return fig.to_json()
@@ -142,7 +142,7 @@ def generate_interactive_plots_notspecf_finaltable(data):
     count_main_book = pd.DataFrame(data['Счет главной книги'].value_counts()).reset_index()
     count_main_book['Счет главной книги'] = count_main_book['Счет главной книги'].astype('str')
     # print(count_main_book.reset_index())
-    fig = px.bar(count_main_book.reset_index(), x = 'Счет главной книги', y = 'count', 
+    fig = px.bar(count_main_book.reset_index(), x = 'Счет главной книги', y = 'count',
                     labels={'Год ввода в эксплуатацию': 'Год ввода в эксплуатацию', 'Год': 'Количество'},
                     title='Распределение Главных Книг')
     plots['main_book_distrib'] = fig.to_json()
@@ -155,7 +155,7 @@ def generate_interactive_plots_notspecf_finaltable(data):
                   title='Top 7 Buildings by Total Сумма распределения',
                   labels={'Здание': 'Здание', 'Сумма распределения': 'Total Сумма распределения'})
     plots['top_7_buildings'] = fig1.to_json()
-                                                         
+
     # Group by 'ID основного средства' and sum the 'Сумма распределения'
     grouped = data.groupby('ID основного средства')['Сумма распределения'].sum().reset_index()
 
@@ -233,9 +233,9 @@ def generate_interactive_plots_notspecf_finaltable(data):
                   labels={'Услуга': 'Услуга', 'Total Distribution Sum': 'Total Distribution Sum'})
     plots['top_7_services'] = fig6.to_json()
 
-    # Group by 'Компания' and sum the 'Площадь'
-    grouped = data.groupby('Компания')['Площадь'].sum().reset_index()
-    grouped = grouped.rename(columns={'Площадь': 'Total Area'})
+    # Group by 'Компания' and sum the 'Площадь ОС'
+    grouped = data.groupby('Компания')['Площадь ОС'].sum().reset_index()
+    grouped = grouped.rename(columns={'Площадь ОС': 'Total Area'})
 
     # Sort by 'Total Area' in descending order and select the top 7
     top_7_companies = grouped.sort_values(by='Total Area', ascending=False).head(7)
