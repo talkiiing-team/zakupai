@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import { getForecastPlots, runForecasting } from '@/features/forecasting/api';
 
 export const Route = createLazyFileRoute(
-    '/_panel/_processings/processings/forecast',
+    '/_panel/_processings/processings/$id/forecast',
 )({
     component: () => {
         const [checkid, setCheckid] = useState(0);

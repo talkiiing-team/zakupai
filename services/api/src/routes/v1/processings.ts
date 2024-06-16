@@ -8,7 +8,7 @@ import { auth } from '@/middlewares/auth';
 import { logger } from '@/logger';
 import { db } from '@/db';
 import { processings } from '@/schema';
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 
 const app = new Hono();
 
@@ -22,6 +22,14 @@ app.get('/', async (c) => {
 
 app.post('/', async (c) => {
     await db.insert(processings).values({ status: 'created' });
+
+    const [proc] = await db
+        .select()
+        .from(processings)
+        .orderBy(desc(processings.createdAt))
+        .limit(1);
+
+    return c.json(proc);
 });
 
 app.get('/:id', async (c) => {

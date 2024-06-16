@@ -13,7 +13,7 @@ export const Route = createFileRoute('/_panel')({
                     <nav className="flex-grow pl-4">
                         <ul className="flex flex-col gap-4 align-middle text-lg">
                             <li>
-                                <Link to="/processings">Распределения</Link>
+                                <Link to="/processings">Заявки</Link>
                             </li>
                         </ul>
                     </nav>

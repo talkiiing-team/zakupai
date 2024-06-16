@@ -20,20 +20,20 @@ import { Route as PanelProcessingsImport } from './routes/_panel/_processings'
 // Create Virtual Routes
 
 const AuthSignInLazyImport = createFileRoute('/auth/sign-in')()
-const PanelProcessingsProcessingsIndexLazyImport = createFileRoute(
-  '/_panel/_processings/processings/',
+const PanelProcessingsIndexLazyImport = createFileRoute(
+  '/_panel/processings/',
 )()
-const PanelProcessingsProcessingsUploadLazyImport = createFileRoute(
-  '/_panel/_processings/processings/upload',
+const PanelProcessingsProcessingsIdUploadLazyImport = createFileRoute(
+  '/_panel/_processings/processings/$id/upload',
 )()
-const PanelProcessingsProcessingsGraphLazyImport = createFileRoute(
-  '/_panel/_processings/processings/graph',
+const PanelProcessingsProcessingsIdGraphLazyImport = createFileRoute(
+  '/_panel/_processings/processings/$id/graph',
 )()
-const PanelProcessingsProcessingsForecastLazyImport = createFileRoute(
-  '/_panel/_processings/processings/forecast',
+const PanelProcessingsProcessingsIdForecastLazyImport = createFileRoute(
+  '/_panel/_processings/processings/$id/forecast',
 )()
-const PanelProcessingsProcessingsDistributionLazyImport = createFileRoute(
-  '/_panel/_processings/processings/distribution',
+const PanelProcessingsProcessingsIdDistributionLazyImport = createFileRoute(
+  '/_panel/_processings/processings/$id/distribution',
 )()
 
 // Create/Update Routes
@@ -58,54 +58,51 @@ const PanelProcessingsRoute = PanelProcessingsImport.update({
   getParentRoute: () => PanelRoute,
 } as any)
 
-const PanelProcessingsProcessingsIndexLazyRoute =
-  PanelProcessingsProcessingsIndexLazyImport.update({
-    path: '/processings/',
+const PanelProcessingsIndexLazyRoute = PanelProcessingsIndexLazyImport.update({
+  path: '/processings/',
+  getParentRoute: () => PanelRoute,
+} as any).lazy(() =>
+  import('./routes/_panel/processings/index.lazy').then((d) => d.Route),
+)
+
+const PanelProcessingsProcessingsIdUploadLazyRoute =
+  PanelProcessingsProcessingsIdUploadLazyImport.update({
+    path: '/processings/$id/upload',
     getParentRoute: () => PanelProcessingsRoute,
   } as any).lazy(() =>
-    import('./routes/_panel/_processings/processings/index.lazy').then(
+    import('./routes/_panel/_processings/processings/$id/upload.lazy').then(
       (d) => d.Route,
     ),
   )
 
-const PanelProcessingsProcessingsUploadLazyRoute =
-  PanelProcessingsProcessingsUploadLazyImport.update({
-    path: '/processings/upload',
+const PanelProcessingsProcessingsIdGraphLazyRoute =
+  PanelProcessingsProcessingsIdGraphLazyImport.update({
+    path: '/processings/$id/graph',
     getParentRoute: () => PanelProcessingsRoute,
   } as any).lazy(() =>
-    import('./routes/_panel/_processings/processings/upload.lazy').then(
+    import('./routes/_panel/_processings/processings/$id/graph.lazy').then(
       (d) => d.Route,
     ),
   )
 
-const PanelProcessingsProcessingsGraphLazyRoute =
-  PanelProcessingsProcessingsGraphLazyImport.update({
-    path: '/processings/graph',
+const PanelProcessingsProcessingsIdForecastLazyRoute =
+  PanelProcessingsProcessingsIdForecastLazyImport.update({
+    path: '/processings/$id/forecast',
     getParentRoute: () => PanelProcessingsRoute,
   } as any).lazy(() =>
-    import('./routes/_panel/_processings/processings/graph.lazy').then(
+    import('./routes/_panel/_processings/processings/$id/forecast.lazy').then(
       (d) => d.Route,
     ),
   )
 
-const PanelProcessingsProcessingsForecastLazyRoute =
-  PanelProcessingsProcessingsForecastLazyImport.update({
-    path: '/processings/forecast',
+const PanelProcessingsProcessingsIdDistributionLazyRoute =
+  PanelProcessingsProcessingsIdDistributionLazyImport.update({
+    path: '/processings/$id/distribution',
     getParentRoute: () => PanelProcessingsRoute,
   } as any).lazy(() =>
-    import('./routes/_panel/_processings/processings/forecast.lazy').then(
-      (d) => d.Route,
-    ),
-  )
-
-const PanelProcessingsProcessingsDistributionLazyRoute =
-  PanelProcessingsProcessingsDistributionLazyImport.update({
-    path: '/processings/distribution',
-    getParentRoute: () => PanelProcessingsRoute,
-  } as any).lazy(() =>
-    import('./routes/_panel/_processings/processings/distribution.lazy').then(
-      (d) => d.Route,
-    ),
+    import(
+      './routes/_panel/_processings/processings/$id/distribution.lazy'
+    ).then((d) => d.Route),
   )
 
 // Populate the FileRoutesByPath interface
@@ -140,39 +137,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInLazyImport
       parentRoute: typeof rootRoute
     }
-    '/_panel/_processings/processings/distribution': {
-      id: '/_panel/_processings/processings/distribution'
-      path: '/processings/distribution'
-      fullPath: '/processings/distribution'
-      preLoaderRoute: typeof PanelProcessingsProcessingsDistributionLazyImport
-      parentRoute: typeof PanelProcessingsImport
-    }
-    '/_panel/_processings/processings/forecast': {
-      id: '/_panel/_processings/processings/forecast'
-      path: '/processings/forecast'
-      fullPath: '/processings/forecast'
-      preLoaderRoute: typeof PanelProcessingsProcessingsForecastLazyImport
-      parentRoute: typeof PanelProcessingsImport
-    }
-    '/_panel/_processings/processings/graph': {
-      id: '/_panel/_processings/processings/graph'
-      path: '/processings/graph'
-      fullPath: '/processings/graph'
-      preLoaderRoute: typeof PanelProcessingsProcessingsGraphLazyImport
-      parentRoute: typeof PanelProcessingsImport
-    }
-    '/_panel/_processings/processings/upload': {
-      id: '/_panel/_processings/processings/upload'
-      path: '/processings/upload'
-      fullPath: '/processings/upload'
-      preLoaderRoute: typeof PanelProcessingsProcessingsUploadLazyImport
-      parentRoute: typeof PanelProcessingsImport
-    }
-    '/_panel/_processings/processings/': {
-      id: '/_panel/_processings/processings/'
+    '/_panel/processings/': {
+      id: '/_panel/processings/'
       path: '/processings'
       fullPath: '/processings'
-      preLoaderRoute: typeof PanelProcessingsProcessingsIndexLazyImport
+      preLoaderRoute: typeof PanelProcessingsIndexLazyImport
+      parentRoute: typeof PanelImport
+    }
+    '/_panel/_processings/processings/$id/distribution': {
+      id: '/_panel/_processings/processings/$id/distribution'
+      path: '/processings/$id/distribution'
+      fullPath: '/processings/$id/distribution'
+      preLoaderRoute: typeof PanelProcessingsProcessingsIdDistributionLazyImport
+      parentRoute: typeof PanelProcessingsImport
+    }
+    '/_panel/_processings/processings/$id/forecast': {
+      id: '/_panel/_processings/processings/$id/forecast'
+      path: '/processings/$id/forecast'
+      fullPath: '/processings/$id/forecast'
+      preLoaderRoute: typeof PanelProcessingsProcessingsIdForecastLazyImport
+      parentRoute: typeof PanelProcessingsImport
+    }
+    '/_panel/_processings/processings/$id/graph': {
+      id: '/_panel/_processings/processings/$id/graph'
+      path: '/processings/$id/graph'
+      fullPath: '/processings/$id/graph'
+      preLoaderRoute: typeof PanelProcessingsProcessingsIdGraphLazyImport
+      parentRoute: typeof PanelProcessingsImport
+    }
+    '/_panel/_processings/processings/$id/upload': {
+      id: '/_panel/_processings/processings/$id/upload'
+      path: '/processings/$id/upload'
+      fullPath: '/processings/$id/upload'
+      preLoaderRoute: typeof PanelProcessingsProcessingsIdUploadLazyImport
       parentRoute: typeof PanelProcessingsImport
     }
   }
@@ -184,12 +181,12 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   PanelRoute: PanelRoute.addChildren({
     PanelProcessingsRoute: PanelProcessingsRoute.addChildren({
-      PanelProcessingsProcessingsDistributionLazyRoute,
-      PanelProcessingsProcessingsForecastLazyRoute,
-      PanelProcessingsProcessingsGraphLazyRoute,
-      PanelProcessingsProcessingsUploadLazyRoute,
-      PanelProcessingsProcessingsIndexLazyRoute,
+      PanelProcessingsProcessingsIdDistributionLazyRoute,
+      PanelProcessingsProcessingsIdForecastLazyRoute,
+      PanelProcessingsProcessingsIdGraphLazyRoute,
+      PanelProcessingsProcessingsIdUploadLazyRoute,
     }),
+    PanelProcessingsIndexLazyRoute,
   }),
   AuthSignInLazyRoute,
 })
@@ -213,41 +210,41 @@ export const routeTree = rootRoute.addChildren({
     "/_panel": {
       "filePath": "_panel.tsx",
       "children": [
-        "/_panel/_processings"
+        "/_panel/_processings",
+        "/_panel/processings/"
       ]
     },
     "/_panel/_processings": {
       "filePath": "_panel/_processings.tsx",
       "parent": "/_panel",
       "children": [
-        "/_panel/_processings/processings/distribution",
-        "/_panel/_processings/processings/forecast",
-        "/_panel/_processings/processings/graph",
-        "/_panel/_processings/processings/upload",
-        "/_panel/_processings/processings/"
+        "/_panel/_processings/processings/$id/distribution",
+        "/_panel/_processings/processings/$id/forecast",
+        "/_panel/_processings/processings/$id/graph",
+        "/_panel/_processings/processings/$id/upload"
       ]
     },
     "/auth/sign-in": {
       "filePath": "auth/sign-in.lazy.tsx"
     },
-    "/_panel/_processings/processings/distribution": {
-      "filePath": "_panel/_processings/processings/distribution.lazy.tsx",
+    "/_panel/processings/": {
+      "filePath": "_panel/processings/index.lazy.tsx",
+      "parent": "/_panel"
+    },
+    "/_panel/_processings/processings/$id/distribution": {
+      "filePath": "_panel/_processings/processings/$id/distribution.lazy.tsx",
       "parent": "/_panel/_processings"
     },
-    "/_panel/_processings/processings/forecast": {
-      "filePath": "_panel/_processings/processings/forecast.lazy.tsx",
+    "/_panel/_processings/processings/$id/forecast": {
+      "filePath": "_panel/_processings/processings/$id/forecast.lazy.tsx",
       "parent": "/_panel/_processings"
     },
-    "/_panel/_processings/processings/graph": {
-      "filePath": "_panel/_processings/processings/graph.lazy.tsx",
+    "/_panel/_processings/processings/$id/graph": {
+      "filePath": "_panel/_processings/processings/$id/graph.lazy.tsx",
       "parent": "/_panel/_processings"
     },
-    "/_panel/_processings/processings/upload": {
-      "filePath": "_panel/_processings/processings/upload.lazy.tsx",
-      "parent": "/_panel/_processings"
-    },
-    "/_panel/_processings/processings/": {
-      "filePath": "_panel/_processings/processings/index.lazy.tsx",
+    "/_panel/_processings/processings/$id/upload": {
+      "filePath": "_panel/_processings/processings/$id/upload.lazy.tsx",
       "parent": "/_panel/_processings"
     }
   }

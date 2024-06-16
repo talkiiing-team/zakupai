@@ -7,7 +7,7 @@ import {
 } from '@/features/graph-designer';
 
 export const Route = createLazyFileRoute(
-    '/_panel/_processings/processings/graph',
+    '/_panel/_processings/processings/$id/graph',
 )({
     component: () => {
         return (

@@ -1,7 +1,7 @@
 import { createLazyFileRoute } from '@tanstack/react-router';
 
 export const Route = createLazyFileRoute(
-    '/_panel/_processings/processings/distribution',
+    '/_panel/_processings/processings/$id/distribution',
 )({
     component: () => (
         <main className="relative flex h-full w-full flex-row">

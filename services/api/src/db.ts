@@ -17,6 +17,6 @@ export const db = drizzle(pool);
 
 export const migrateDb = async () => {
     await migrate(db, {
-        migrationsFolder: path.resolve(import.meta.dirname, '../migrations'),
+        migrationsFolder: path.resolve(import.meta.dirname, '../drizzle'),
     });
 };
