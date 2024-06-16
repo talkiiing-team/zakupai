@@ -1,7 +1,8 @@
-import { createLazyFileRoute } from '@tanstack/react-router';
-
-import { runForecasting } from '@/features/forecasting/api';
 import { ChangeEvent, useState } from 'react';
+import { createLazyFileRoute } from '@tanstack/react-router';
+import useSWR from 'swr';
+
+import { getForecastPlots, runForecasting } from '@/features/forecasting/api';
 
 export const Route = createLazyFileRoute(
     '/_panel/_processings/processings/forecast',
@@ -20,6 +21,10 @@ export const Route = createLazyFileRoute(
 
             setCheckid(num);
         };
+
+        const plots = useSWR('forecast_plots.json', getForecastPlots);
+
+        console.log(plots);
 
         return (
             <main className="relative flex h-full w-full flex-row">
