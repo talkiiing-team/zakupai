@@ -1,7 +1,7 @@
-xn----7sbbznd9a5a.xn--p1ai {
+xn--80aicbulygci4n.xn--p1ai {
     reverse_proxy http://web
 }
 
-api.xn----7sbbznd9a5a.xn--p1ai {
+api.xn--80aicbulygci4n.xn--p1ai {
     reverse_proxy http://api:3000
 }

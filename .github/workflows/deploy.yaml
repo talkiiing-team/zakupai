@@ -1,5 +1,5 @@
 ---
-name: Deploy on production закуп-ай.рф
+name: Deploy on production распределяй.рф
 
 on:
   push:
