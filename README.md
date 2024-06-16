@@ -2,7 +2,7 @@
 # [РаспределяйAI](https://xn--80aicbulygci4n.xn--p1ai)
 <img src="docs/images/logo.png" width="320"  align="right" >
 
-### by Singularity team
+@@ by Singularity team @@
 
 
 
