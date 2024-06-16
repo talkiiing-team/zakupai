@@ -1,4 +1,4 @@
-FROM node:22-alpine AS base
+FROM node:22-bulleye AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
@@ -12,14 +12,23 @@ RUN pnpm deploy --filter=web /build/web
 
 FROM base AS api
 WORKDIR /app
+
+RUN apt update
+RUN apt install wget gcc fuse
+
 ENV PYTHONUNBUFFERED=1
-RUN apk add --no-cache python3 py3-pip py3-scikit-learn py3-numpy py3-pandas py3-openpyxl py3-matplotlib py3-statsmodels py3-tqdm wget fuse gcc rust cargo python3-dev musl-dev linux-headers cmake
-RUN ln -sf python3 /usr/bin/python
+RUN apt install python3
+RUN python3 -m ensurepip
 RUN python3 -m pip install --no-cache --upgrade pip setuptools --break-system-packages
-RUN python3 -m pip install --no-cache catboost --break-system-packages
+
+RUN python3 -m pip install --no-cache catboost==1.2.5 --break-system-packages
+RUN python3 -m pip install --no-cache scikit-learn numpy pandas openpyxl matplotlib statsmodels tqdm --break-system-packages
+
 RUN wget https://github.com/yandex-cloud/geesefs/releases/latest/download/geesefs-linux-amd64 && chmod a+x geesefs-linux-amd64
 RUN mkdir -p /mnt/bucket
+
 COPY --from=build /build/api /app
+
 CMD ./geesefs-linux-amd64 zakupai /mnt/bucket && pnpm start
 
 FROM base AS web_build
