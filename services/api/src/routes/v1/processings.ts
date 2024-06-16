@@ -81,7 +81,7 @@ app.post('/distribution', async (c) => {
             pythonOptions: ['-u'],
         });
 
-        py.on('message', logger.debug);
+        py.on('message', (msg) => logger.debug(msg));
         py.on('close', resolve);
         py.on('error', reject);
         py.on('pythonError', reject);
