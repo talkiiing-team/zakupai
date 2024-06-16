@@ -75,7 +75,7 @@ class ContractsMerger:
         self.merger_by_agreem = self.merger_df.groupby("ID договора")
         self.merger_unique_agreem = self.merger_df["ID договора"].unique()
         self.needed_pays_df = self.pays_df[self.pays_df["ID договора"].isin(self.merger_unique_agreem)]
-        self.needed_pays_df["time"] = self.needed_pays_df["Год"].map(lambda x: datetime(year=x + 1, month=1, day=1))
+        self.needed_pays_df["time"] = self.needed_pays_df["Год"].map(lambda x: datetime(year=x, month=1, day=1))
 
         # удалим здания, у которых дата окончания действия меньше минимальной даты в списке договоров, они точно не подойдут
         self.main_costs_df = self.main_costs_df[
@@ -94,8 +94,8 @@ class ContractsMerger:
         self.squares_by_build = self.squares.groupby("Здание")
         self.squares_dict = {}
         for gr_name, gr in self.squares_by_build:
-            build_squares = gr.sort_values(by="Измер. действит. по")
-            build_square = gr.iloc[0]
+            build_squares = gr.sort_values(by="Измер. действит. по", ascending=False)
+            build_square = build_squares.iloc[0]
             self.squares_dict[gr_name] = build_square
 
     def parse_contract(self, contract):
