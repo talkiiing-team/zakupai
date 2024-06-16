@@ -8,7 +8,7 @@ check_id = int(sys.argv[1])
 
 distribution_df = pd.read_csv('/mnt/bucket/distribution_result.csv')
 
-generate_interactive_plots_all_data(distribution_df)
+# generate_interactive_plots_all_data(distribution_df)
 generate_interactive_plots(distribution_df, check_id=check_id)
 
 plots = generate_interactive_plots_notspecf_finaltable(distribution_df)
