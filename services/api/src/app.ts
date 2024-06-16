@@ -19,7 +19,8 @@ app.get('/health', (c) => c.body('OK'));
 app.route('/v1', v1Routes);
 
 app.onError((error, c) => {
-    logger.error(error);
+    // logger.error(error);
+    console.log(error);
     return c.json({ message: error }, 500);
 });
 
