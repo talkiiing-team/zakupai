@@ -28,7 +28,6 @@ def generate_interactive_plots(data, asset=None, check_id = None):
     data = data.dropna(subset=['Дата отражения в учетной системе'])
     if asset:
         
-
         data_asset = data[data['ID основного средства'] == asset]
 
         # График Time-series по сумме распределения
@@ -71,7 +70,7 @@ def generate_interactive_plots_all_data(data):
     grouped = grouped.rename(columns={'ID основного средства': 'Unique Assets'})
     asset_counts = grouped['Unique Assets'].value_counts().reset_index()
     asset_counts = asset_counts.rename(columns={'index': 'Unique Assets', 'Unique Assets': 'Count'})
-    fig1 = px.pie(asset_counts, values='Count', names='Unique Assets',
+    fig1 = px.pie(asset_counts, values='Count', names='Count',
                   title='Доли уникальных средств по каждому зданию')
     fig1.update_layout(
         legend_title_text='Количество уникальных средств'
@@ -127,24 +126,7 @@ def generate_interactive_plots_all_data(data):
     plots['usage_distribution_bar'] = fig4.to_json()
 
     # Распределение по годам ввода в эксплуатацию
-    data['Дата ввода в эксплуатацию'] = pd.to_datetime(data['Дата ввода в эксплуатацию'], format='%Y-%m-%d', errors='coerce')
-    data['Год ввода в эксплуатацию'] = data['Дата ввода в эксплуатацию'].dt.year
-    data = data.dropna(subset=['Год ввода в эксплуатацию'])
-    year_counts = data['Год ввода в эксплуатацию'].value_counts().reset_index()
-    year_counts = year_counts.rename(columns={'Год ввода в эксплуатацию': 'Год', 'index': 'Год ввода в эксплуатацию'})
-    year_counts = year_counts.sort_values('Год ввода в эксплуатацию')
-    tickvals = year_counts['Год ввода в эксплуатацию']
-    ticktext = [str(year) for i, year in enumerate(tickvals) if i % 5 == 0]
-    fig5 = px.bar(year_counts, x='Год ввода в эксплуатацию', y='Год',
-                  labels={'Год ввода в эксплуатацию': 'Год ввода в эксплуатацию', 'Год': 'Количество'},
-                  title='Распределение по годам ввода в эксплуатацию')
-    fig5.update_layout(
-        xaxis_title='Год ввода в эксплуатацию',
-        yaxis_title='Количество',
-        xaxis=dict(tickvals=tickvals, ticktext=ticktext, tickangle=45),
-        margin=dict(l=50, r=50, t=50, b=100)
-    )
-    plots['year_distribution_bar'] = fig5.to_json()
+
 
     return plots
 
@@ -152,6 +134,18 @@ def generate_interactive_plots_all_data(data):
 def generate_interactive_plots_notspecf_finaltable(data):
 
     plots = {}
+
+    # fig0 = px.histogram(data['Сумма распределения'])
+    # fig0.show()
+
+    count_main_book = pd.DataFrame(data['Счет главной книги'].value_counts()).reset_index()
+    count_main_book['Счет главной книги'] = count_main_book['Счет главной книги'].astype('str')
+    # print(count_main_book.reset_index())
+    fig = px.bar(count_main_book.reset_index(), x = 'Счет главной книги', y = 'count', 
+                    labels={'Год ввода в эксплуатацию': 'Год ввода в эксплуатацию', 'Год': 'Количество'},
+                    title='Распределение Главных Книг')
+    plots['main_book_distrib'] = fig.to_json()
+
 
     # Group by 'Здание' and sum the 'Сумма распределения'
     grouped = data.groupby('Здание')['Сумма распределения'].sum().reset_index()
@@ -256,13 +250,7 @@ def generate_interactive_plots_notspecf_finaltable(data):
 
     return plots
 
-
-
-
-
-
 # Example usage
-# generate_interactive_plots_all_data(data)
-# generate_interactive_plots(data, check_id = 5006170938)
-# plots = generate_interactive_plots_notspecf_finaltable(data)
-
+# generate_interactive_plots_all_data(data) #подавать res_datetimes
+# generate_interactive_plots(data, check_id = 5006170938) #подавать результат распределенные счета
+# plots = generate_interactive_plots_notspecf_finaltable(data) #подавать результат распределенные счета
