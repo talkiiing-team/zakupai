@@ -1,5 +1,6 @@
 # [РаспределяйAI](https://xn--80aicbulygci4n.xn--p1ai)
 ### by Singularity team
+РаспределAI - это low-code сервис для распределения основных средств, определения и прогнозирования расходов с помощью машинного обучения
 
 
 [Основная информация](#основная-информация)
@@ -11,26 +12,22 @@
 [Наша команда](#наша-команда)
 
 ## Основная информация
-РаспределAI - это low-code сервис для распределения основных средств, определения и прогнозирования расходов с помощью машинного обучения
-![](docs/images/screen1.JPG)
-![](docs/images/editor_example.png)
-
 Приложение развернуто на наших мощностях для удобства демонстрации на домене **[распределяй.рф](https://xn--80aicbulygci4n.xn--p1ai)**.
 
 **Инструкция по запуску сервисов** описана в **[quick-start.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/quick-start.md)**.
 
-Пользовательская документация доступна: **[здесь](https://evergreen-scarer-984.notion.site/f960dc52059049dea0c9f63e7ee0e761?pvs=4)**
+**Пользовательская документация** доступна: **[здесь](https://evergreen-scarer-984.notion.site/f960dc52059049dea0c9f63e7ee0e761?pvs=4)**
 
-Вся документация к модулям платформы расположена в **[docs](https://github.com/talkiiing-team/zakupai/blob/main/docs/)**.
+Вся **техническая документация** к модулям платформы расположена в **[docs](https://github.com/talkiiing-team/zakupai/blob/main/docs/)**.
 Для навигации по ней используйте текущую страницу
 
-![](docs/images)
+
+![](docs/images/screen1.JPG)
+
 
 ## Документация к core-модулям
 
 ![](docs/images/ZAKUPAI_sheme.png)
-
-------------
 
 ### Модуль предобработки данных
 **Документация к модулю**: **[merge_contracts.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/merge_contracts.md)**.
@@ -78,14 +75,19 @@
 
 ----------
 
+
+------------
+
+
 ## Примеры кода для запуска core алгоритмов
-![](docs/images/catboost.png)
 
 **Код для обучения модели определения счета главной книги:** **[predict_main_book.ipynb](https://github.com/talkiiing-team/zakupai/blob/main/services/api/ml/lib/predict_main_book.ipynb)**.
 Код для обучения модели градиентного бустинга определения счет главной книги. Используются данные исходного датасета и сгенерированные признаки с помощью metrge_contract.py
 
 **Пример запуска pipeline-а модуля:** **[pipeline_example.ipynb](https://github.com/talkiiing-team/zakupai/blob/main/services/api/ml/lib/pipeline_example.ipynb)**.
 Представлен весь пайплайн из core алгоритмов - начиная с загрузки данных, заканчивая предсказанием затрат по основным средствам на будущее
+
+![](docs/images/catboost.png)
 
 
 ## Наша команда
