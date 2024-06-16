@@ -6,13 +6,15 @@ export const Route = createFileRoute('/_panel/_processings')({
             <nav className="border-b border-zinc-300 p-4">
                 <ul className="text-md flex flex-row gap-4 align-middle">
                     <li>
-                        <Link to="/processings/upload">Загрузка</Link>
+                        <Link to="/processings/upload">Датасет</Link>
                     </li>
                     <li>
-                        <Link to="/processings/dataset">Датасет</Link>
+                        <Link to="/processings/graph">Алгоритм</Link>
                     </li>
                     <li>
-                        <Link to="/processings/graph">Граф</Link>
+                        <Link to="/processings/distribution">
+                            Распределение
+                        </Link>
                     </li>
                 </ul>
             </nav>

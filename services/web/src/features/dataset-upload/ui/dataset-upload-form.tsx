@@ -41,7 +41,7 @@ export const DatasetUploadForm: FC = () => {
             }));
         };
 
-    const upload = () => {
+    const upload = async () => {
         const { merger, mainCosts, squares, servCodes, pays } = files;
 
         if (!merger || !mainCosts || !squares || !servCodes || !pays) {
@@ -49,61 +49,63 @@ export const DatasetUploadForm: FC = () => {
             return;
         }
 
-        uploadDataset({
+        await uploadDataset({
             merger,
             mainCosts,
             squares,
             servCodes,
             pays,
         });
-    };
 
-    const runMerge = () => {
-        mergeDataset();
+        await mergeDataset();
     };
 
     return (
         <form
-            className="flex flex-col"
+            className="flex flex-col items-start"
             onSubmit={(e) => {
                 e.preventDefault();
             }}
         >
-            <label>merger</label>
+            <label>Связь договор-здания</label>
             <input
                 className="mb-4"
                 type="file"
                 onChange={handleSingleFile('merger')}
             />
-            <label>main_costs</label>
+            <label>Основные средства</label>
             <input
                 className="mb-4"
                 type="file"
                 onChange={handleSingleFile('mainCosts')}
             />
-            <label>squares</label>
+            <label>Площади зданий</label>
             <input
                 className="mb-4"
                 type="file"
                 onChange={handleSingleFile('squares')}
             />
-            <label>serv_codes</label>
+            <label>Коды услуг</label>
             <input
                 className="mb-4"
                 type="file"
                 onChange={handleSingleFile('servCodes')}
             />
-            <label>договоры</label>
+            <label>Договоры</label>
             <input className="mb-4" type="file" />
-            <label>pays</label>
+            <label>Счета на оплату (несколько файлов)</label>
             <input
                 className="mb-4"
                 type="file"
                 multiple
                 onChange={handleMultiplyFiles('pays')}
             />
-            <button onClick={upload}>Загрузить</button>
-            <button onClick={runMerge}>merge</button>
+            <button
+                className="mt-4 rounded-md border border-zinc-300 px-4 py-2 text-xl shadow-md"
+                onClick={upload}
+            >
+                Загрузить
+            </button>
         </form>
     );
 };
