@@ -5,6 +5,7 @@ import { Hono } from 'hono';
 import { PythonShell } from 'python-shell';
 
 import { auth } from '@/middlewares/auth';
+import { logger } from '@/logger';
 
 const app = new Hono();
 
@@ -31,6 +32,8 @@ app.post('/dataset', async (c) => {
             );
         }),
     );
+
+    return c.json({ message: 'successful' }, 201);
 });
 
 app.post('/merge', async (c) => {
@@ -46,6 +49,8 @@ app.post('/merge', async (c) => {
         py.on('error', reject);
         py.on('pythonError', reject);
     });
+
+    return c.json({ message: 'successful' }, 200);
 });
 
 app.get('/features', async (c) => {
@@ -64,6 +69,8 @@ app.post('/graph', async (c) => {
     const graph = await c.req.json();
 
     await fs.writeFile('/mnt/bucket/graph.json', JSON.stringify(graph));
+
+    return c.json({ message: 'successful' }, 201);
 });
 
 app.post('/distribution', async (c) => {
@@ -74,11 +81,13 @@ app.post('/distribution', async (c) => {
             pythonOptions: ['-u'],
         });
 
-        py.on('message', console.log);
+        py.on('message', logger.debug);
         py.on('close', resolve);
         py.on('error', reject);
         py.on('pythonError', reject);
     });
+
+    return c.json({ messsage: 'successful' }, 201);
 });
 
 export default app;

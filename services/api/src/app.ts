@@ -18,6 +18,11 @@ app.get('/health', (c) => c.body('OK'));
 
 app.route('/v1', v1Routes);
 
+app.onError((error, c) => {
+    logger.error(error);
+    return c.json({ message: error }, 500);
+});
+
 serve({
     fetch: app.fetch,
     port: Number(PORT),
