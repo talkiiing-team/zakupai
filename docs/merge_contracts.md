@@ -39,7 +39,7 @@
 ### Пример использования
 ```python
 import pandas as pd
-from с import ContractsMerger
+from merge_contracts import ContractsMerger
 
 pays_df1 = pd.read_excel("data/Счета на оплату 3800-2023.XLSX")
 pays_df2 = pd.read_excel("data/Счета на оплату n.XLSX")
