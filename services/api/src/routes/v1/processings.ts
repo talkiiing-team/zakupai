@@ -109,6 +109,20 @@ app.post('/forecast', async (c) => {
         py.on('pythonError', reject);
     });
 
+    await new Promise<void>((resolve, reject) => {
+        const py = new PythonShell('forecast_plots.py', {
+            mode: 'text',
+            scriptPath: path.join(import.meta.dirname, '../../../ml'),
+            pythonOptions: ['-u'],
+            args: [checkid],
+        });
+
+        py.on('message', (msg) => logger.debug(msg));
+        py.on('close', resolve);
+        py.on('error', reject);
+        py.on('pythonError', reject);
+    });
+
     return c.json({ messsage: 'successful' }, 201);
 });
 
