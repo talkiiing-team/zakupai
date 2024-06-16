@@ -7,7 +7,7 @@ import { CreateProcessingButton } from '@/features/processings/ui/create-process
 
 export const Route = createLazyFileRoute('/_panel/processings/')({
     component: () => {
-        const history = useSWR('v1/processings/', getProcessingsHistory);
+        const history = useSWR('v1/processings', getProcessingsHistory);
 
         return (
             <main className="relative flex h-full w-full flex-row">

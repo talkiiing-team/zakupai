@@ -35,7 +35,7 @@ export const getProcessingsHistory = async (): Promise<Array<Processing>> => {
     type Response = Array<ProcessingDTO>;
 
     const res = await ky.get(
-        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/`,
+        `${import.meta.env.VITE_API_BASE_URL}/v1/processings`,
     );
 
     if (!res.ok) {
@@ -75,7 +75,7 @@ export const createProcessing = async (): Promise<Processing> => {
     type Response = ProcessingDTO;
 
     const res = await ky.post(
-        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/`,
+        `${import.meta.env.VITE_API_BASE_URL}/v1/processings`,
     );
 
     if (!res.ok) {
