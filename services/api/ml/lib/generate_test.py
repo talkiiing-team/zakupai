@@ -1,11 +1,13 @@
 import pandas as pd
 import numpy as np
+import os
 from tqdm import tqdm
 import catboost
 from catboost import Pool
 import pickle
 
-main_cost_clf = pickle.load(open("main_cost_clf.pickle", "rb"))
+
+main_cost_clf = pickle.load(open(os.path.join(os.getcwd(), "lib/main_cost_clf.pickle"), "rb"))
 cat_features = ["Год счета", "Позиция счета", "Номер позиции распределения",
                 "Услуга", "Класс услуги", "Класс ОС", 'Признак "Использование в основной деятельности"', 'Признак "Способ использования"']
 x_features = ["Площадь ОС", "Сумма распределения"]
