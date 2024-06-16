@@ -35,8 +35,8 @@ def prepare_data(data, check_ID):
     df_filled = daily_df.copy()
     for col in tqdm(daily_df.columns):
         if daily_df.loc[check_ID, col] < 1000 or pd.isna(daily_df.loc[check_ID, col]):
-            previous_data = daily_df.loc[check_ID, :col].replace(0, np.nan)
-            df_filled.loc[check_ID, col] = previous_data.mean() + random.randint(30, 70) * 10000 // 100
+            previous_data = daily_df.loc[check_ID, :col]    # .replace(0, np.nan)
+                df_filled.loc[check_ID, col] = previous_data.mean()
 
     # Удаление выбросов
     # daily_df = daily_df.apply(remove_outliers, axis=1)
