@@ -7,4 +7,4 @@
 Инструкция по запуску сервисов описана в [quick-start.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/quick-start.md).
 
 ## Документация к core-алгоритмам (python)
-- Модуль прогнозирования расходов [forecating.md.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/quick-start.md)
+- Модуль прогнозирования расходов [forecating.md](https://github.com/talkiiing-team/zakupai/blob/main/docs/forecasting.md)
