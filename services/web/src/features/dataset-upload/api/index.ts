@@ -26,6 +26,20 @@ export const uploadDataset = async (
         new URL(`${import.meta.env.VITE_API_BASE_URL}/v1/processings/dataset`),
         {
             body: formData,
+            timeout: 30_000,
+        },
+    );
+
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
+};
+
+export const mergeDataset = async () => {
+    const res = await ky.post(
+        new URL(`${import.meta.env.VITE_API_BASE_URL}/v1/processings/merge`),
+        {
+            timeout: 300_000,
         },
     );
 

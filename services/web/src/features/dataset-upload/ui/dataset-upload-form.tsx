@@ -1,6 +1,6 @@
 import { FC, ChangeEvent, useState } from 'react';
 
-import { uploadDataset } from '@/features/dataset-upload/api';
+import { mergeDataset, uploadDataset } from '@/features/dataset-upload/api';
 
 type FilesState = {
     merger?: File;
@@ -58,6 +58,10 @@ export const DatasetUploadForm: FC = () => {
         });
     };
 
+    const runMerge = () => {
+        mergeDataset();
+    };
+
     return (
         <form
             className="flex flex-col"
@@ -99,6 +103,7 @@ export const DatasetUploadForm: FC = () => {
                 onChange={handleMultiplyFiles('pays')}
             />
             <button onClick={upload}>Загрузить</button>
+            <button onClick={runMerge}>merge</button>
         </form>
     );
 };

@@ -19,3 +19,16 @@ export const getFeatures = async () => {
         dataType,
     }));
 };
+
+export const saveGraph = async () => {
+    const res = await ky.get(
+        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/features`,
+        {
+            timeout: 30_000,
+        },
+    );
+
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
+};
