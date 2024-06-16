@@ -6,7 +6,7 @@ from lib.graphs import generate_interactive_plots_all_data, generate_interactive
 
 check_id = int(sys.argv[1])
 
-forecast_df = pd.read_csv('/mnt/bucket/forecast.csv')
+forecast_df = pd.read_csv('/mnt/bucket/distribution_result.csv')
 
 generate_interactive_plots_all_data(forecast_df)
 generate_interactive_plots(forecast_df, check_id = check_id)
