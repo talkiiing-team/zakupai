@@ -1,6 +1,6 @@
-import { int, mysqlTable, text } from 'drizzle-orm/mysql-core';
+import { mysqlTable, int, text, timestamp } from 'drizzle-orm/mysql-core';
 
-const processings = mysqlTable('processings', {
+export const processings = mysqlTable('processings', {
     id: int('id').primaryKey().autoincrement(),
     status: text('status', {
         enum: [
@@ -11,6 +11,10 @@ const processings = mysqlTable('processings', {
             'merged',
             'distributing',
             'distributed',
+            'forecasting',
+            'generating-plots',
+            'done',
         ],
     }),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
 });

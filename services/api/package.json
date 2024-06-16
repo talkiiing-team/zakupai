@@ -6,7 +6,8 @@
   "scripts": {
     "start": "tsx src/app.ts",
     "dev": "tsx watch src/app.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "generate": "drizzle-kit generate"
   },
   "devDependencies": {
     "@types/node": "^20.14.2",

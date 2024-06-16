@@ -3,6 +3,9 @@ version: '3'
 services:
   caddy:
     build: ./caddy
+    depends_on:
+      - api
+      - web
     ports:
       - 80:80
       - 443:443
@@ -10,6 +13,8 @@ services:
       - caddy_data:/data
 
   api:
+    depends_on:
+      - mysql
     restart: always
     build:
       context: .
@@ -27,6 +32,8 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
 
   web:
+    depends_on:
+      - api
     build:
       context: .
       dockerfile: dockerfile
@@ -39,6 +46,8 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
       - mysql_data:/var/lib/mysql
+    ports:
+      - 3306:3306
 
 volumes:
   caddy_data:
