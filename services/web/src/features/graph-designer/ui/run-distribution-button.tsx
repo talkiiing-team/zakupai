@@ -1,15 +1,23 @@
 import { FC } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 
 import { Spinner } from '@/common/ui/spinner';
 import { runDistribution } from '@/features/graph-designer/api';
 
 type Props = {
+    procId: number | string;
     isLoading: boolean;
 };
 
-export const RunDistributionButton: FC<Props> = ({ isLoading }) => {
+export const RunDistributionButton: FC<Props> = ({ procId, isLoading }) => {
+    const navigate = useNavigate({ from: '/processings/$id/graph' });
+
     const run = async () => {
-        await runDistribution();
+        await runDistribution(procId);
+        await navigate({
+            to: '/processings/$id/distribution',
+            params: { id: String(procId) },
+        });
     };
 
     return (

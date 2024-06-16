@@ -2,9 +2,9 @@ import ky from 'ky';
 
 export type FeatureDataType = 'bool' | 'date' | 'num';
 
-export const getFeatures = async () => {
+export const getFeatures = async (procId: number | string) => {
     const res = await ky.get(
-        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/features`,
+        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/${procId}/features`,
     );
 
     if (!res.ok) {
@@ -20,9 +20,9 @@ export const getFeatures = async () => {
     }));
 };
 
-export const uploadGraph = async (graph: object) => {
+export const uploadGraph = async (procId: number | string, graph: object) => {
     const res = await ky.post(
-        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/graph`,
+        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/${procId}/graph`,
         {
             json: graph,
             timeout: 10_000,
@@ -34,9 +34,9 @@ export const uploadGraph = async (graph: object) => {
     }
 };
 
-export const runDistribution = async () => {
+export const runDistribution = async (procId: number | string) => {
     const res = await ky.post(
-        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/distribution`,
+        `${import.meta.env.VITE_API_BASE_URL}/v1/processings/${procId}/distribution`,
         {
             timeout: 60_000,
         },

@@ -4,14 +4,21 @@ import { Spinner } from '@/common/ui/spinner';
 import { useGraphDesignerState } from '@/features/graph-designer/model/use-graph-designer-state';
 import { uploadGraph } from '@/features/graph-designer/api';
 
-export const SaveGraphButton: FC = () => {
+type Props = {
+    procId: number | string;
+};
+
+export const SaveGraphButton: FC<Props> = ({ procId }) => {
     const [isLoading, setIsLoading] = useState(false);
     const { nodes, edges } = useGraphDesignerState();
 
     const save = async () => {
         try {
             setIsLoading(true);
-            await uploadGraph({ nodes: nodes.value, edges: edges.value });
+            await uploadGraph(procId, {
+                nodes: nodes.value,
+                edges: edges.value,
+            });
         } finally {
             setIsLoading(false);
         }

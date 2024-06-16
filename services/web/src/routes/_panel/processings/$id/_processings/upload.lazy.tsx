@@ -5,6 +5,7 @@ import { createLazyFileRoute, useParams } from '@tanstack/react-router';
 import { DatasetUploadForm } from '@/features/dataset-upload';
 import { ProcessingStatus } from '@/features/processings/model';
 import { getProcessingById } from '@/features/processings/api';
+import { Spinner } from '@/common/ui/spinner';
 
 export const Route = createLazyFileRoute(
     '/_panel/processings/$id/_processings/upload',
@@ -21,7 +22,20 @@ export const Route = createLazyFileRoute(
         return (
             <main className="relative flex h-full w-full flex-row">
                 <div className="m-24 w-full">
-                    <h1 className="mb-4 text-3xl">Загрузка данных</h1>
+                    {proc.data &&
+                    proc.data.status >= ProcessingStatus.MERGED ? (
+                        <h1 className="mb-4 text-3xl">Данные загружены</h1>
+                    ) : (
+                        proc.data &&
+                        proc.data.status === ProcessingStatus.MERGING && (
+                            <>
+                                <h1 className="mb-4 text-3xl">
+                                    Данные обрабатываются
+                                </h1>
+                                <Spinner />
+                            </>
+                        )
+                    )}
                     {proc.data &&
                         proc.data.status <=
                             ProcessingStatus.DATASET_UPLOADING && (

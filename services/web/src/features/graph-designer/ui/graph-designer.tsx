@@ -24,15 +24,15 @@ export const GraphDesigner: FC = () => {
     const { onConnect, onEdgesChange, onNodesChange, onDrop, onDragOver } =
         useGraphDesigner();
 
-    const { nodeTypes, inventory } = useGraphDesignerNodeTypes();
-
     const { id: procId } = useParams({
-        from: '/_panel/processings/$id/_processings/upload',
+        from: '/_panel/processings/$id/_processings/graph',
     });
 
     const proc = useSWR(['v1/processings', procId], ([, id]) =>
         getProcessingById(id),
     );
+
+    const { nodeTypes, inventory } = useGraphDesignerNodeTypes(procId);
 
     return (
         <div className="relative flex h-full w-full flex-row">
@@ -56,12 +56,13 @@ export const GraphDesigner: FC = () => {
                 />
             </ReactFlow>
             <RunDistributionButton
+                procId={procId}
                 isLoading={Boolean(
                     proc.data &&
                         proc.data.status === ProcessingStatus.DISTRIBUTING,
                 )}
             />
-            <SaveGraphButton />
+            <SaveGraphButton procId={procId} />
             <DownloadGraphJSONButton />
         </div>
     );

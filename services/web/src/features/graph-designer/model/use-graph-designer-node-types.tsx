@@ -144,8 +144,10 @@ const colorByDataType: Record<FeatureDataType, NodeColor> = {
     date: 'blue',
 };
 
-export const useGraphDesignerNodeTypes = () => {
-    const features = useSWR('v1/processings/features', getFeatures);
+export const useGraphDesignerNodeTypes = (procId: number | string) => {
+    const features = useSWR(['v1/processings/features', procId], ([, id]) =>
+        getFeatures(id),
+    );
 
     return useMemo(() => {
         const featuresNodes = features.data?.map<InventoryItem>(
