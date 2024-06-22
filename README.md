@@ -1,4 +1,4 @@
-# [Наш сервис](https://xn--80aicbulygci4n.xn--p1ai)
+# [РаспределAI](https://xn--80aicbulygci4n.xn--p1ai)
 
 <img src="docs/images/logo.png" width="320"  align="right" >
 
