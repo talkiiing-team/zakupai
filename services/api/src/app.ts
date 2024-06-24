@@ -1,4 +1,4 @@
-import { Hono } from 'hono';
+import { OpenAPIHono } from '@hono/zod-openapi';
 import { showRoutes } from 'hono/dev';
 import { cors } from 'hono/cors';
 import { serve } from '@hono/node-server';
@@ -9,7 +9,7 @@ import { logger } from '@/logger';
 import { v1Routes } from '@/routes/v1';
 import { migrateDb } from '@/db';
 
-export const app = new Hono();
+export const app = new OpenAPIHono();
 
 app.use('*', cors());
 
@@ -18,8 +18,18 @@ app.onError((error, c) => {
     return c.json({ message: error }, 500);
 });
 
-app.get('/docs', swaggerUI({ url: '/' }));
 app.get('/health', (c) => c.body('OK'));
+app.get('/docs', swaggerUI({ url: '/openapi' }));
+app.doc('/openapi', {
+    info: { title: 'РаспределAI', version: 'v1' },
+    openapi: '3.1.0',
+    servers: [
+        {
+            url: new URL('https://api.xn--80aicbulygci4n.xn--p1ai').origin,
+            description: 'production',
+        },
+    ],
+});
 app.route('/v1', v1Routes);
 
 const run = async () => {
