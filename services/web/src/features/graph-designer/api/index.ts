@@ -46,3 +46,17 @@ export const runDistribution = async (procId: number | string) => {
         throw new Error(res.statusText);
     }
 };
+
+export const getGraph = async (procId: number | string): Promise<object> => {
+    type Response = Record<string, string>;
+
+    const res = await ky.get(
+        `${import.meta.env.VITE_S3_BASE_URL}/${procId}/graph.json`,
+    );
+
+    if (!res.ok) {
+        throw new Error(res.statusText);
+    }
+
+    return await res.json<Response>();
+};

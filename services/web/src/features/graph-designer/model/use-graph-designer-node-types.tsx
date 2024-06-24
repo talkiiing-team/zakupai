@@ -1,6 +1,5 @@
 import { ComponentType, useMemo } from 'react';
 import { NodeProps, Position } from 'reactflow';
-import useSWR from 'swr';
 
 import { FeatureDataType, getFeatures } from '@/features/graph-designer/api';
 import { RootNode } from '@/features/graph-designer/ui/nodes/root-node';
@@ -18,6 +17,7 @@ import { BooleanConditionNode } from '@/features/graph-designer/ui/nodes/boolean
 import { DateConditionNode } from '@/features/graph-designer/ui/nodes/date-condition-node';
 import { BaseNode } from '@/features/graph-designer/ui/nodes/base-node';
 import { NodeColor } from '@/features/graph-designer/model/color';
+import useSWRImmutable from 'swr/immutable';
 
 type InventoryItem = {
     displayName: string;
@@ -145,12 +145,9 @@ const colorByDataType: Record<FeatureDataType, NodeColor> = {
 };
 
 export const useGraphDesignerNodeTypes = (procId: number | string) => {
-    const features = useSWR(
+    const features = useSWRImmutable(
         ['v1/processings/features', procId],
         ([, id]) => getFeatures(id),
-        {
-            refreshInterval: 5_000,
-        },
     );
 
     return useMemo(() => {

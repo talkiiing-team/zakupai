@@ -7,6 +7,6 @@ export const DocsButton: FC = () => (
         className="absolute bottom-32 right-4 block rounded-md border border-zinc-300 bg-white p-2 text-center align-middle shadow-md"
         target="_blank"
     >
-        <InformationCircleIcon className="h-6 w-6" />
+        <InformationCircleIcon className="h-12 w-12" />
     </a>
 );

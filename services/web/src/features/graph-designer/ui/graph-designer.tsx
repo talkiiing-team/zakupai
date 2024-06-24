@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import ReactFlow, { Controls, Background, BackgroundVariant } from 'reactflow';
 import { useSignals } from '@preact/signals-react/runtime';
 import { useParams } from '@tanstack/react-router';
@@ -14,6 +14,7 @@ import { getProcessingById } from '@/features/processings/api';
 import { ProcessingStatus } from '@/features/processings/model';
 import { SaveGraphButton } from '@/features/graph-designer/ui/save-graph-button';
 import { DocsButton } from '@/features/graph-designer/ui/docs-button';
+import { getGraph } from '@/features/graph-designer/api';
 
 import 'reactflow/dist/style.css';
 
@@ -36,6 +37,21 @@ export const GraphDesigner: FC = () => {
             refreshInterval: 5_000,
         },
     );
+
+    useEffect(() => {
+        if (!proc.data) {
+            return;
+        }
+
+        getGraph(proc.data.id).then((graph) => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            nodes.value = graph.nodes;
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            edges.value = graph.edges;
+        });
+    }, [proc.data]);
 
     const { nodeTypes, inventory } = useGraphDesignerNodeTypes(procId);
 
