@@ -4,12 +4,12 @@
 
 ### Infra + Boilerplate
 
-- [ ] Поднять виртуалку
-- [ ] Поднять кубер
+- [x] Поднять виртуалку
+- [х] Поднять кубер
 - [x] Купить домен - `закуп-ай.рф`
-- [ ] Поднять ingress & cert-manager
-- [ ] Поднять PostgreSQL
-- [ ] Поднять Clickhouse
+- [x] Поднять ingress & cert-manager
+- [x] Поднять PostgreSQL
+- [x] Поднять Clickhouse
 - [ ] Забутстрапить фронт
   - React
   - Gravity UI
