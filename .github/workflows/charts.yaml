@@ -1,0 +1,32 @@
+name: Charts
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - charts/**
+      - .github/workflows/charts.yaml
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4.3.0
+      - uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+          KUBE_CONTEXT: zakupai
+        with:
+          args: cluster-info
+
+      - name: Release Clickhouse
+        run:
+          helm updrage -i -f charts/clickhouse/values.yaml clickhouse oci://registry-1.docker.io/bitnamicharts/clickhouse
+
+      - name: Release Postgres
+        run:
+          helm updrage -i -f charts/postgres/values.yaml postgres oci://registry-1.docker.io/bitnamicharts/postgresql

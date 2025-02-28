@@ -8,5 +8,13 @@ auth:
   username: admin
   password: password
 
+resources:
+  requests:
+    cpu: 500m
+    memory: 2048Mi
+  limit:
+    cpu: 2000m
+    memory: 6144Mi
+
 shards: 1
 replicaCount: 1
