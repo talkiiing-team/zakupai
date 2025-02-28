@@ -1,0 +1,23 @@
+name: Infra
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .kube/**
+      - .github/workflows/infra.yaml
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+          KUBE_CONTEXT: zakupai
+        with:
+          args: apply -f .kube/
