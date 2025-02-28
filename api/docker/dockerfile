@@ -3,7 +3,7 @@ FROM python:3.12-bookworm
 WORKDIR /opt/app
 
 COPY api/requirements.txt .
-RUN pip install --no-cache-dir --upgrade -r requirements.txt --root-user-action
+RUN pip install --no-cache-dir --upgrade -r requirements.txt --root-user-action ignore
 
 COPY api .
 
