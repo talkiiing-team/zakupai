@@ -25,8 +25,8 @@ jobs:
 
       - name: Release Clickhouse
         run:
-          helm updrage -i -f charts/clickhouse/values.yaml clickhouse oci://registry-1.docker.io/bitnamicharts/clickhouse
+          helm upgrade -i -f charts/clickhouse/values.yaml clickhouse oci://registry-1.docker.io/bitnamicharts/clickhouse
 
       - name: Release Postgres
         run:
-          helm updrage -i -f charts/postgres/values.yaml postgres oci://registry-1.docker.io/bitnamicharts/postgresql
+          helm upgrade -i -f charts/postgres/values.yaml postgres oci://registry-1.docker.io/bitnamicharts/postgresql
