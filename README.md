@@ -1,5 +1,16 @@
 # ЗакупAI
 
+## Dev quickstart
+
+- Поставь `pyenv` и убедись что у тебя выбрана корректная версия Python
+- Создай .venv и поставь зависимости
+
+```bash
+python3 -m venv .venv
+python3 -m pip install -r api/requirements.txt
+python3 -m pip install -r ml/requirements.txt
+```
+
 ## Таски
 
 ### Infra + Boilerplate
@@ -41,7 +52,7 @@
 - [ ] Генерация отчета в .pdf
   - Генерация изображения графиков (maybe nodriver/puppetter)
 - [ ] Отправка на каналы нотификаций (OR)
-  - Telegram
+  - Telegram + механизм линка chat_id пользователя
   - Email
 
 ### Презентация
