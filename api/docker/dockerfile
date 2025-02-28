@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt --root-user-action 
 COPY api .
 
 EXPOSE 80
-CMD [ "fastapi", "run", "main.py", "--proxy-headers", "--port", "80" ]
+CMD [ "fastapi", "run", "app/main.py", "--proxy-headers", "--port", "80" ]
