@@ -1,0 +1,51 @@
+{
+  "name": "web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@gravity-ui/dashkit": "^8.26.1",
+    "@gravity-ui/navigation": "^3.1.1",
+    "@siberiacancode/reactuse": "^0.0.97",
+    "@tailwindcss/vite": "^4.0.9",
+    "@tanstack/react-router": "^1.112.0",
+    "highcharts": "^12.1.2",
+    "jotai": "^2.12.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.9"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@gravity-ui/chartkit": "^6.0.1",
+    "@gravity-ui/icons": "^2.13.0",
+    "@gravity-ui/uikit": "^7.5.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@tanstack/router-devtools": "^1.112.0",
+    "@tanstack/router-plugin": "^1.112.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-basic-ssl": "^1.2.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react-swc": "^3.8.0",
+    "esbuild-sass-plugin": "^3.3.1",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "lightningcss": "^1.29.1",
+    "sass-embedded": "^1.85.1",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^6.2.0",
+    "vite-imagetools": "^7.0.5",
+    "vite-plugin-svgr": "^4.3.0",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
