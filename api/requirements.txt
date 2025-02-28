@@ -4,3 +4,4 @@ pydantic-settings
 alembic
 asyncpg
 sqlalchemy
+unicorn
