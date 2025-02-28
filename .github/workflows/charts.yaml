@@ -16,12 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: azure/setup-helm@v4.3.0
-      - uses: actions-hub/kubectl@master
+      - run: |
+          mkdir -p ~/.kube
+          echo $KUBE_CONFIG | base64 -d > ~/.kube/config
+          kubectl config use-context zakupai
+          kubectl cluster-info
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-          KUBE_CONTEXT: zakupai
-        with:
-          args: cluster-info
 
       - name: Release Clickhouse
         run:
