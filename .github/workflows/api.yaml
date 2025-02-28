@@ -1,0 +1,52 @@
+name: Api
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - api/**
+      - .github/workflows/api.yaml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: docker/login-action@v3
+        with:
+          registry: cr.yandex
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: actions/checkout@v4
+      - uses: docker/build-push-action@v6
+        with:
+          file: ./api/docker/dockerfile
+          context: .
+          push: true
+          tags: cr.yandex/crphumdkkpdrgg386glu/api:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs:
+      - build
+    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+          KUBE_CONTEXT: zakupai
+        with:
+          args: apply -f api/.kube
+      - uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+          KUBE_CONTEXT: zakupai
+        with:
+          args: rollout restart deployment api
+      
