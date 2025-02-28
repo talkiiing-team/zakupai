@@ -43,3 +43,10 @@ jobs:
           KUBE_CONTEXT: zakupai
         with:
           args: apply -f web/.kube
+      - uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+          KUBE_CONTEXT: zakupai
+        with:
+          args: rollout restart deployment web
+      
