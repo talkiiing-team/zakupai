@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - web/**
+      - .github/workflows/web.yaml
 
 jobs:
   build:
