@@ -29,13 +29,14 @@ jobs:
           push: true
           tags: cr.yandex/crphumdkkpdrgg386glu/web:latest
 
-  release:
+  deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     needs:
       - build
     
     steps:
+      - uses: actions/checkout@v4
       - uses: actions-hub/kubectl@master
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
