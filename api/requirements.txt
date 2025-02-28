@@ -1,1 +1,3 @@
 fastapi[standart]
+pydantic
+pydantic-settings
