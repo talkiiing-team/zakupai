@@ -5,8 +5,8 @@ from clickhouse_connect.driver import Client
 from fastapi import APIRouter, Depends
 
 from app.clickhouse.ClickhouseConnection import get_clickhouse_connection
-from app.dto.JoinSequenceDataInfoDto import TableJoinDescription
-from app.request_builder.RequestBuilder import get_available_join_list, build_source
+from app.dto.JoinSequenceDataInfoDto import TableJoinDescription, FilterDto, TableFilterFrontDto
+from app.request_builder.RequestBuilder import get_available_join_list, build_source, get_all_available_filters
 
 router = APIRouter()
 
@@ -28,3 +28,8 @@ def get_join_sequence_list(
         limit: int | None = 100
 ) -> list[dict]:
     return build_source(table_list, connection, limit)
+
+
+@router.post("/get_table_filters")
+def get_table_filters(table_join_description: TableJoinDescription) -> list[TableFilterFrontDto]:
+    return get_all_available_filters(table_join_description)

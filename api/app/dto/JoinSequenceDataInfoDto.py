@@ -14,3 +14,20 @@ class JoinSequenceDataInfoRuleDto(BaseModel):
 class TableJoinDescription(BaseModel):
     base_table: str
     join_sequence: list[JoinSequenceDataInfoDto]
+
+
+class FilterDto(BaseModel):
+    type: str = "select"
+    column: str
+    is_array: bool = False
+
+
+class TableFiltersDto(BaseModel):
+    table: str
+    filters: list[FilterDto]
+
+class TableFilterFrontDto(BaseModel):
+    table: str
+    type: str
+    column: str
+    is_array: bool
