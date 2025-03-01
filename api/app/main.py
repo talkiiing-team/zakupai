@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from contextlib import asynccontextmanager
 from aiogram.types import Update
 
-from app.controller import DatasourceController, NotificationChannelController
+from app.controller import DatasourceController, NotificationChannelController, DynamicFilterController
 from app import bot
 from app.settings import settings
 
@@ -24,7 +24,9 @@ app.include_router(DatasourceController.router, prefix="/datasource")
 app.include_router(
     NotificationChannelController.router, prefix="/notification_channels"
 )
-
+app.include_router(
+    DynamicFilterController.router
+)
 
 @app.post("/tg/webhook")
 async def tg_webhook(request: Request) -> None:
@@ -36,5 +38,3 @@ async def tg_webhook(request: Request) -> None:
 def health():
     return "ok"
 
-
-print(app.routes)

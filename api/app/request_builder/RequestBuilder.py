@@ -1,7 +1,9 @@
+import sys
 from typing import List
 
 from clickhouse_connect.driver import Client
 
+from app.dto.DynamicFilterDto import DynamicFilterDto, SelectedFilter, DynamicFilterResponseDto
 from app.dto.JoinSequenceDataInfoDto import JoinSequenceDataInfoDto, JoinSequenceDataInfoRuleDto, TableJoinDescription, \
     TableFiltersDto, FilterDto, TableFilterFrontDto
 
@@ -138,11 +140,6 @@ tables_filters = [
     ),
 ]
 
-
-def build_join_source(join_sequence_data_info: List[JoinSequenceDataInfoDto]) -> str:
-    pass
-
-
 def get_available_join_list():
     return list(
         map(
@@ -158,7 +155,9 @@ def get_available_join_list():
 def build_source_query(
         source_description: TableJoinDescription
 ) -> str:
+    print('aboba2', file=sys.stderr)
     select_part = f"FROM {source_description.base_table}"
+
     for join in source_description.join_sequence:
         selection_rool = list(
             filter(
@@ -217,3 +216,36 @@ def get_all_available_filters(source_descriptions: TableJoinDescription) -> list
                 is_array=f.is_array
             ))
     return ret_value
+
+
+def get_filter_query_part(selected_filters: List[SelectedFilter]) -> str:
+    filter_tokens = []
+    for f in selected_filters:
+        if f.type == 'select':
+            query_path = '('
+            table_and_column = f'toString({f.table}.{f.column})'
+            for t in f.value_for_select:
+                query_path = query_path + table_and_column + '=' + '\'' + t + '\'' + ' OR '
+            query_path += 'FALSE'
+            query_path += ')'
+            filter_tokens.append(query_path)
+    return ' AND '.join(filter_tokens)
+
+
+def get_filter_value(dynamic_filter_dto: DynamicFilterDto, client: Client) -> DynamicFilterResponseDto:
+    print('aboba', file=sys.stderr)
+    join_query_part = build_source_query(dynamic_filter_dto.table_join_description)
+
+    print('join query part', join_query_part, file=sys.stderr)
+    if dynamic_filter_dto.selected_filters is None or dynamic_filter_dto.selected_filters == []:
+        filter_part = ""
+    else:
+        filter_part = "WHERE " + get_filter_query_part(dynamic_filter_dto.selected_filters)
+    print('filter part', filter_part)
+    if dynamic_filter_dto.requested_filter_value.type == "select":
+        requested_filter = dynamic_filter_dto.requested_filter_value
+        query = f"SELECT DISTINCT({requested_filter.table}.{requested_filter.column}) {join_query_part} {filter_part}"
+        print(query)
+        result = client.query(query)
+        unique_values = [str(row[0]) for row in result.result_rows]
+        return DynamicFilterResponseDto(unique_values_for_options=unique_values)
