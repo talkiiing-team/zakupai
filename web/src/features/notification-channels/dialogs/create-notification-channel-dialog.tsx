@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button, Dialog, SegmentedRadioGroup, Text, TextInput } from "@gravity-ui/uikit";
 import { useMutation } from '@tanstack/react-query';
 
-import { getNotificationChannelsNotificationChannelsEmailPost } from '~/api/zakupaiComponents'
 
 type Props = {
     open: boolean,
@@ -15,7 +14,7 @@ export function CreateNotificationChannelDialog({ open, onClose, }: Props) {
         { type: 'telegram';  } | { type: 'email'; email: string }
     >({ type: 'telegram' });
 
-    const createEmailChannel = useMutation({ mutationFn: getNotificationChannelsNotificationChannelsEmailPost, mutationKey: ['notification_channels'] });
+    const createEmailChannel = useMutation({ mutationFn: async (args: { queryParams: { email: string } }) => {}, mutationKey: ['notification_channels'] });
 
     const onCancel = () => {
         onClose();
