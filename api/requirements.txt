@@ -5,6 +5,6 @@ alembic
 asyncpg
 sqlalchemy
 unicorn
-clickhouse-connect
 aiogram
 greenlet
+kubernetes
