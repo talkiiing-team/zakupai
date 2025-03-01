@@ -83,6 +83,7 @@ export const DashboardsTable: FC = () => {
           {
             id: entity.entryId,
             name: <DashboardName>{entity.key.split('/').splice(-1).join('')}</DashboardName>,
+            updatedAt: new Date(entity.updatedAt).toLocaleString()
           }
         )) ?? []
       }
@@ -91,7 +92,11 @@ export const DashboardsTable: FC = () => {
         {
           id: 'name',
           name: 'Название'
-        }
+        },
+        {
+          id: 'updatedAt',
+          name: 'Последнее изменение'
+        },
       ]}
     />
   )
