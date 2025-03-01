@@ -1,7 +1,8 @@
 import { Text } from '@gravity-ui/uikit';
 
-import { DashboardsTable } from '@/components/tables/dashboards-table';
 import { ActionBar } from '@/components/navigation/action-bar';
+
+import { DashboardsTable } from '../tables/dashboards-table';
 
 export function DashboardsPage() {
   return (
