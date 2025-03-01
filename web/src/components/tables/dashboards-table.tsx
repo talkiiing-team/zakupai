@@ -56,7 +56,7 @@ export const DashboardsTable: FC = () => {
             description: 'Основной дашборд, общая аналитика'
           },
           {
-            id: 'me-and-market',
+            id: 'market',
             name: <DashboardName>Я и Рынок</DashboardName>,
             description: 'Проанализируйте свою ситуацию на фоне других'
           },
