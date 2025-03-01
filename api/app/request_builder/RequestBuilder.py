@@ -1,12 +1,6 @@
-from logging import Filter
 from typing import List
 
-from clickhouse_connect.dbapi import Connection
 from clickhouse_connect.driver import Client
-from markdown_it.rules_block import table
-from sqlalchemy import column
-from sqlalchemy.dialects.mssql.information_schema import columns
-from sqlalchemy.dialects.oracle.dictionary import all_tables
 
 from app.dto.JoinSequenceDataInfoDto import JoinSequenceDataInfoDto, JoinSequenceDataInfoRuleDto, TableJoinDescription, \
     TableFiltersDto, FilterDto, TableFilterFrontDto
@@ -161,11 +155,9 @@ def get_available_join_list():
     )
 
 
-def build_source(
-        source_description: TableJoinDescription,
-        connection: Client,
-        limit: int | None
-):
+def build_source_query(
+        source_description: TableJoinDescription
+) -> str:
     select_part = f"FROM {source_description.base_table}"
     for join in source_description.join_sequence:
         selection_rool = list(
@@ -177,6 +169,15 @@ def build_source(
             )
         )[0]
         select_part += f" JOIN {join.right_join_table} ON {selection_rool.condition}"
+    return select_part
+
+
+def build_source(
+        source_description: TableJoinDescription,
+        connection: Client,
+        limit: int | None
+):
+    select_part = build_source_query(source_description)
     if limit is not None:
         select_part += f" LIMIT {limit}"
     return get_select_data(select_part, connection)
