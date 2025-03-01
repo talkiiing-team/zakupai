@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, Ref, useEffect, useState } from "react";
 import { Button, Dialog, Loader, SegmentedRadioGroup, Select, Text, TextInput } from "@gravity-ui/uikit";
 import { Cron } from 'react-js-cron'
 
@@ -12,6 +12,7 @@ import { useCreateScheduler } from '../hooks/use-create-scheduler';
 import { toaster } from '@/shared/lib/toaster';
 
 type Props = {
+    target?: string,
     open: boolean,
     onClose: () => void,
     onApply: () => void,
@@ -34,7 +35,7 @@ const NotificationChannelName: FC<NotificationChannelNameProps> = ({ type, name 
   )
 }
 
-export function AddSchedulerDialog({ open, onClose }: Props) {
+export function AddSchedulerDialog({ open, onClose, target }: Props) {
     const [formValue, setFormValue] = useState<
         {
           cron: string,
@@ -75,7 +76,7 @@ export function AddSchedulerDialog({ open, onClose }: Props) {
     const onApply = () => {
       createMutation.mutate({
         notificationChannelIds: formValue.notificationChannelIds,
-        target: `https://datalens.xn----7sbbznd9a5a.xn--p1ai/${formValue.dashboard!}`,
+        target: target ?? `https://datalens.xn----7sbbznd9a5a.xn--p1ai/${formValue.dashboard!}`,
         cron: formValue.cron
       })
     };
@@ -98,19 +99,30 @@ export function AddSchedulerDialog({ open, onClose }: Props) {
                               Дашборд
                           </Text>
 
-                          <Select
-                            placeholder="Выберите дашборд"
-                            value={formValue.dashboard ? [formValue.dashboard] : []}
-                            onUpdate={(val) => setFormValue((form) => ({ ...form, dashboard: val[0] }))}
-                          >
-                            {
-                              dashboards!.entries.map((entity) => (
-                                <Select.Option value={entity.entryId}>
-                                  {extractDashboardName(entity.key)}
-                                </Select.Option>
-                              ))
-                            }
-                          </Select>
+                          {
+                            target
+                              ? (
+                                <TextInput
+                                  disabled
+                                  value={target}
+                                />
+                              )
+                              : (
+                                <Select
+                                  placeholder="Выберите дашборд"
+                                  value={formValue.dashboard ? [formValue.dashboard] : []}
+                                  onUpdate={(val) => setFormValue((form) => ({ ...form, dashboard: val[0] }))}
+                                >
+                                  {
+                                    dashboards!.entries.map((entity) => (
+                                      <Select.Option value={entity.entryId}>
+                                        {extractDashboardName(entity.key)}
+                                      </Select.Option>
+                                    ))
+                                  }
+                                </Select>
+                              )
+                          }
                         </div>
 
                         <div className='flex flex-col gap-1'>
@@ -162,7 +174,7 @@ export function AddSchedulerDialog({ open, onClose }: Props) {
                 onClickButtonCancel={onCancel}
                 onClickButtonApply={onApply}
                 propsButtonApply={{
-                    disabled: !formValue.dashboard || formValue.notificationChannelIds.length === 0
+                    disabled: (!formValue.dashboard && !target) || formValue.notificationChannelIds.length === 0
                 }}
                 textButtonApply="Создать"
             />
