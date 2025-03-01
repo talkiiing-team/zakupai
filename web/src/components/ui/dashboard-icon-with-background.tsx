@@ -2,7 +2,6 @@ import { useMemo, type FC } from 'react';
 
 import { ChartColumnStacked } from '@gravity-ui/icons';
 import { invertColor } from '@/shared/lib/color';
-import { cn } from '@/shared/utils/classnames';
 
 export interface DashboardIconWithBackgroundProps {
   name: string;

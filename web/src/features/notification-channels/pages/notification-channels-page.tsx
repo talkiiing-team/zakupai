@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Text } from '@gravity-ui/uikit'
 
-import { NotificationChannelsTable } from '@/components/tables/notification-channels-table'
-import { NotificationChannelsActionBar } from '@/components/navigation/notification-channels-action-bar'
-import { CreateNotificationChannelDialog } from '@/components/dialogs/create-notification-channel-dialog'
+import { NotificationChannelsTable } from '@/features/notification-channels/tables/notification-channels-table'
+import { NotificationChannelsActionBar } from '@/features/notification-channels/navigation/notification-channels-action-bar'
+import { CreateNotificationChannelDialog } from '@/features/notification-channels/dialogs/create-notification-channel-dialog'
 
 export function NotificationChannelsPage() {
     const [open, setOpen] = useState(false);

@@ -14,7 +14,6 @@
     "api:generate": "npx openapi-codegen gen zakupai"
   },
   "dependencies": {
-    "@gravity-ui/dashkit": "^8.26.1",
     "@gravity-ui/data-source": "^0.5.0",
     "@gravity-ui/navigation": "^3.1.1",
     "@siberiacancode/reactuse": "^0.0.97",
@@ -30,11 +29,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
-    "@gravity-ui/chartkit": "^6.0.1",
     "@gravity-ui/icons": "^2.13.0",
     "@gravity-ui/uikit": "^7.5.0",
-    "@openapi-codegen/cli": "^3.1.0",
-    "@openapi-codegen/typescript": "^11.0.1",
     "@svgr/plugin-jsx": "^8.1.0",
     "@tanstack/router-devtools": "^1.112.0",
     "@tanstack/router-plugin": "^1.112.0",
