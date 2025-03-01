@@ -1,2 +1,3 @@
 import './uikit'
-import './dashkit'
+import './chartkit'
+import './dashkit' 

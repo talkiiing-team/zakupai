@@ -1,0 +1,6 @@
+root = true
+
+tabWidth = 4
+
+[*.{js,jsx,ts,tsx,html}]
+tabWidth = 2

@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
 
 import { useAtom } from 'jotai';
-import { AsideHeader as AsideHeaderBase } from '@gravity-ui/navigation';
+import { AsideHeader as AsideHeaderBase, FooterItem } from '@gravity-ui/navigation';
 import { useLocation, useNavigate } from '@tanstack/react-router';
 import { ChartAreaStackedNormalized } from '@gravity-ui/icons';
 
@@ -36,14 +36,29 @@ export function AsideHeader({ children }: PropsWithChildren<AsideHeaderProps>) {
       subheaderItems={[
         {
           item: {
-            id: 'dashboard',
-            title: 'Дашборд',
+            id: 'dashboards',
+            title: 'Дашборды',
             icon: ChartAreaStackedNormalized,
-            onItemClick: () => navigate({ to: '/' }),
-            current: location.pathname === '/'
+            onItemClick: () => navigate({ to: '/dashboards' }),
+            current: location.pathname === '/dashboards'
           }
         }
       ]}
+
+      // renderFooter={
+      //   ({ compact }) => (
+      //     <>
+      //       <FooterItem
+      //         compact={compact}
+      //         item={{
+      //           id: 'Да',
+      //           title: 'Да',
+      //           tooltipText: 'Minor issue (Now)',
+      //         }}
+      //       />
+      //     </>
+      //   )
+      // }
     />
   );
 }

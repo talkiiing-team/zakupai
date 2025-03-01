@@ -1,95 +1,74 @@
+import { Text } from '@gravity-ui/uikit';
+import ChartKit from '@gravity-ui/chartkit';
 import { Config, DashKit } from '@gravity-ui/dashkit';
-import ChartKit, { settings } from '@gravity-ui/chartkit'
-import { YagrPlugin, type YagrWidgetData } from '@gravity-ui/chartkit/yagr'
-
-settings.set({plugins: [ YagrPlugin ]});
-
-const line10: YagrWidgetData = {
-  data: {
-      timeline: [
-          1636838612441, 1636925012441, 1637011412441, 1637097812441, 1637184212441,
-          1637270612441, 1637357012441, 1637443412441, 1637529812441, 1637616212441,
-      ],
-      graphs: [
-          {
-              id: '0',
-              name: 'Serie 1',
-              color: '#6c59c2',
-              data: [45, 52, 89, 72, 39, 49, 82, 59, 36, 5],
-          },
-          {
-              id: '1',
-              name: 'Serie 2',
-              color: '#6e8188',
-              data: [37, 6, 51, 10, 65, 35, 72, 0, 94, 54],
-          },
-          {
-              id: '2',
-              name: 'Serie 3',
-              color: '#e21576',
-              data: [26, 54, 15, 40, 43, 18, 65, 46, 51, 33],
-          },
-      ],
-  },
-  libraryConfig: {
-      chart: {
-          series: {
-              type: 'line',
-          },
-          select: {
-              zoom: false,
-          },
-      },
-      title: {
-          text: 'line: random 10 pts',
-      },
-      axes: {
-          x: {},
-      },
-      scales: {
-          x: {},
-          y: {
-              type: 'linear',
-              range: 'nice',
-          },
-      },
-      cursor: {
-          x: {
-              visible: true,
-              style: 'solid 2px rgba(230, 2, 7, 0.3)',
-          },
-      },
-      tooltip: {
-          show: true,
-          tracking: 'sticky',
-      },
-      legend: {},
-      processing: {},
-  },
-};
 
 const config: Config = {
-  salt: ''+Math.random(),
+  salt: String(Math.random()),
+  counter: 2,
+  items: [
+    {
+      id: 'in',
+      data: {
+        title: 'Test',
+        value: 'Test 2',
+      },
+      type: 'indicator',
+      namespace: 'default',
+      orderId: 1,
+    },
+    {
+      id: 'ln',
+      data: {},
+      type: 'line',
+      namespace: 'default',
+      orderId: 1,
+    },
+    {
+      id: 'pi',
+      data: {},
+      type: 'pie',
+      namespace: 'default',
+      orderId: 1,
+    }
+  ],
+  layout: [
+    {
+      i: 'in',
+      w: 12,
+      h: 5,
+      x: 0,
+      y: 0,
+    },
+    {
+      i: 'ln',
+      w: 16,
+      h: 16,
+      x: 12,
+      y: 0,
+    },
+    {
+      i: 'pi',
+      w: 16,
+      h: 16,
+      x: 0,
+      y: 16,
+    },
+  ],
   aliases: {},
-  items: [],
   connections: [],
-  counter: 0,
-  layout: []
-}
+};
 
 export function IndexPage() {
   return (
-    <div className='relative min-w-full min-h-[50vh]'>
-      {/* <DashKit
+    <div className='relative min-w-full min-h-full p-4 flex flex-col gap-4'>
+      <Text variant='subheader-3'>
+        Дашборд
+      </Text>
+            
+      <DashKit
         config={config}
-        editMode={false}
-      />  */}
-      <div className='h-[500px]'>
-        <ChartKit 
-          type="yagr"
-          data={line10}        
-        />
-      </div>
+        editMode
+      />
     </div>
   )
 }

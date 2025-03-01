@@ -18,10 +18,11 @@
     "@siberiacancode/reactuse": "^0.0.97",
     "@tailwindcss/vite": "^4.0.9",
     "@tanstack/react-router": "^1.112.0",
-    "highcharts": "^12.1.2",
+    "highcharts": "^8.2.2",
     "jotai": "^2.12.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.2",
     "tailwindcss": "^4.0.9"
   },
   "devDependencies": {
