@@ -45,7 +45,7 @@ export function CreateNotificationChannelDialog({ open, onClose }: Props) {
                         <SegmentedRadioGroup.Option value="telegram">
                             Telegram
                         </SegmentedRadioGroup.Option>
-                        <SegmentedRadioGroup.Option value="email">
+                        <SegmentedRadioGroup.Option value="email" disabled>
                             Email
                         </SegmentedRadioGroup.Option>
                     </SegmentedRadioGroup>
