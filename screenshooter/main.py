@@ -34,6 +34,7 @@ async def main():
     )
 
     browser = await nodriver.start(sandbox=False)
+    browser.main_tab.maximize()
 
     print(f"Open {args.target}")
     page = await browser.get(args.target)
