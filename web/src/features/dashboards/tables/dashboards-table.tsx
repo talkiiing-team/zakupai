@@ -1,26 +1,13 @@
 import type { FC } from 'react';
 
-import axios from 'axios'
 import { Table, TableProps, withTableActions, Icon, Loader } from '@gravity-ui/uikit';
-import { Ellipsis as EllipsisIcon, CopyPlus as CopyPlusIcon } from '@gravity-ui/icons';
 import { useNavigate } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
 
-import { DashboardIconWithBackground } from '../ui/dashboard-icon-with-background';
-import { client, WorkbookEntities } from '@/shared/lib/axios';
+import { DashboardIconWithBackground } from '@/components/ui/dashboard-icon-with-background';
+import { useDashboards } from '../hooks/use-dashboards';
 
 const TableWithAction = withTableActions(Table);
-
-const columns: TableProps<{}>['columns'] = [
-  {
-    id: 'name',
-    name: 'Название'
-  },
-  {
-    id: 'description',
-    name: 'Описание'
-  }
-]
 
 export interface DashboardNameProps {
   children: string
@@ -38,22 +25,7 @@ export const DashboardName: FC<DashboardNameProps> = ({ children }) => {
 export const DashboardsTable: FC = () => {
   const navigate = useNavigate()
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['dashboards'],
-    queryFn: () => client.post<WorkbookEntities>(
-      '/datalens/gateway/root/us/getWorkbookEntries',
-      {
-        "workbookId": "rr241df4ft1ad",
-        "pageSize": 10,
-        "page": 0,
-        "orderBy": {
-          "field": "name",
-          "direction": "asc"
-        },
-        "scope": "dash"
-      }
-    ).then(res => res.data)
-  })
+  const { data, isLoading } = useDashboards()
 
   if (isLoading) 
     return (
