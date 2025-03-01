@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Dialog, SegmentedRadioGroup, Text, TextInput } from "@gravity-ui/uikit";
-import { useMutation } from '@tanstack/react-query';
+
+import { useCreateEmailNotificationChannel } from "@/features/notification-channels/hooks/use-create-email-notification-channel";
 
 
 type Props = {
@@ -9,12 +10,12 @@ type Props = {
     onApply: () => void,
 };
 
-export function CreateNotificationChannelDialog({ open, onClose, }: Props) {
+export function CreateNotificationChannelDialog({ open, onClose }: Props) {
     const [formValue, setFormValue] = useState<
         { type: 'telegram';  } | { type: 'email'; email: string }
     >({ type: 'telegram' });
 
-    const createEmailChannel = useMutation({ mutationFn: async (args: { queryParams: { email: string } }) => {}, mutationKey: ['notification_channels'] });
+    const mutation = useCreateEmailNotificationChannel();
 
     const onCancel = () => {
         onClose();
@@ -23,8 +24,9 @@ export function CreateNotificationChannelDialog({ open, onClose, }: Props) {
     const onApply = () => {
         if (formValue.type !== 'email') {
             return;
-        } 
-        createEmailChannel.mutate({ queryParams: { email: formValue.email }});
+        }
+
+        mutation.mutate(formValue.email, { onSuccess: onClose });
     };
 
     return (
@@ -72,7 +74,9 @@ export function CreateNotificationChannelDialog({ open, onClose, }: Props) {
                 textButtonCancel="Отмена"
                 onClickButtonCancel={onCancel}
                 onClickButtonApply={onApply}
-                propsButtonApply={{ disabled: formValue.type === 'telegram' || formValue.email.length < 1 }}
+                propsButtonApply={{
+                    disabled: formValue.type === 'telegram' || formValue.email.length < 1
+                }}
                 textButtonApply="Создать"
             />
         </Dialog>

@@ -1,6 +1,9 @@
-import type { FC } from 'react';
-import { Table, TableProps, withTableActions, Icon } from '@gravity-ui/uikit';
+import { type FC } from 'react';
+import { Table, TableProps, withTableActions } from '@gravity-ui/uikit';
 import { PaperPlane, At, TrashBin } from '@gravity-ui/icons';
+
+import { useNotificationChannels } from '@/features/notification-channels/hooks/use-notification-channels';
+import { type NotificationChannel } from '@/features/notification-channels/api';
 
 const TableWithAction = withTableActions(Table);
 
@@ -16,21 +19,30 @@ const columns: TableProps<{}>['columns'] = [
 ]
 
 export interface NotificationChannelNameProps {
-  type: 'telegram' | 'email'
+  type: NotificationChannel['type']
 }
 
 export const NotificationChannelName: FC<NotificationChannelNameProps> = ({ type }) => {
   return (
     <div className='flex items-center gap-2'>
-      {({ 
-            'telegram': <><PaperPlane /><span>Telegram</span></>,
-            'email': <><At /><span>Email</span></>
-        })[type]}
+      {type === 'telegram' && <PaperPlane />}
+      {type === 'email' && <At />}
+      <span>
+        {type === 'telegram' && 'Telegram'}
+        {type === 'email' && 'Email'}
+      </span>
     </div>
   )
 }
 
 export const NotificationChannelsTable: FC = () => {
+  const { data } = useNotificationChannels();
+
+  const channels = (data ?? []).map((channel) => ({
+    type: <NotificationChannelName type={channel.type} />, 
+    destination: <span>{channel.type === 'email' ? channel.email : channel.user_id}</span>
+  }));
+
   const getRowActions = () => [
     {
       text: 'Удалить',
@@ -38,24 +50,13 @@ export const NotificationChannelsTable: FC = () => {
       handler: () => {},
       theme: 'danger' as const,
     }
-  ]
+  ];
 
   return (
     <TableWithAction
       className='w-full'
       getRowActions={getRowActions}
-      data={
-        [
-          {
-            type: <NotificationChannelName  type='email' />,
-            destination: 'nerlihmax@yandex.ru'
-          },
-          {
-            type: <NotificationChannelName  type='telegram' />,
-            destination: '@nerlihmax'
-          },
-        ]
-      }
+      data={channels}
       columns={columns}
     />
   )
