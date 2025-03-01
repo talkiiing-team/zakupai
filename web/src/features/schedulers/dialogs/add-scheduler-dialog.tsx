@@ -76,7 +76,7 @@ export function AddSchedulerDialog({ open, onClose, target }: Props) {
     const onApply = () => {
       createMutation.mutate({
         notificationChannelIds: formValue.notificationChannelIds,
-        target: target ?? `https://datalens.xn----7sbbznd9a5a.xn--p1ai/${formValue.dashboard!}`,
+        target: target ?? `https://datalens.xn----7sbbznd9a5a.xn--p1ai/${formValue.dashboard!}?mode=embedded`,
         cron: formValue.cron
       })
     };

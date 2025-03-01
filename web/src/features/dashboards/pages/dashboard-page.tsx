@@ -16,7 +16,7 @@ export const DashboardPage = () => {
   useEffect(() => {
     const subscriber = (event: MessageEvent) => {
       if (event.data?.code === 'URL_CHANGED') {
-        setPath(`https://datalens.xn----7sbbznd9a5a.xn--p1ai${event.data.data.pathname}${event.data.data.search}`)
+        setPath(`https://datalens.xn----7sbbznd9a5a.xn--p1ai${event.data.data.pathname}${event.data.data.search}&mode=embedded`)
       }
     }
     
