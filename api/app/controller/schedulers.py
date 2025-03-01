@@ -32,7 +32,12 @@ async def get_all_schedulers():
 
     crons: V1CronJobList = batchv1.list_namespaced_cron_job(SCHEDULERS_NAMESPACE)
 
-    return crons.items
+    schedulers = []
+    for cron in crons.items:
+        cron: V1CronJob
+        schedulers.append(cron.to_dict())
+
+    return schedulers
 
 
 class CreateSchedulerBody(BaseModel):
@@ -90,7 +95,6 @@ async def create_scheduler(
                                     image="cr.yandex/crphumdkkpdrgg386glu/screenshooter:latest",
                                     image_pull_policy="Always",
                                     command=cmd,
-                                    restart_policy="Never",
                                 ),
                             ],
                             restart_policy="Never",
