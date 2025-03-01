@@ -22,7 +22,7 @@ export function AsideHeader({ children }: PropsWithChildren<AsideHeaderProps>) {
     return (
       <MobileHeader
         logo={{
-          text: 'ЗакупAI',
+          text: '',
           icon: BrandLogo,
           href: '#',
           onClick: () => navigate({ to: '/' }),
