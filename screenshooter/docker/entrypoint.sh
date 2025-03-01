@@ -6,7 +6,7 @@ rm -f /tmp/.X0-lock # from not cleanly stopping the container
 uname -a
 
 echo -e "\n### Starting Xvfb..."
-Xvfb -ac -screen 0 2160x3840x24 &
+Xvfb -ac -screen 0 2048x2048x24 &
 
 echo -e "\n### Starting fluxbox..."
 fluxbox -screen 0 &> /dev/null &
