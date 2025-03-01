@@ -4,7 +4,9 @@ import { Plus } from '@gravity-ui/icons';
 
 type Opts = Record<string, { value: string }>;
 
-const options: Opts = {'aboba': { value: 'sex'}};
+const options: Opts = {
+  'test': { value: '123' }
+};
 
 const filtersAtom = atom<Opts>({});
 

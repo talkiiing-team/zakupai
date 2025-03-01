@@ -21,7 +21,7 @@ export const queryClient = new QueryClient({
         theme: 'danger',
         autoHiding: 3000,
         title: 'Ошибка!',
-        content: error?.toString(),
+        content: JSON.stringify(error),
         isClosable: true
       })
     },
@@ -33,7 +33,7 @@ export const queryClient = new QueryClient({
         theme: 'danger',
         autoHiding: 3000,
         title: 'Ошибка!',
-        content: error?.toString(),
+        content: JSON.stringify(error),
         isClosable: true
       })
     },

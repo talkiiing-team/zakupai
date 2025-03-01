@@ -5,7 +5,8 @@ import { useLocation, useNavigate } from '@tanstack/react-router'
 const mapPathToHumanNames: Record<string, string> = {
   dashboards: 'Дашборды',
   'notification-channels': 'Каналы нотификаций',
-  builder: 'Построитель'  
+  builder: 'Построитель',
+  main: 'Главное'
 }
 
 function getBreadcrumbs() {
