@@ -108,3 +108,14 @@ async def create_scheduler(
     print(cronjob)
 
     batchv1.create_namespaced_cron_job(SCHEDULERS_NAMESPACE, body=cronjob)
+
+
+class DeleteSchedulerBody(BaseModel):
+    uid: str = Field()
+
+
+@router.delete("/")
+async def delete_scheduler(body: DeleteSchedulerBody):
+    batchv1 = client.BatchV1Api()
+
+    batchv1.delete_namespaced_cron_job(body.uid, SCHEDULERS_NAMESPACE)
