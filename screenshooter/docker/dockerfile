@@ -1,0 +1,22 @@
+FROM python:3.12-bullseye
+
+WORKDIR /opt/app
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y xvfb fluxbox x11vnc x11-apps software-properties-common ca-certificates curl
+
+RUN curl -fSsL https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor | sudo tee /usr/share/keyrings/google-chrome.gpg >> /dev/null
+RUN echo deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main | sudo tee /etc/apt/sources.list.d/google-chrome.list
+RUN apt-get update && apt-get install -y google-chrome-stable
+RUN ln -s $(which google-chrome-stable) /usr/bin/chrome
+
+COPY screenshooter/docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+COPY screenshooter/requirements.txt .
+RUN python3 -m pip install -r requirements.txt
+
+COPY screenshooter .
+
+ENTRYPOINT ["/entrypoint.sh"]
