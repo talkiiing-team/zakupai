@@ -1,5 +1,5 @@
 import { queryClient } from '@/app/providers/query'
-import { WorkbookEntities } from '@/shared/lib/axios'
+import { WorkbookEntities } from '@/features/dashboards/hooks/use-dashboards'
 import { ActionBar as ActionBarBase } from '@gravity-ui/navigation'
 import { Breadcrumbs, Button, DropdownMenu } from '@gravity-ui/uikit'
 import { useLocation, useNavigate } from '@tanstack/react-router'

@@ -58,6 +58,7 @@ export const DashboardPage = () => {
         target={path}
         open={dialog}
         onClose={() => setDialog(false)}
+        onApply={() => {}}
       />
     </>
   )
