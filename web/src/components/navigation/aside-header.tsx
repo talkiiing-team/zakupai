@@ -40,7 +40,7 @@ export function AsideHeader({ children }: PropsWithChildren<AsideHeaderProps>) {
             title: 'Дашборды',
             icon: ChartAreaStackedNormalized,
             onItemClick: () => navigate({ to: '/dashboards' }),
-            current: location.pathname === '/dashboards'
+            current: location.pathname.startsWith('/dashboards')
           }
         },
         {
