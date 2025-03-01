@@ -33,7 +33,7 @@ async def main():
         default=DefaultBotProperties(parse_mode=ParseMode.MARKDOWN_V2),
     )
 
-    browser = await nodriver.start()
+    browser = await nodriver.start(sandbox=False)
 
     print(f"Open {args.target}")
     page = await browser.get(args.target)
