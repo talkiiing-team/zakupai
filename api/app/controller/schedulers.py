@@ -98,15 +98,17 @@ async def create_scheduler(
                                     image="cr.yandex/crphumdkkpdrgg386glu/screenshooter:latest",
                                     image_pull_policy="Always",
                                     command=cmd,
-                                    env=V1EnvVar(
-                                        name="TG_TOKEN",
-                                        value_from=V1EnvVarSource(
-                                            secret_key_ref=V1SecretKeySelector(
-                                                name="telegram-secret",
-                                                key="token",
+                                    env=[
+                                        V1EnvVar(
+                                            name="TG_TOKEN",
+                                            value_from=V1EnvVarSource(
+                                                secret_key_ref=V1SecretKeySelector(
+                                                    name="telegram-secret",
+                                                    key="token",
+                                                ),
                                             ),
-                                        ),
-                                    ),
+                                        )
+                                    ],
                                 ),
                             ],
                             restart_policy="Never",
