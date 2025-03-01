@@ -1,24 +1,31 @@
-import { Button, Dialog, SegmentedRadioGroup, Text, TextInput } from "@gravity-ui/uikit";
 import { useState } from "react";
+import { Button, Dialog, SegmentedRadioGroup, Text, TextInput } from "@gravity-ui/uikit";
+import { useMutation } from '@tanstack/react-query';
+
+import { getNotificationChannelsNotificationChannelsEmailPost } from '~/api/zakupaiComponents'
 
 type Props = {
     open: boolean,
     onClose: () => void,
-    onApply: () => void
+    onApply: () => void,
 };
 
-export function CreateNotificationChannelDialog({ open, onClose, onApply: onDialogApply }: Props) {
+export function CreateNotificationChannelDialog({ open, onClose, }: Props) {
     const [formValue, setFormValue] = useState<
         { type: 'telegram';  } | { type: 'email'; email: string }
     >({ type: 'telegram' });
+
+    const createEmailChannel = useMutation({ mutationFn: getNotificationChannelsNotificationChannelsEmailPost, mutationKey: ['notification_channels'] });
 
     const onCancel = () => {
         onClose();
     };
 
     const onApply = () => {
-        console.log(formValue);
-        // onDialogApply();
+        if (formValue.type !== 'email') {
+            return;
+        } 
+        createEmailChannel.mutate({ queryParams: { email: formValue.email }});
     };
 
     return (

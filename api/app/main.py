@@ -1,7 +1,7 @@
-from contextlib import asynccontextmanager
-
-from aiogram.types import Update
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
+from aiogram.types import Update
 
 from app import bot
 from app.controller import NotificationChannelController
@@ -21,6 +21,14 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origin=["https://localhost:5173", "https://закуп-ай.рф"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(
     NotificationChannelController.router, prefix="/notification_channels"
 )
@@ -30,6 +38,7 @@ app.include_router(
 async def tg_webhook(request: Request) -> None:
     update = Update.model_validate(await request.json(), context={"bot": bot.bot})
     await bot.dispatcher.feed_update(bot.bot, update)
+
 
 @app.get("/health")
 def health():

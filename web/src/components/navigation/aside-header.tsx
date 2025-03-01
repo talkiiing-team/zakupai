@@ -3,7 +3,7 @@ import type { PropsWithChildren } from 'react';
 import { useAtom } from 'jotai';
 import { AsideHeader as AsideHeaderBase, FooterItem } from '@gravity-ui/navigation';
 import { useLocation, useNavigate } from '@tanstack/react-router';
-import { ChartAreaStackedNormalized, PaperPlane } from '@gravity-ui/icons';
+import { ChartAreaStackedNormalized, ClockArrowRotateLeft, PaperPlane } from '@gravity-ui/icons';
 
 import BrandLogo from '~/assets/logo.svg?react'
 
@@ -51,7 +51,16 @@ export function AsideHeader({ children }: PropsWithChildren<AsideHeaderProps>) {
             onItemClick: () => navigate({ to: '/notification-channels' }),
             current: location.pathname.includes('notification-channels')
           }
-        }
+        },
+        {
+          item: {
+            id: 'schedulers',
+            title: 'Планировщики',
+            icon: ClockArrowRotateLeft,
+            onItemClick: () => navigate({ to: '/schedulers' }),
+            current: location.pathname.includes('schedulers')
+          }
+        },
       ]}
 
       // renderFooter={
