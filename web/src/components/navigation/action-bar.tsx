@@ -3,6 +3,7 @@ import { WorkbookEntities } from '@/shared/lib/axios'
 import { ActionBar as ActionBarBase } from '@gravity-ui/navigation'
 import { Breadcrumbs, Button, DropdownMenu } from '@gravity-ui/uikit'
 import { useLocation, useNavigate } from '@tanstack/react-router'
+import { ReactNode } from 'react'
 
 const mapPathToHumanNames: Record<string, string> = {
   dashboards: 'Дашборды',
@@ -52,7 +53,11 @@ function getBreadcrumbs() {
   )
 }
 
-export function ActionBar() {
+export interface ActionBarProps {
+  renderRightContent?: () => ReactNode
+}
+
+export function ActionBar({ renderRightContent }: ActionBarProps) {
   return (
      <ActionBarBase>
       <ActionBarBase.Section type="primary">
@@ -61,6 +66,14 @@ export function ActionBar() {
             {getBreadcrumbs()}
           </ActionBarBase.Item>
         </ActionBarBase.Group>
+
+        {
+          renderRightContent && (
+            <ActionBarBase.Group pull="right">
+              {renderRightContent()}
+            </ActionBarBase.Group>
+          )
+        }
       </ActionBarBase.Section>
     </ActionBarBase>
   )
