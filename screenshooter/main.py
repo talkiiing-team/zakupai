@@ -34,14 +34,15 @@ async def main():
     )
 
     browser = await nodriver.start(sandbox=False)
-    browser.main_tab.maximize()
 
     print(f"Open {args.target}")
     page = await browser.get(args.target)
 
+    await page.maximize()
+
     time.sleep(10)
 
-    screenshot = await page.save_screenshot()
+    screenshot = await page.save_screenshot(full_page=True)
 
     for user in args.telegram:
         await bot.send_photo(chat_id=user, photo=FSInputFile(screenshot))
