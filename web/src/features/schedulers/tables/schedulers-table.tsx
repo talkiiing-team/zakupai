@@ -6,6 +6,8 @@ import { type NotificationChannel } from '@/features/notification-channels/api';
 import { useSchedulers } from '../hooks/use-schedulers';
 import { useRemoveScheduler } from '../hooks/use-remove-scheduler';
 import { toaster } from '@/shared/lib/toaster';
+import { useDashboards } from '@/features/dashboards/hooks/use-dashboards';
+import { extractDashboardName } from '@/features/dashboards/utils';
 
 const TableWithAction = withTableActions(Table);
 
@@ -13,6 +15,10 @@ const columns: TableProps<{}>['columns'] = [
   {
     id: 'name',
     name: 'Название'
+  },
+  {
+    id: 'dashboard',
+    name: 'Дашборд'
   },
   {
     id: 'createdAt',
@@ -39,6 +45,7 @@ export const NotificationChannelName: FC<NotificationChannelNameProps> = ({ type
 
 export const SchedulersTable: FC = () => {
   const { data } = useSchedulers();
+  const { data: dashboards } = useDashboards()
 
   const mutation = useRemoveScheduler()
 
@@ -47,6 +54,7 @@ export const SchedulersTable: FC = () => {
   const schedulers = (data ?? []).map((scheduler) => ({
     id: scheduler.metadata.annotations['zakupai.scheduler_uid'],
     name: scheduler.metadata.name,
+    dashboard: extractDashboardName(dashboards?.entries.find(e => JSON.stringify(scheduler).includes(e.entryId))?.key ?? ''),
     createdAt: new Date(scheduler.metadata.creation_timestamp).toLocaleString(),
   }));
 
