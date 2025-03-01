@@ -11,4 +11,6 @@ class JoinSequenceDataInfoRuleDto(BaseModel):
     right_join_table: str
     condition: str
 
-
+class TableJoinDescription(BaseModel):
+    base_table: str
+    join_sequence: list[JoinSequenceDataInfoDto]

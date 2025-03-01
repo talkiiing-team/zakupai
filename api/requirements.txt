@@ -5,3 +5,4 @@ alembic
 asyncpg
 sqlalchemy
 unicorn
+clickhouse-connect

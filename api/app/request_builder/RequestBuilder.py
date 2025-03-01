@@ -1,6 +1,9 @@
 from typing import List
 
-from app.dto.JoinSequenceDataInfoDto import JoinSequenceDataInfoDto, JoinSequenceDataInfoRuleDto
+from clickhouse_connect.dbapi import Connection
+from clickhouse_connect.driver import Client
+
+from app.dto.JoinSequenceDataInfoDto import JoinSequenceDataInfoDto, JoinSequenceDataInfoRuleDto, TableJoinDescription
 
 sessions_to_customer_condition = 'sessions.customer_inn = customers.customer_inn'
 sessions_to_winners_conditions = 'sessions.ks_prime_id = winners.ks_prime_id'
@@ -92,3 +95,30 @@ def get_available_join_list():
             join_list
         )
     )
+
+
+def build_source(
+        source_description: TableJoinDescription,
+        connection: Client,
+        limit: int | None
+):
+    select_part = f"SELECT * FROM {source_description.base_table}"
+    for join in source_description.join_sequence:
+        selection_rool = list(
+            filter(
+                lambda
+                    join_sequence_data_info_rule: join_sequence_data_info_rule.left_join_table == join.left_join_table and
+                                                  join_sequence_data_info_rule.right_join_table == join.right_join_table,
+                join_list
+            )
+        )[0]
+        select_part += f" JOIN {join.right_join_table} ON {selection_rool.condition}"
+    if limit is not None:
+        select_part += f" LIMIT {limit}"
+    return get_select_data(select_part, connection)
+
+def get_select_data(query: str, connection: Client) -> list[dict]:
+    result = connection.query(query)
+    columns = result.column_names
+    result_list = [dict(zip(columns, row)) for row in result.result_rows]
+    return result_list
