@@ -32,14 +32,14 @@ async def on_start(message: Message) -> None:
         existing_channel = result.first()
 
         if existing_channel is not None:
-            await bot.send_message(chat_id=chat_id, text="Вы уже зарегистрированы\!")
+            await bot.send_message(chat_id=chat_id, text="Вы уже зарегистрированы\\!")
             return
 
         new_channel = NotificationChannel(tg_id=user_id, tg_chat_id=chat_id)
         metabase.add(new_channel)
         await metabase.commit()
 
-        await bot.send_message(chat_id=chat_id, text="Вы успешно зарегистрированы\!")
+        await bot.send_message(chat_id=chat_id, text="Вы успешно зарегистрированы\\!")
 
 
 dispatcher.include_router(router)
