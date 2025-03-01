@@ -9,3 +9,7 @@ body,
 .g-breadcrumbs {
   align-items: center;
 }
+
+.ant-select-selection-overflow {
+  flex: unset !important;
+}

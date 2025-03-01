@@ -1,20 +1,22 @@
-import { type FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { Table, TableProps, withTableActions } from '@gravity-ui/uikit';
 import { PaperPlane, At, TrashBin } from '@gravity-ui/icons';
 
 import { type NotificationChannel } from '@/features/notification-channels/api';
 import { useSchedulers } from '../hooks/use-schedulers';
+import { useRemoveScheduler } from '../hooks/use-remove-scheduler';
+import { toaster } from '@/shared/lib/toaster';
 
 const TableWithAction = withTableActions(Table);
 
 const columns: TableProps<{}>['columns'] = [
   {
-    id: 'type',
-    name: 'Тип'
+    id: 'name',
+    name: 'Название'
   },
   {
-    id: 'destination',
-    name: 'Назначение'
+    id: 'createdAt',
+    name: 'Время создания'
   }
 ]
 
@@ -38,16 +40,31 @@ export const NotificationChannelName: FC<NotificationChannelNameProps> = ({ type
 export const SchedulersTable: FC = () => {
   const { data } = useSchedulers();
 
-  const channels = (data ?? []).map((channel) => ({
-    type: <NotificationChannelName type={channel.type} />, 
-    destination: <span>{channel.type === 'email' ? channel.email : channel.user_id}</span>
+  const mutation = useRemoveScheduler()
+
+  console.log(data)
+
+  const schedulers = (data ?? []).map((scheduler) => ({
+    id: scheduler.metadata.annotations['zakupai.scheduler_uid'],
+    name: scheduler.metadata.name,
+    createdAt: new Date(scheduler.metadata.creation_timestamp).toLocaleString(),
   }));
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      toaster.add({
+        name: 'asdad',
+        autoHiding: 1500,
+        title: 'Удалено'
+      })
+    }
+  }, [mutation.isSuccess])
 
   const getRowActions = () => [
     {
       text: 'Удалить',
       icon: <TrashBin className='size-[14px]' />,
-      handler: () => {},
+      handler: (scheduler: { id: string }) => mutation.mutate(scheduler.id),
       theme: 'danger' as const,
     }
   ];
@@ -55,8 +72,9 @@ export const SchedulersTable: FC = () => {
   return (
     <TableWithAction
       className='w-full'
+      // @ts-ignore
       getRowActions={getRowActions}
-      data={channels}
+      data={schedulers}
       columns={columns}
     />
   )

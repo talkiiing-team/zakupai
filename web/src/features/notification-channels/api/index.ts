@@ -1,5 +1,5 @@
-export type EmailNotificationChannel = { type: 'email'; email: string };
-export type TelegramNotificationChannel = { type: 'telegram'; user_id: string };
+export type EmailNotificationChannel = { id: number, type: 'email'; email: string };
+export type TelegramNotificationChannel = { id: number, type: 'telegram'; user_id: string };
 
 export type NotificationChannel =
     | EmailNotificationChannel

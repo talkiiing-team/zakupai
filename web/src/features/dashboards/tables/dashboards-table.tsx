@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { DashboardIconWithBackground } from '@/components/ui/dashboard-icon-with-background';
 import { useDashboards } from '../hooks/use-dashboards';
+import { extractDashboardName } from '../utils';
 
 const TableWithAction = withTableActions(Table);
 
@@ -54,7 +55,7 @@ export const DashboardsTable: FC = () => {
         data?.entries.map((entity) => (
           {
             id: entity.entryId,
-            name: <DashboardName>{entity.key.split('/').splice(-1).join('')}</DashboardName>,
+            name: <DashboardName>{extractDashboardName(entity.key)}</DashboardName>,
             updatedAt: new Date(entity.updatedAt).toLocaleString()
           }
         )) ?? []
