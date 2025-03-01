@@ -2,9 +2,10 @@ import { DashKit, pluginText, pluginTitle, type Plugin } from '@gravity-ui/dashk
 
 import { Indicator } from '@/components/dashkit/indicator';
 import { Line } from '@/components/dashkit/line';
+import { Pie } from '@/components/dashkit/pie';
+import { Column } from '@/components/dashkit/column';
 
 import { IS_MOBILE } from '~/config' 
-import { Pie } from '@/components/dashkit/pie';
 
 DashKit.setSettings({
   gridLayout: {
@@ -39,6 +40,14 @@ const plugins: Plugin[] = [
       h: 20,
     },
     renderer: Pie
+  },
+  {
+    type: 'column',
+    defaultLayout: {
+      w: 16,
+      h: 20,
+    },
+    renderer: Column
   }
 ]
 

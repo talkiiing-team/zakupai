@@ -29,6 +29,13 @@ const config: Config = {
       type: 'pie',
       namespace: 'default',
       orderId: 1,
+    },
+    {
+      id: 'co',
+      data: {},
+      type: 'column',
+      namespace: 'default',
+      orderId: 1,
     }
   ],
   layout: [
@@ -52,6 +59,13 @@ const config: Config = {
       h: 16,
       x: 0,
       y: 16,
+    },
+    {
+      i: 'co',
+      w: 16,
+      h: 16,
+      x: 0,
+      y: 32,
     },
   ],
   aliases: {},
