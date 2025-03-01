@@ -8,7 +8,8 @@ const mapPathToHumanNames: Record<string, string> = {
   dashboards: 'Дашборды',
   'notification-channels': 'Каналы нотификаций',
   builder: 'Построитель',
-  main: 'Главное'
+  main: 'Главное',
+  qq15j1qmu780c: 'Главное',
 }
 
 function getBreadcrumbs() {
