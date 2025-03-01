@@ -1,3 +1,5 @@
+import { queryClient } from '@/app/providers/query'
+import { WorkbookEntities } from '@/shared/lib/axios'
 import { ActionBar as ActionBarBase } from '@gravity-ui/navigation'
 import { Breadcrumbs, Button, DropdownMenu } from '@gravity-ui/uikit'
 import { useLocation, useNavigate } from '@tanstack/react-router'
@@ -27,9 +29,20 @@ function getBreadcrumbs() {
         paths.split('/').map((path, index) => {
           const p = `/${paths.split('/').splice(0, index + 1).join('/')}`
 
+          const dashboardsData = queryClient.getQueryData<WorkbookEntities>(['dashboards'])
+
+          let name: string | undefined = mapPathToHumanNames[path]
+
+          if (dashboardsData?.entries) {
+            const probablyName = dashboardsData?.entries.find(e => e.entryId === path)?.key.split('/').splice(-1).join('')
+
+            if (probablyName)
+              name = probablyName
+          }
+
           return (
             <Breadcrumbs.Item key={p}>
-              {mapPathToHumanNames[path] ?? path}
+              {name ?? path}
             </Breadcrumbs.Item>
           )
         })
