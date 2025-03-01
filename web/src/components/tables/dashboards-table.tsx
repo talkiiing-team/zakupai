@@ -40,7 +40,7 @@ export const DashboardsTable: FC = () => {
   const a = useQuery({
     queryKey: ['dashboards'],
     queryFn: () => axios.post(
-      'https://xn----7sbbznd9a5a.xn--p1ai/gateway/root/us/getWorkbookEntries',
+      'https://xn----7sbbznd9a5a.xn--p1ai/datalens/gateway/root/us/getWorkbookEntries',
       {
         "workbookId": "rr241df4ft1ad",
         "pageSize": 10,
