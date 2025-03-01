@@ -1,9 +1,12 @@
 import type { FC } from 'react';
 
+import axios from 'axios'
 import { Table, TableProps, withTableActions, Icon } from '@gravity-ui/uikit';
 import { Ellipsis as EllipsisIcon, CopyPlus as CopyPlusIcon } from '@gravity-ui/icons';
-import { DashboardIconWithBackground } from '../ui/dashboard-icon-with-background';
 import { useNavigate } from '@tanstack/react-router';
+import { useQuery } from '@tanstack/react-query';
+
+import { DashboardIconWithBackground } from '../ui/dashboard-icon-with-background';
 
 const TableWithAction = withTableActions(Table);
 
@@ -34,20 +37,39 @@ export const DashboardName: FC<DashboardNameProps> = ({ children }) => {
 export const DashboardsTable: FC = () => {
   const navigate = useNavigate()
 
-  const getRowActions = () => [
-    {
-      text: 'Клонировать',
-      icon: <CopyPlusIcon className='size-[14px]' />,
-      handler: () => {},
-    }
-  ]
+  const a = useQuery({
+    queryKey: ['dashboards'],
+    queryFn: () => axios.post(
+      'https://xn----7sbbznd9a5a.xn--p1ai/gateway/root/us/getWorkbookEntries',
+      {
+        "workbookId": "rr241df4ft1ad",
+        "pageSize": 10,
+        "page": 0,
+        "orderBy": {
+          "field": "name",
+          "direction": "asc"
+        },
+        "scope": "dash"
+      }
+    )
+  })
+
+  console.log(a)
+
+  // const getRowActions = () => [
+  //   { 
+  //     text: 'Клонировать',
+  //     icon: <CopyPlusIcon className='size-[14px]' />,
+  //     handler: () => {},
+  //   }
+  // ]
 
   return (
     <TableWithAction
       getRowDescriptor={() => ({ interactive: true })}
       onRowClick={(row) => navigate({ to: `/dashboards/${row.id}` })}
       className='w-full'
-      getRowActions={getRowActions}
+      // getRowActions={getRowActions}
       data={
         [
           {
