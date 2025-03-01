@@ -97,7 +97,7 @@ async def create_scheduler(
                                     name="send-report",
                                     image="cr.yandex/crphumdkkpdrgg386glu/screenshooter:latest",
                                     image_pull_policy="Always",
-                                    command=cmd,
+                                    args=cmd,
                                     env=[
                                         V1EnvVar(
                                             name="TG_TOKEN",
