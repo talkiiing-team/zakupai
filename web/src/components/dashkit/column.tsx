@@ -2,6 +2,7 @@ import { Card } from '@gravity-ui/uikit';
 import ChartKit from '@gravity-ui/chartkit';
 import { Plugin, PluginWidgetProps } from '@gravity-ui/dashkit';
 import { HighchartsWidgetData } from '@gravity-ui/chartkit/highcharts';
+import { FC } from 'react';
 
 export interface ColumnProps extends PluginWidgetProps {
   data: {}
@@ -83,6 +84,28 @@ const data: HighchartsWidgetData = {
 
 
 export const Column: Plugin<ColumnProps>['renderer'] = (props, ref) => {
+  props.onStateAndParamsChange({
+    params: {
+      test: 'test'
+    }
+  }, {
+    action: 'setParams'
+  })
+
+  return (
+    <Card
+      type='container'
+      className='w-full h-full p-1'
+    >
+      <ChartKit
+        type="highcharts"
+        data={data}
+      />
+    </Card>
+  )
+}
+
+export const ColumnLite: FC = () => {
   return (
     <Card
       type='container'

@@ -15,6 +15,7 @@ import { Route as TestImport } from './../routes/test'
 import { Route as IndexImport } from './../routes/index'
 import { Route as NotificationChannelsIndexImport } from './../routes/notification-channels/index'
 import { Route as DashboardsIndexImport } from './../routes/dashboards/index'
+import { Route as DashboardsBuilderImport } from './../routes/dashboards/builder'
 import { Route as DashboardsIdImport } from './../routes/dashboards/$id'
 
 // Create/Update Routes
@@ -40,6 +41,12 @@ const NotificationChannelsIndexRoute = NotificationChannelsIndexImport.update({
 const DashboardsIndexRoute = DashboardsIndexImport.update({
   id: '/dashboards/',
   path: '/dashboards/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardsBuilderRoute = DashboardsBuilderImport.update({
+  id: '/dashboards/builder',
+  path: '/dashboards/builder',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardsIdImport
       parentRoute: typeof rootRoute
     }
+    '/dashboards/builder': {
+      id: '/dashboards/builder'
+      path: '/dashboards/builder'
+      fullPath: '/dashboards/builder'
+      preLoaderRoute: typeof DashboardsBuilderImport
+      parentRoute: typeof rootRoute
+    }
     '/dashboards/': {
       id: '/dashboards/'
       path: '/dashboards'
@@ -97,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/test': typeof TestRoute
   '/dashboards/$id': typeof DashboardsIdRoute
+  '/dashboards/builder': typeof DashboardsBuilderRoute
   '/dashboards': typeof DashboardsIndexRoute
   '/notification-channels': typeof NotificationChannelsIndexRoute
 }
@@ -105,6 +120,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/test': typeof TestRoute
   '/dashboards/$id': typeof DashboardsIdRoute
+  '/dashboards/builder': typeof DashboardsBuilderRoute
   '/dashboards': typeof DashboardsIndexRoute
   '/notification-channels': typeof NotificationChannelsIndexRoute
 }
@@ -114,6 +130,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/test': typeof TestRoute
   '/dashboards/$id': typeof DashboardsIdRoute
+  '/dashboards/builder': typeof DashboardsBuilderRoute
   '/dashboards/': typeof DashboardsIndexRoute
   '/notification-channels/': typeof NotificationChannelsIndexRoute
 }
@@ -133,6 +150,10 @@ export interface FileRouteTypes {
     | '/dashboards/$id'
     | '/dashboards'
     | '/notification-channels'
+    | '/dashboards/builder'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/test' | '/dashboards/$id' | '/dashboards/builder' | '/dashboards'
+
   id:
     | '__root__'
     | '/'
@@ -140,6 +161,7 @@ export interface FileRouteTypes {
     | '/dashboards/$id'
     | '/dashboards/'
     | '/notification-channels/'
+    | '/dashboards/builder'
   fileRoutesById: FileRoutesById
 }
 
@@ -147,14 +169,16 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TestRoute: typeof TestRoute
   DashboardsIdRoute: typeof DashboardsIdRoute
+  DashboardsBuilderRoute: typeof DashboardsBuilderRoute
   DashboardsIndexRoute: typeof DashboardsIndexRoute
-  NotificationChannelsIndexRoute: typeof NotificationChannelsIndexRoute
+  NotificationChannelsIndexRoute: typeof NotificationChannelsIndexRoute 
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TestRoute: TestRoute,
   DashboardsIdRoute: DashboardsIdRoute,
+  DashboardsBuilderRoute: DashboardsBuilderRoute,
   DashboardsIndexRoute: DashboardsIndexRoute,
   NotificationChannelsIndexRoute: NotificationChannelsIndexRoute,
 }
@@ -174,6 +198,7 @@ export const routeTree = rootRoute
         "/dashboards/$id",
         "/dashboards/",
         "/notification-channels/"
+        "/dashboards/builder",
       ]
     },
     "/": {
@@ -184,6 +209,9 @@ export const routeTree = rootRoute
     },
     "/dashboards/$id": {
       "filePath": "dashboards/$id.tsx"
+    },
+    "/dashboards/builder": {
+      "filePath": "dashboards/builder.tsx"
     },
     "/dashboards/": {
       "filePath": "dashboards/index.tsx"

@@ -2,6 +2,7 @@ import { Card } from '@gravity-ui/uikit';
 import ChartKit from '@gravity-ui/chartkit';
 import { Plugin, PluginWidgetProps } from '@gravity-ui/dashkit';
 import { HighchartsWidgetData } from '@gravity-ui/chartkit/highcharts';
+import { FC } from 'react';
 
 export interface PieProps extends PluginWidgetProps {
   data: {}
@@ -43,6 +44,20 @@ const data: HighchartsWidgetData = {
 };
 
 export const Pie: Plugin<PieProps>['renderer'] = (props, ref) => {
+  return (
+    <Card
+      type='container'
+      className='w-full h-full p-1'
+    >
+      <ChartKit
+        type="highcharts"
+        data={data}
+      />
+    </Card>
+  )
+}
+
+export const PieLite: FC = () => {
   return (
     <Card
       type='container'

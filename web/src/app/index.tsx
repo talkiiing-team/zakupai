@@ -1,5 +1,6 @@
 import { useAtomValue } from 'jotai';
-import { ThemeProvider } from '@gravity-ui/uikit';
+import { ThemeProvider, ToasterComponent, ToasterProvider } from '@gravity-ui/uikit';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from '@tanstack/react-router';
 
 import { router } from './providers/router';
@@ -15,13 +16,20 @@ import './styles/theme.scss';
 import '~/init'
 
 import { themeAtom } from '~/atoms/theme';
+import { toaster } from '@/shared/lib/toaster';
+import { queryClient } from './providers/query';
 
 export function App() {
   const theme = useAtomValue(themeAtom)
 
   return (
     <ThemeProvider theme={theme}>
-      <RouterProvider router={router} />
+      <ToasterProvider toaster={toaster}>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+        <ToasterComponent />
+      </ToasterProvider>
     </ThemeProvider>
   )
 }

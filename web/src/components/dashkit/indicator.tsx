@@ -1,6 +1,7 @@
 import { Card } from '@gravity-ui/uikit';
 import ChartKit from '@gravity-ui/chartkit';
 import { Plugin, PluginWidgetProps } from '@gravity-ui/dashkit';
+import { FC } from 'react';
 
 export type IndicationData = {
   title: string;
@@ -9,7 +10,7 @@ export type IndicationData = {
 
 export interface IndicatorProps extends PluginWidgetProps {
   data: IndicationData & {
-    extraIndicators: IndicationData[]
+    extraIndicators?: IndicationData[]
   }
 }
 
@@ -36,6 +37,35 @@ export const Indicator: Plugin<IndicatorProps>['renderer'] = (props, ref) => {
         },
       }))
     )
+
+  return (
+    <Card
+      type='container'
+      className='w-full h-full p-1'
+    >
+      <ChartKit
+        type="indicator"
+        data={
+          {
+            data: data.filter(Boolean),
+          }
+        }
+      />
+    </Card>
+  )
+}
+
+export const IndicatorLite: FC<{ data: IndicationData }> = (props) => {
+  const data = [
+    {
+      title: props.data.title,
+      content: {
+        current: {
+          value: props.data.value,
+        },
+      },
+    }
+  ]
 
   return (
     <Card
