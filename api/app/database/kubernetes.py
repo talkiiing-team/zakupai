@@ -1,4 +1,7 @@
 from kubernetes import client, config
+from kubernetes.config import ConfigException
 
-# config.load_incluster_config()
-config.load_kube_config()
+try:
+    config.load_incluster_config()
+except ConfigException:
+    config.load_kube_config()
