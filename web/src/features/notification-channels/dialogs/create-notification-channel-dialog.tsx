@@ -27,6 +27,7 @@ export function CreateNotificationChannelDialog({ open, onClose }: Props) {
         }
 
         mutation.mutate(formValue.email, { onSuccess: onClose });
+        setFormValue({ type: 'telegram' })
     };
 
     return (
