@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 
 import axios from 'axios'
-import { Table, TableProps, withTableActions, Icon } from '@gravity-ui/uikit';
+import { Table, TableProps, withTableActions, Icon, Loader } from '@gravity-ui/uikit';
 import { Ellipsis as EllipsisIcon, CopyPlus as CopyPlusIcon } from '@gravity-ui/icons';
 import { useNavigate } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
@@ -54,6 +54,15 @@ export const DashboardsTable: FC = () => {
       }
     ).then(res => res.data)
   })
+
+  if (isLoading) 
+    return (
+      <div 
+       className={`w-full h-full flex items-center justify-center ${!isLoading ? 'hidden' : ''}`}
+      >
+        <Loader size='l' />
+      </div>
+    )
 
   // const getRowActions = () => [
   //   { 
