@@ -17,7 +17,6 @@ export const fetchData = async (
       params = {}
     } = options;
 
-    // Construct URL with query parameters
     const queryParams = new URLSearchParams(params).toString();
     const url = `${baseUrl}${endpoint}${queryParams ? `?${queryParams}` : ''}`;
 

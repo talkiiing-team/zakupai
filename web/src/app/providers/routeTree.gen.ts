@@ -16,7 +16,6 @@ import { Route as IndexImport } from './../routes/index'
 import { Route as NotificationChannelsIndexImport } from './../routes/notification-channels/index'
 import { Route as DashboardsIndexImport } from './../routes/dashboards/index'
 import { Route as DashboardsMainImport } from './../routes/dashboards/main'
-import { Route as DashboardsBuilderImport } from './../routes/dashboards/builder'
 import { Route as DashboardsIdImport } from './../routes/dashboards/$id'
 
 // Create/Update Routes
@@ -51,12 +50,6 @@ const DashboardsMainRoute = DashboardsMainImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const DashboardsBuilderRoute = DashboardsBuilderImport.update({
-  id: '/dashboards/builder',
-  path: '/dashboards/builder',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const DashboardsIdRoute = DashboardsIdImport.update({
   id: '/dashboards/$id',
   path: '/dashboards/$id',
@@ -86,13 +79,6 @@ declare module '@tanstack/react-router' {
       path: '/dashboards/$id'
       fullPath: '/dashboards/$id'
       preLoaderRoute: typeof DashboardsIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/dashboards/builder': {
-      id: '/dashboards/builder'
-      path: '/dashboards/builder'
-      fullPath: '/dashboards/builder'
-      preLoaderRoute: typeof DashboardsBuilderImport
       parentRoute: typeof rootRoute
     }
     '/dashboards/main': {
@@ -125,7 +111,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/test': typeof TestRoute
   '/dashboards/$id': typeof DashboardsIdRoute
-  '/dashboards/builder': typeof DashboardsBuilderRoute
   '/dashboards/main': typeof DashboardsMainRoute
   '/dashboards': typeof DashboardsIndexRoute
   '/notification-channels': typeof NotificationChannelsIndexRoute
@@ -135,7 +120,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/test': typeof TestRoute
   '/dashboards/$id': typeof DashboardsIdRoute
-  '/dashboards/builder': typeof DashboardsBuilderRoute
   '/dashboards/main': typeof DashboardsMainRoute
   '/dashboards': typeof DashboardsIndexRoute
   '/notification-channels': typeof NotificationChannelsIndexRoute
@@ -146,7 +130,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/test': typeof TestRoute
   '/dashboards/$id': typeof DashboardsIdRoute
-  '/dashboards/builder': typeof DashboardsBuilderRoute
   '/dashboards/main': typeof DashboardsMainRoute
   '/dashboards/': typeof DashboardsIndexRoute
   '/notification-channels/': typeof NotificationChannelsIndexRoute
@@ -158,7 +141,6 @@ export interface FileRouteTypes {
     | '/'
     | '/test'
     | '/dashboards/$id'
-    | '/dashboards/builder'
     | '/dashboards/main'
     | '/dashboards'
     | '/notification-channels'
@@ -167,7 +149,6 @@ export interface FileRouteTypes {
     | '/'
     | '/test'
     | '/dashboards/$id'
-    | '/dashboards/builder'
     | '/dashboards/main'
     | '/dashboards'
     | '/notification-channels'
@@ -176,7 +157,6 @@ export interface FileRouteTypes {
     | '/'
     | '/test'
     | '/dashboards/$id'
-    | '/dashboards/builder'
     | '/dashboards/main'
     | '/dashboards/'
     | '/notification-channels/'
@@ -187,7 +167,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TestRoute: typeof TestRoute
   DashboardsIdRoute: typeof DashboardsIdRoute
-  DashboardsBuilderRoute: typeof DashboardsBuilderRoute
   DashboardsMainRoute: typeof DashboardsMainRoute
   DashboardsIndexRoute: typeof DashboardsIndexRoute
   NotificationChannelsIndexRoute: typeof NotificationChannelsIndexRoute
@@ -197,7 +176,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TestRoute: TestRoute,
   DashboardsIdRoute: DashboardsIdRoute,
-  DashboardsBuilderRoute: DashboardsBuilderRoute,
   DashboardsMainRoute: DashboardsMainRoute,
   DashboardsIndexRoute: DashboardsIndexRoute,
   NotificationChannelsIndexRoute: NotificationChannelsIndexRoute,
@@ -216,7 +194,6 @@ export const routeTree = rootRoute
         "/",
         "/test",
         "/dashboards/$id",
-        "/dashboards/builder",
         "/dashboards/main",
         "/dashboards/",
         "/notification-channels/"
@@ -230,9 +207,6 @@ export const routeTree = rootRoute
     },
     "/dashboards/$id": {
       "filePath": "dashboards/$id.tsx"
-    },
-    "/dashboards/builder": {
-      "filePath": "dashboards/builder.tsx"
     },
     "/dashboards/main": {
       "filePath": "dashboards/main.tsx"
