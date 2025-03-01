@@ -16,7 +16,7 @@ export const DashboardPage = () => {
       <iframe
         className='w-full h-full'
         ref={ref}
-        src={`http://localhost:49320/${param.id}`} 
+        src={`https://datalens.xn----7sbbznd9a5a.xn--p1ai/${param.id}`} 
       />
     </>
   )
