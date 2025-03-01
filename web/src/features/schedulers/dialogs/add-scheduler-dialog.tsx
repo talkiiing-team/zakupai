@@ -59,6 +59,12 @@ export function AddSchedulerDialog({ open, onClose }: Props) {
             title: 'Создано'
           })
           onClose()
+          setFormValue(
+            {
+              cron: '0 0 * * *',
+              notificationChannelIds: []
+            }
+          )
         }
       }, [createMutation.isSuccess])
 
