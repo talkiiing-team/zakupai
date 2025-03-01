@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Request
 from contextlib import asynccontextmanager
-from aiogram.types import Update
 
-from app.controller import DatasourceController, NotificationChannelController, DynamicFilterController
+from aiogram.types import Update
+from fastapi import FastAPI, Request
+
 from app import bot
+from app.controller import NotificationChannelController
 from app.settings import settings
 
 
@@ -20,21 +21,16 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(DatasourceController.router, prefix="/datasource")
 app.include_router(
     NotificationChannelController.router, prefix="/notification_channels"
 )
-app.include_router(
-    DynamicFilterController.router
-)
+
 
 @app.post("/tg/webhook")
 async def tg_webhook(request: Request) -> None:
     update = Update.model_validate(await request.json(), context={"bot": bot.bot})
     await bot.dispatcher.feed_update(bot.bot, update)
 
-
 @app.get("/health")
 def health():
     return "ok"
-
