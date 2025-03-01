@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './../routes/__root'
 import { Route as TestImport } from './../routes/test'
 import { Route as IndexImport } from './../routes/index'
+import { Route as NotificationChannelsIndexImport } from './../routes/notification-channels/index'
 import { Route as DashboardsIndexImport } from './../routes/dashboards/index'
 import { Route as DashboardsIdImport } from './../routes/dashboards/$id'
 
@@ -27,6 +28,12 @@ const TestRoute = TestImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const NotificationChannelsIndexRoute = NotificationChannelsIndexImport.update({
+  id: '/notification-channels/',
+  path: '/notification-channels/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardsIndexImport
       parentRoute: typeof rootRoute
     }
+    '/notification-channels/': {
+      id: '/notification-channels/'
+      path: '/notification-channels'
+      fullPath: '/notification-channels'
+      preLoaderRoute: typeof NotificationChannelsIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -84,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/test': typeof TestRoute
   '/dashboards/$id': typeof DashboardsIdRoute
   '/dashboards': typeof DashboardsIndexRoute
+  '/notification-channels': typeof NotificationChannelsIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -91,6 +106,7 @@ export interface FileRoutesByTo {
   '/test': typeof TestRoute
   '/dashboards/$id': typeof DashboardsIdRoute
   '/dashboards': typeof DashboardsIndexRoute
+  '/notification-channels': typeof NotificationChannelsIndexRoute
 }
 
 export interface FileRoutesById {
@@ -99,14 +115,31 @@ export interface FileRoutesById {
   '/test': typeof TestRoute
   '/dashboards/$id': typeof DashboardsIdRoute
   '/dashboards/': typeof DashboardsIndexRoute
+  '/notification-channels/': typeof NotificationChannelsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/test' | '/dashboards/$id' | '/dashboards'
+  fullPaths:
+    | '/'
+    | '/test'
+    | '/dashboards/$id'
+    | '/dashboards'
+    | '/notification-channels'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/test' | '/dashboards/$id' | '/dashboards'
-  id: '__root__' | '/' | '/test' | '/dashboards/$id' | '/dashboards/'
+  to:
+    | '/'
+    | '/test'
+    | '/dashboards/$id'
+    | '/dashboards'
+    | '/notification-channels'
+  id:
+    | '__root__'
+    | '/'
+    | '/test'
+    | '/dashboards/$id'
+    | '/dashboards/'
+    | '/notification-channels/'
   fileRoutesById: FileRoutesById
 }
 
@@ -115,6 +148,7 @@ export interface RootRouteChildren {
   TestRoute: typeof TestRoute
   DashboardsIdRoute: typeof DashboardsIdRoute
   DashboardsIndexRoute: typeof DashboardsIndexRoute
+  NotificationChannelsIndexRoute: typeof NotificationChannelsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -122,6 +156,7 @@ const rootRouteChildren: RootRouteChildren = {
   TestRoute: TestRoute,
   DashboardsIdRoute: DashboardsIdRoute,
   DashboardsIndexRoute: DashboardsIndexRoute,
+  NotificationChannelsIndexRoute: NotificationChannelsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -137,7 +172,8 @@ export const routeTree = rootRoute
         "/",
         "/test",
         "/dashboards/$id",
-        "/dashboards/"
+        "/dashboards/",
+        "/notification-channels/"
       ]
     },
     "/": {
@@ -151,6 +187,9 @@ export const routeTree = rootRoute
     },
     "/dashboards/": {
       "filePath": "dashboards/index.tsx"
+    },
+    "/notification-channels/": {
+      "filePath": "notification-channels/index.tsx"
     }
   }
 }

@@ -3,7 +3,8 @@ import { Breadcrumbs, Button, DropdownMenu } from '@gravity-ui/uikit'
 import { useLocation, useNavigate } from '@tanstack/react-router'
 
 const mapPathToHumanNames: Record<string, string> = {
-  dashboards: 'Дашборды'  
+  dashboards: 'Дашборды',
+  'notification-channels': 'Каналы нотификаций',
 }
 
 function getBreadcrumbs() {

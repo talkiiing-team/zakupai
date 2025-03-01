@@ -2,8 +2,6 @@ import { atom, useAtom } from 'jotai';
 import { Menu, Icon, Button, Popover, Label } from '@gravity-ui/uikit';
 import { Plus } from '@gravity-ui/icons';
 
-import { DashboardsTable } from '@/components/tables/dashboards-table';
-
 type Opts = Record<string, { value: string }>;
 
 const options: Opts = {'aboba': { value: 'sex'}};

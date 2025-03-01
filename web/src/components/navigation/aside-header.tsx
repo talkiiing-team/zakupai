@@ -3,7 +3,7 @@ import type { PropsWithChildren } from 'react';
 import { useAtom } from 'jotai';
 import { AsideHeader as AsideHeaderBase, FooterItem } from '@gravity-ui/navigation';
 import { useLocation, useNavigate } from '@tanstack/react-router';
-import { ChartAreaStackedNormalized } from '@gravity-ui/icons';
+import { ChartAreaStackedNormalized, PaperPlane } from '@gravity-ui/icons';
 
 import BrandLogo from '~/assets/logo.svg?react'
 
@@ -41,6 +41,15 @@ export function AsideHeader({ children }: PropsWithChildren<AsideHeaderProps>) {
             icon: ChartAreaStackedNormalized,
             onItemClick: () => navigate({ to: '/dashboards' }),
             current: location.pathname === '/dashboards'
+          }
+        },
+        {
+          item: {
+            id: 'notification-channels',
+            title: 'Каналы нотификаций',
+            icon: PaperPlane,
+            onItemClick: () => navigate({ to: '/notification-channels' }),
+            current: location.pathname.includes('notification-channels')
           }
         }
       ]}
