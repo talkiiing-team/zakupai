@@ -11,12 +11,16 @@ from app.models.notification_channel import NotificationChannel
 router = APIRouter()
 
 
-class TelegramNotificationChannelSchema(BaseModel):
+class BaseNotificationChannelSchema(BaseModel):
+    id: int
+
+
+class TelegramNotificationChannelSchema(BaseNotificationChannelSchema):
     type: Literal["telegram"] = "telegram"
     user_id: str = Field()
 
 
-class EmailNotificationChannelSchema(BaseModel):
+class EmailNotificationChannelSchema(BaseNotificationChannelSchema):
     type: Literal["email"] = "email"
     email: str = Field()
 
@@ -36,12 +40,14 @@ async def get_notification_channels(
     for res in result.scalars().all():
         if res.email is not None:
             channels.append(
-                EmailNotificationChannelSchema(type="email", email=res.email)
+                EmailNotificationChannelSchema(id=res.id, type="email", email=res.email)
             )
 
         if res.tg_id is not None:
             channels.append(
-                TelegramNotificationChannelSchema(type="telegram", user_id=res.tg_id)
+                TelegramNotificationChannelSchema(
+                    id=res.id, type="telegram", user_id=res.tg_id
+                )
             )
 
     return channels

@@ -105,8 +105,6 @@ async def create_scheduler(
         ),
     )
 
-    print(cronjob)
-
     batchv1.create_namespaced_cron_job(SCHEDULERS_NAMESPACE, body=cronjob)
 
 
