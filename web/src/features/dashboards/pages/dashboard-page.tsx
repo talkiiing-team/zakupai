@@ -49,7 +49,7 @@ export const DashboardPage = () => {
         <Loader size='l' />
       </div>
       <iframe
-        className={`w-full h-full ${loading ? 'hidden' : ''}`}
+        className={`w-full h-full ${loading ? 'hidden' : ''} md:min-h-[95vh]`}
         onLoad={() => setLoading(false)}
         src={`https://datalens.xn----7sbbznd9a5a.xn--p1ai/${param.id}?_no_controls=1`}
       />
