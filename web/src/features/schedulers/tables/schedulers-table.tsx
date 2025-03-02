@@ -117,10 +117,10 @@ export const SchedulersTable: FC = () => {
     <TableWithAction
       className='w-full'
       getRowDescriptor={() => ({ interactive: true })}
-      onRowMouseDown={(row) => {
-        setCurrentSchedulerAtom(row.scheduler)
-        setShowSchedulerInfoAtom(true)
-      }}
+      // onRowMouseDown={(row) => {
+      //   setCurrentSchedulerAtom(row.scheduler)
+      //   setShowSchedulerInfoAtom(true)
+      // }}
       // @ts-ignore
       getRowActions={getRowActions}
       data={schedulers}
