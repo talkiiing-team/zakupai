@@ -15,7 +15,7 @@ export const RUSSIAN_LOCALE: Locale = {
   "weekOption": "неделя",
   "dayOption": "день",
   "hourOption": "час",
-  "minuteOption": "минута",
+  "minuteOption": "минуту",
   "rebootOption": "перезагрузка",
   "prefixPeriod": "Каждый",
   "prefixMonths": "в",

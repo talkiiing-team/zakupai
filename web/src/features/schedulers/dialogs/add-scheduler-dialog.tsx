@@ -24,7 +24,7 @@ export interface NotificationChannelNameProps {
   name: string
 }
 
-const NotificationChannelName: FC<NotificationChannelNameProps> = ({ type, name }) => {
+export const NotificationChannelName: FC<NotificationChannelNameProps> = ({ type, name }) => {
   return (
     <div className='flex items-center gap-2'>
       {type === 'telegram' && <PaperPlane />}
@@ -77,7 +77,7 @@ export function AddSchedulerDialog({ open, onClose, target }: Props) {
     const onApply = () => {
       createMutation.mutate({
         notificationChannelIds: formValue.notificationChannelIds,
-        target: target ?? `https://datalens.xn----7sbbznd9a5a.xn--p1ai/${formValue.dashboard!}?mode=embedded`,
+        target: target ?? `https://datalens.xn----7sbbznd9a5a.xn--p1ai/${formValue.dashboard!}?mode=embedded&_no_controls=1`,
         cron: formValue.cron
       })
     };

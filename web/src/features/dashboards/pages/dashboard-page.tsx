@@ -16,7 +16,7 @@ export const DashboardPage = () => {
   useEffect(() => {
     const subscriber = (event: MessageEvent) => {
       if (event.data?.code === 'URL_CHANGED') {
-        setPath(`https://datalens.xn----7sbbznd9a5a.xn--p1ai${event.data.data.pathname}${event.data.data.search}&mode=embedded`)
+        setPath(`https://datalens.xn----7sbbznd9a5a.xn--p1ai${event.data.data.pathname}${event.data.data.search}&mode=embedded&_no_controls=1`)
       }
     }
     
@@ -51,7 +51,7 @@ export const DashboardPage = () => {
       <iframe
         className={`w-full h-full ${loading ? 'hidden' : ''}`}
         onLoad={() => setLoading(false)}
-        src={`https://datalens.xn----7sbbznd9a5a.xn--p1ai/${param.id}`}
+        src={`https://datalens.xn----7sbbznd9a5a.xn--p1ai/${param.id}?_no_controls=1`}
       />
 
       <AddSchedulerDialog
