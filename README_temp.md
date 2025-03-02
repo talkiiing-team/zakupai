@@ -16,7 +16,7 @@ python3 -m pip install -r ml/requirements.txt
 ### Infra + Boilerplate
 
 - [x] Поднять виртуалку
-- [х] Поднять кубер
+- [x] Поднять кубер
 - [x] Купить домен - `закуп-ай.рф`
 - [x] Поднять ingress & cert-manager
 - [x] Поднять PostgreSQL

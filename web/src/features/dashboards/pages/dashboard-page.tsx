@@ -51,7 +51,7 @@ export const DashboardPage = () => {
       <iframe
         className={`w-full h-full ${loading ? 'hidden' : ''} min-h-[95vh]`}
         onLoad={() => setLoading(false)}
-        src={`https://datalens.xn----7sbbznd9a5a.xn--p1ai/${param.id}?_no_controls=1`}
+        src={`https://datalens.xn----7sbbznd9a5a.xn--p1ai/${param.id}`}
       />
 
       <AddSchedulerDialog
