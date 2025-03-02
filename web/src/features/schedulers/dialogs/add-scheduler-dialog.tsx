@@ -10,6 +10,7 @@ import { At, PaperPlane } from '@gravity-ui/icons';
 import 'react-js-cron/dist/styles.css'
 import { useCreateScheduler } from '../hooks/use-create-scheduler';
 import { toaster } from '@/shared/lib/toaster';
+import { RUSSIAN_LOCALE } from '../locale/ru';
 
 type Props = {
     target?: string,
@@ -156,7 +157,11 @@ export function AddSchedulerDialog({ open, onClose, target }: Props) {
                             Время планирования
                           </Text>
 
-                          <Cron value={formValue.cron} setValue={(cron: string) => setFormValue((form) => ({ ...form, cron }))} />
+                          <Cron
+                            locale={RUSSIAN_LOCALE}
+                            value={formValue.cron}
+                            setValue={(cron: string) => setFormValue((form) => ({ ...form, cron }))}
+                          />
                         </div>
 
                       </div>
