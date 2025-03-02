@@ -7,6 +7,7 @@ from aiogram import Bot
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 from aiogram.types import FSInputFile
+from fpdf import FPDF
 
 
 async def main():
@@ -44,8 +45,14 @@ async def main():
 
     screenshot = await page.save_screenshot(full_page=True)
 
+    pdf = FPDF(orientation="portrait")
+    pdf.set_margin(0)
+    pdf.add_page()
+    pdf.image(screenshot, w=pdf.epw, keep_aspect_ratio=True)
+    pdf.output("report.pdf")
+
     for user in args.telegram:
-        await bot.send_photo(chat_id=user, photo=FSInputFile(screenshot))
+        await bot.send_document(chat_id=user, document=FSInputFile("report.pdf"))
 
     # TODO: email
 
