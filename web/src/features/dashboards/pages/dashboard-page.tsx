@@ -30,7 +30,7 @@ export const DashboardPage = () => {
   }
   
   const handleRedirectClick = () => {
-    window.open(`https://datalens.xn----7sbbznd9a5a.xn--p1ai/${param.id}`, '_blank');
+    window.open(`https://datalens.xn----7sbbznd9a5a.xn--p1ai/${param.id}?mode=embedded&_no_controls=1`, '_blank');
   }
 
   return (
